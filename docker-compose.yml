@@ -10,6 +10,18 @@ services:
       - ./backend/src:/App/src:ro
     ports:
       - "5000:5000"
+  react:
+    build:
+      context: ./namshy_frontend
+      dockerfile: Dockerfile
+    container_name: React_Clothes_container
+    volumes:
+      - ./namshy_frontend/src:/React_Clothes/src:ro
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+    restart: always
 
   nginx:
     build:
