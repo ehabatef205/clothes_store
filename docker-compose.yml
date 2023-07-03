@@ -18,5 +18,5 @@ services:
     # volumes:
     #     - ./Care_Frontend/build:/usr/share/nginx/html:ro
     ports:
-      - 82:82
+      - 82:80
     restart: always
