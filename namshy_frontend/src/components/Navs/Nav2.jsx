@@ -8,40 +8,40 @@ export function Nav2() {
     <div>
       <Container className="d-flex justify-content-evenly nav2 w-100">
         <Nav className="me-auto text-dark ">
-          <Nav.Link className="text-dark " href="#home">
+          <Nav.Link className="text-dark " href="/newarrivals">
             New arrivals
           </Nav.Link>
-          <Nav.Link className="text-dark " href="/page1">
+          <Nav.Link className="text-dark " href="/clothing">
             clothing
           </Nav.Link>
-          <Nav.Link className="text-dark " href="#pricing">
+          <Nav.Link className="text-dark " href="/shoes">
             shoes
           </Nav.Link>
-          <Nav.Link className="text-dark " href="#home">
+          <Nav.Link className="text-dark " href="/bags">
             Bags
           </Nav.Link>
-          <Nav.Link className="text-dark " href="#features">
+          <Nav.Link className="text-dark " href="/accessories">
             accessories
           </Nav.Link>
-          <Nav.Link className="text-dark " href="#pricing">
+          <Nav.Link className="text-dark " href="/grooming">
             grooming
           </Nav.Link>
           <Nav.Link className="text-dark " href="/">
             Home
           </Nav.Link>
-          <Nav.Link className="text-dark " href="#features">
+          <Nav.Link className="text-dark " href="/sport">
             sport
           </Nav.Link>
-          <Nav.Link className="text-dark " href="#pricing">
+          <Nav.Link className="text-dark " href="/premium">
             Premium
           </Nav.Link>
-          <Nav.Link className="text-dark " href="#home">
+          <Nav.Link className="text-dark " href="/brand">
             Brand
           </Nav.Link>
-          <Nav.Link className="text-dark " href="#features">
+          <Nav.Link className="text-dark " href="/gifts">
             Gifts
           </Nav.Link>
-          <Nav.Link className="text-dark " href="#pricing">
+          <Nav.Link className="text-dark " href="/sale">
             Sale
           </Nav.Link>
         </Nav>

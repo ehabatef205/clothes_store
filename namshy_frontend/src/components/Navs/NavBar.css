@@ -7,3 +7,13 @@
 .custom-navbar {
     height: 9%;
 }
+.hider::-webkit-scrollbar {
+    display: none;
+  }
+
+.hider.a{
+    hover:pointer;
+}
+.hell::-webkit-scrollbar {
+    display: none;
+  }

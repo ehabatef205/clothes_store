@@ -1,6 +1,8 @@
 import React from "react";
 import "./Section.css";
 export default function FirstHeader() {
+  let label = window.location.pathname.slice(1)
+  label = label.toUpperCase().at(0) + label.slice(1)
   return (
     <div>
       <header
@@ -9,9 +11,9 @@ export default function FirstHeader() {
       >
         <div className=" w-25">
           <div>
-            <h3 style={{ display: "flex" }}>women's clothes</h3>
+            <h3 style={{ display: "flex" }}>{label}</h3>
           </div>
-          <div>
+          {/* <div>
             <nav aria-label="breadcrumb">
               <ol class="breadcrumb m-0">
                 <li class="breadcrumb-item">
@@ -35,7 +37,7 @@ export default function FirstHeader() {
                 </li>
               </ol>
             </nav>
-          </div>
+          </div> */}
         </div>
         <div
           className=" d-flex"

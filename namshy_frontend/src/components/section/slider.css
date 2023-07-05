@@ -15,7 +15,7 @@
   }
   .contain{
     top: 0;
-    width: 1300px;
+    width: 100%;
    
     position: relative;
     padding: 0px !important;
@@ -27,24 +27,29 @@
   }
   .containe{
     top: 0;
-    width: 1000px;
+    width: 100%;
+
     /* top: 100px; */
     position: relative;
     padding: 0px !important;
     display: flex;
     flex-wrap: wrap;
-  justify-content: space-between;
+    justify-content: space-between;
   /*  */
   
   }
   .carousel-wrapper {
+    border: #7DCEA0 1px;
     position: relative;
-    
-      width:322px;
-      height: 465px;
+    height: 465px;
+      width:100%;
+     
   }
-  .card{
-    width: 322px;
+  .carda{
+    height: 50%;
+    width: 30%;
+    min-width: 300px;
+    border: #7DCEA0 1px;
   }
   .carousel-wrapper .carousel-indicators  [data-bs-target] {
     width: 100%;

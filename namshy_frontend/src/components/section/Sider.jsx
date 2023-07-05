@@ -5,7 +5,7 @@ import { colors, options, type, size } from "./prodlist";
 export default function Sider() {
   return (
     <div>
-      <div className="contianer  sider1  d-flex flex-wrap ">
+      <div className="contianer  sider1  d-flex flex-wrap " style={{width:"100%"}}>
         <div
           className="border-bottom border-2 border-secondary w-100 col-12"
           style={{ fontSize: "14px", paddingBottom: "25px" }}

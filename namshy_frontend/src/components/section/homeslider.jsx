@@ -1,13 +1,10 @@
 import React from "react";
-import Carousel from "react-bootstrap/Carousel";
-import { Card } from "react-bootstrap";
-import { useState } from "react";
 export default function Homeslider() {
   return (
     <div
       id="carouselExample"
       className="carousel slide "
-      style={{ width: "1400px", height: "500px" }}
+      style={{ width: "90%", height: "500px" }}
     >
       <div
         className="carousel-inner"

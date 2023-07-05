@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 import { Rating } from "@mui/material";
 import ThirdSlider from "../components/section/ThirdSlider";
 import * as Product from '../api/product'
@@ -11,11 +11,10 @@ function SelectedProductPage({ products, handleClick }) {
 
   const { id } = useParams();
   useEffect(() => {
-    console.log('here')
+
     const getById = async () => {
-      console.log('here')
       await Product.get_product_by_id(id).then((e) => {
-        setSelected(e.response)
+        setSelected(e)
       })
     } 
     getById()
@@ -27,8 +26,6 @@ function SelectedProductPage({ products, handleClick }) {
 
 
   const [value, setValue] = useState(0);
-
-  console.log(id);
 
   return (
     <div
@@ -55,50 +52,46 @@ function SelectedProductPage({ products, handleClick }) {
           </ol>
         </nav>
       </div>
-      <Container id="parent" className=" justify-content-center">
-        <Row className=" " style={{ height: childHeight }}>
-          <Col
+      <Container id="parent"  style={{width:"100%"}}>
+        <div style={{display:"flex","flex-direction":"row",width:"100%",flexDirection:"row"}}>
+          <div
             id="child1"
             className="d-flex flex-wrap col-lg-6 "
-            style={{ width: "630px", padding: "0px" }}
+            style={{ width: "43%", padding: "0px",justifyContent:"space-between" ,marginRight:"10px" }}
           >
               
             {selected?.imageSrc?.map((image, index) => (
               <img
                 key={index}
-                style={{ width: "307px", height: "433px" }}
-                className="d-block mx-1 my-1 "
+                style={{ width: "45%", height:"45%" }}
+                className="d-block   "
                 src={image}
                 alt={""}
               />
             ))}
-          </Col>
-          <Col
+          </div>
+          <div
             id="child2"
-            className=" d-flex flex-wrap col-lg-6"
+            className=" d-flex flex-wrap col"
             style={{
-              width: "650px",
-              overflow: "auto",
-              boxSizing: "content-box",
-              height: childHeight,
+              width: "55%",
             }}
           >
             <div className=" d-flex flex-wrap  ">
-              <Row
-                className=" d-flex flex-wrap  w-100 mx-1 "
-                style={{ width: "625px" }}
+              <div
+                className=" d-flex flex-wrap   w-100  "
               >
-                <div className=" w-100  d-flex justify-content-between  my-1">
-                  <div className=" my-1  w-50 ">
-                    <p style={{ textAlign: "left" }}>{selected?.name}</p>
+                <div className="   d-flex justify-content-between w-100 ">
+                  <div>
+                    <p >{selected?.name}</p>
                   </div>
-                  <div className=" my-1 mx-2 " style={{}}>
+                  <div style={{"margin-left": "auto"}} >
                     {" "}
                     <a className="text-success">follow brand</a>{" "}
-                    <i className="bi bi-share mx-1"></i>{" "}
+                    <i className="bi bi-share "></i>{" "}
                   </div>
                 </div>
-                <div className=" my-1 w-100">
+                <div className="  w-100">
                   <p style={{ textAlign: "left", fontSize: "25px" }}>
                     {selected?.name}
                   </p>
@@ -106,20 +99,20 @@ function SelectedProductPage({ products, handleClick }) {
                 {/* <div className=" w-100" >   </div> */}
 
                 <div
-                  className=" w-100 my-1 d-flex "
+                  className=" w-100  d-flex "
                   style={{ fontSize: "18px" }}
                 >
                   {" "}
-                  <s className="text-secondary mx-2">{selected?.price}</s>
+                  <div className=" mx-2">{selected?.price} </div>
                 </div>
-              </Row>
+              </div>
               {/*  */}
-              <Row
-                className=" d-flex flex-wrap  w-100 mx-1  "
-                style={{ width: "625px", height: "170px" }}
+              <div
+                className=" d-flex flex-wrap  w-100   "
+                style={{ width: "100%", height: "170px" }}
               >
                 <div
-                  className="d-flex justify-content-between "
+                  className="d-flex justify-content-between w-100"
                   style={{ height: "40px" }}
                 >
                   <div>
@@ -129,7 +122,7 @@ function SelectedProductPage({ products, handleClick }) {
                     show size chart
                   </div>
                 </div>
-                <div className=" w-100   my-1">
+                <div className=" w-100   ">
                   <div style={{ textAlign: "left" }}>
                     <button
                       style={{
@@ -137,7 +130,7 @@ function SelectedProductPage({ products, handleClick }) {
                         borderRadius: "2px",
                         fontSize: "17px",
                       }}
-                      className="btn text-success bg-light  mx-1 my-2"
+                      className="btn text-success bg-light   my-2"
                     >
                       international{" "}
                     </button>
@@ -147,7 +140,7 @@ function SelectedProductPage({ products, handleClick }) {
                         borderRadius: "2px",
                         fontSize: "17px",
                       }}
-                      className="btn text-success bg-light  mx-1 my-2"
+                      className="btn text-success bg-light   my-2"
                     >
                       US{" "}
                     </button>
@@ -157,7 +150,7 @@ function SelectedProductPage({ products, handleClick }) {
                         borderRadius: "2px",
                         fontSize: "17px",
                       }}
-                      className="btn text-success bg-light  mx-1 my-2"
+                      className="btn text-success bg-light   my-2"
                     >
                       {" "}
                       UK
@@ -168,13 +161,13 @@ function SelectedProductPage({ products, handleClick }) {
                         borderRadius: "2px",
                         fontSize: "17px",
                       }}
-                      className="btn text-success bg-light  mx-1 my-2"
+                      className="btn text-success bg-light   my-2"
                     >
                       EU{" "}
                     </button>
                   </div>
                   <div
-                    className=" my-1  justify-content-start "
+                    className="   justify-content-start "
                     style={{ textAlign: "left" }}
                   >
                     {" "}
@@ -187,23 +180,26 @@ function SelectedProductPage({ products, handleClick }) {
                           borderRadius: "2px",
                         }}
                         key={index}
-                        className="btn  btn-outline-secondary mx-1"
+                        className="btn  btn-outline-secondary "
                       >
                         {size}
                       </button>
                     ))}
                   </div>
                 </div>
-                {/* <div className=" my-1 w-100" >productname</div> 
-    <div className="w-100 my-1" >prise/ old</div> */}
-              </Row>
+                {/* <div className="  w-100" >productname</div> 
+    <div className="w-100 " >prise/ old</div> */}
+              </div>
               {/*  */}
-              <Row
-                className=" d-flex flex-wrap w-100 w-100 mx-1 "
-                style={{ height: "200px" }}
+              <div
+                className=" d-flex  w-100   "
+                style={{"flex-direction":"flex-row"}}
+
               >
-                <div className=" my-1 w-50  d-md-grid ">
-                  <span className=" my-2 h-50 " style={{ textAlign: "center" }}>
+                <div className=" d-flex w-100  " 
+                style={{"flex-direction":"flex-row"}}
+                >
+                  <span style={{ textAlign: "center" ,width:"50%"}}>
                     <button
                       className="btn text-light my-3 h-100 w-100"
                       onClick={() => handleClick(products)}
@@ -212,46 +208,49 @@ function SelectedProductPage({ products, handleClick }) {
                       Add To Bag
                     </button>
                   </span>
+                
+
+                  <span  style={{ textAlign: "center",width:"50%" }}>
+                    <button className="btn bg-light my-3  text-success h-100 w-100">
+                      Add to wish list{" "}
+                    </button>
+                  </span>
+                  
+                  </div>
+              </div>
+              <div className=" d-flex w-100   "style={{"margin-top":"15px" ,justifyContent:"space-between",gap:"15%"}}
+                >
+              <span className="" style={{ height: "100%" }}>
+                    <img
+                    
+                      src=" https://a.namshicdn.com/web-desktop/2be1a1eca215dfed8e18.svg "
+                      alt=""
+                    />
+                    <div>Free Shipping</div>
+                  </span>
                   <span className="" style={{ height: "100px" }}>
                     <img
                       src="https://a.namshicdn.com/web-desktop/04712760e51a72afe9cc.svg"
                       alt=""
                     />
                     <div>100% Genuine</div>
-                  </span>{" "}
-                </div>
-
-                <div className=" my-1 w-50 d-md-grid ">
-                  <span className=" my-2 h-50 " style={{ textAlign: "center" }}>
-                    <button className="btn bg-light my-3  text-success h-100 w-100">
-                      Add to wish list{" "}
-                    </button>
                   </span>
-                  <span className="" style={{ height: "100px" }}>
-                    <img
-                      src=" https://a.namshicdn.com/web-desktop/2be1a1eca215dfed8e18.svg "
-                      alt=""
-                    />
-                    <div>Free Shipping</div>
-                  </span>{" "}
-                </div>
-              </Row>
+              </div>
               {/**/}
-              <Row
-                className=" d-flex flex-wrap mx-1 "
-                style={{ width: "620px", borderBottom: " 1px solid gray" }}
+              <div
+                className=" d-flex flex-wrap  "
+                style={{ width: "100%", borderBottom: " 1px solid gray" }}
               >
                 <div
                   style={{ borderBottom: " 1px solid gray", textAlign: "left" }}
                 >
-                  Description
-                </div>
-                <div className="my-2">{selected?.desc}</div>
-              </Row>
+                  Description : {selected?.desc}
+                 </div>
+                              </div>
               {/*  */}
-              <Row
-                className=" d-flex flex-wrap mx-1  "
-                style={{ width: "620px" }}
+              <div
+                className=" d-flex flex-wrap   "
+                style={{ width: "100%" ,height:"30%" }}
               >
                 <div
                   className="my-4"
@@ -262,7 +261,7 @@ function SelectedProductPage({ products, handleClick }) {
                 >
                   Info & Care
                 </div>
-                <div className="d-flex my-2">
+                <div className="d-flex">
                   <div style={{ textAlign: "left" }}>
                     {" "}
                     SKU
@@ -276,14 +275,12 @@ function SelectedProductPage({ products, handleClick }) {
                     washing instructions
                     <br /> product material
                   </div>
-
-                  
                 </div>
-              </Row>
+              </div>
               {/*  */}
-              <Row
-                className=" d-flex flex-wrap mx-1  "
-                style={{ width: "620px" }}
+              <div
+                className=" d-flex flex-wrap   "
+                style={{ width: "100%" }}
               >
                 <div className="d-flex w-25 ">
                   <a
@@ -316,17 +313,17 @@ function SelectedProductPage({ products, handleClick }) {
                   Follow this brand to stay updated on exciting launches, new
                   collections & more!
                 </div>
-              </Row>
+              </div>
             </div>
-          </Col>
-        </Row>
+          </div>
+        </div>
       </Container>
-      <Container className="justify-content-center" style={{ width: "1305px" }}>
+      <Container className="justify-content-center" style={{ width: "100%" }}>
         <section
           className=" d-flex justify-content-between  my-5 mx-4"
           style={{
-            height: "80px",
-            width: "1200px",
+            
+            width: "100%",
             padding: "10px",
             border: "1px solid gray",
           }}
@@ -353,7 +350,7 @@ function SelectedProductPage({ products, handleClick }) {
           </div>
         </section>
 
-        <section className=" my-5 h-25   " style={{ width: "1300px" }}>
+        <section className=" my-5 h-25   " style={{ width: "100%" }}>
           <div className=" w-100 my-3  " style={{ textAlign: "left" }}>
             <p>Frequently Bought Together</p>
           </div>
@@ -362,7 +359,7 @@ function SelectedProductPage({ products, handleClick }) {
           </div>
         </section>
 
-        <section className=" my-5 h-25 " style={{ width: "1300px" }}>
+        <section className=" my-5 h-25 " style={{ width: "100%" }}>
           <div className=" w-100 my-3  " style={{ textAlign: "left" }}>
             <p>Similar Products</p>
           </div>

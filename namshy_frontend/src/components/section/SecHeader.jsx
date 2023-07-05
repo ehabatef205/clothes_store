@@ -5,13 +5,15 @@ export default function SecHeader() {
     <div>
       <header
         className=" second  "
-        style={{ display: "flex", justifyContent: "space-between" }}
+        style={{ display: "flex",justifyContent: "space-between" }}
       >
-        <div className="  w-50">
-          <div style={{ display: "flex" }}>
+        <div  style={{
+                width: "70%"}}>
+          <div style={{ display: "flex","overflow-y":"auto" }}>
             <a
-              className="btn  mx-2 d-flex"
+              className="btn  d-flex"
               style={{
+                width: "25%", height: "100%" ,
                 backgroundColor: "#f7f7f7",
                 borderRadius: "26px",
                 border: "1.5px solid #f7f7f7",
@@ -23,8 +25,9 @@ export default function SecHeader() {
             </a>
 
             <a
-              className="btn  mx-2"
+              className="btn "
               style={{
+                width: "25%", height: "100%" ,
                 backgroundColor: "#f7f7f7",
                 borderRadius: "26px",
                 border: "1.5px solid #f7f7f7",
@@ -35,8 +38,9 @@ export default function SecHeader() {
               Sports
             </a>
             <a
-              className="btn  mx-2"
+              className="btn "
               style={{
+                width: "25%", height: "100%" ,
                 backgroundColor: "#f7f7f7",
                 borderRadius: "26px",
                 border: "1.5px solid #f7f7f7",
@@ -47,8 +51,9 @@ export default function SecHeader() {
               Streetwear
             </a>
             <a
-              className="btn  mx-2"
+              className="btn "
               style={{
+                width: "25%", height: "100%" ,
                 backgroundColor: "#f7f7f7",
                 borderRadius: "26px",
                 border: "1.5px solid #f7f7f7",
@@ -66,7 +71,7 @@ export default function SecHeader() {
             <i>53983 styles </i>
           </div>
         </div>
-        <div className="d-flex" style={{ width: "150px", height: "40px" }}>
+        <div className="d-flex" style={{ width: "20%", height: "100%" ,}}>
           <select class="form-select" aria-label="Dropdown">
             <option selected>Suggested</option>
             <option value="option1">Option 1</option>

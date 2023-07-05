@@ -21,19 +21,19 @@ export default function Page1() {
         </div>
 
         <div className="adslider  w-100">
-          <img src="slider.PNG" alt="" />
+          <img className="w-100" src="slider.PNG" alt="" />
           {/* <AdSlider /> */}
         </div>
 
-        <div className="d-flex flex-wrap w-100">
-          <div>
+        <div className="d-flex flex-row w-100">
+          <div style={{ width: "25%" }}>
             <Sider></Sider>
           </div>
           <div
-            className="  d-grid"
-            style={{ height: "fit-content", width: "1000px" }}
+            
+            style={{ height: "100%", width: "75%" }}
           >
-            <div className="w-100  justify-content-start">
+            <div className="w-100  "style={{"max-height":"10%"}}>
               <SecHeader />
             </div>
             <div className=" cards w-100 ">

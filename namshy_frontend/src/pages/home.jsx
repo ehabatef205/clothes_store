@@ -4,7 +4,7 @@ import { Container } from "react-bootstrap";
 import Homecards from "../components/section/homecards";
 import * as prod_cat from '../api/product_category'
 import "../components/section/slider.css";
-export default function Home() {
+export default function Home({section}) {
   const [categories, setCategories] = useState([])
   useEffect(() => {
     const getCategory = async () => {
@@ -29,6 +29,7 @@ export default function Home() {
       <Container className="my-4  " style={{ justifyContent: "center" }}>
         <div>
           <div className="" style={{ height: "fit-content" }}>
+            <h1>{section}</h1>
             {categories?.map((category, index)=>(<Homecards category_id = {category._id} category_name={category.name} />))}          </div>
         </div>
       </Container>

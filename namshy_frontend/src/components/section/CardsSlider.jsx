@@ -28,7 +28,7 @@ export function CardsSlider() {
     <div className="containe d-flex mx-1">
       {products.map((product) => (
         <div
-          className="card my-1"
+          className="carda"
           key={product._id}
           
         >
@@ -62,18 +62,18 @@ export function CardsSlider() {
             </Carousel>
           </div>
           <div
-            className="card-body my-2 d-flex"
-            style={{ fontSize: "15px", padding: "0px" }}
+            className="card-body d-flex"
+            style={{ fontSize: "100%", padding: "0px" ,flexDirection:"flex-row","justify-content": "space-between"}}
           >
-            <div className=" mx-2 my-3 d-flex flex-column align-items-start">
+            <div className="  d-flex flex-column align-items-start">
            
               <Card.Title className="mb-0">{product.name}</Card.Title>
               <Card.Text className="mb-0">Price: {product.price}</Card.Text>
               <Card.Text> {product.desc}</Card.Text>
             </div>
-            <span className=" my-2 h-50 " style={{ textAlign: "center" }}>
+            <span className="  h-75 " style={{ textAlign: "center" ," margin-top":"10%" }}>
               <button
-                className="btn text-light my-4 mx-2 h-100 w-100"
+                className="btn text-light h-100 w-100"
                 style={{ backgroundColor: "#7DCEA0" }}
               >
                 Add To Bag
