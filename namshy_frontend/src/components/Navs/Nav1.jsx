@@ -2,19 +2,26 @@ import React, { useState } from "react";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
+import { Router, Route, Routes } from "react-router-dom";
+import Page1 from "../../pages/page1";
 import "./NavBar.css";
+import logo from "../../images/logo.jpg";
 import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
+import { Nav2 } from "./Nav2";
+
 // import logo from '../../images/logo.png'
 
 import { useNavigate } from "react-router-dom";
 
-export function NavBar() {
+export function NavBar({visible = true}) {
+  const currentpage = window.location.pathname.split('/')[1];
   const navigate = useNavigate();
   const [query, setQuery] = useState("");
   const handleLinkClick = (href) => {
+    
     navigate(href);
   };
 
@@ -28,7 +35,7 @@ export function NavBar() {
       <div
         style={{
           height: "60px",
-          width: "100vw",
+          width: "100%",
           backgroundColor: "rgb(0, 0, 0)",
         }}
       >
@@ -85,11 +92,11 @@ export function NavBar() {
                 style={{
                   ...linkStyle,
                   background:
-                    window.location.pathname === "/premiumCategory"
+                    currentpage === "premiumCategory"
                       ? "white"
                       : "transparent",
                   color:
-                    window.location.pathname === "/premiumCategory"
+                    currentpage === "premiumCategory"
                       ? "black"
                       : "white",
                 }}
@@ -102,11 +109,11 @@ export function NavBar() {
                 style={{
                   ...linkStyle,
                   background:
-                    window.location.pathname === "/kids"
+                    currentpage === "kids"
                       ? "white"
                       : "transparent",
                   color:
-                    window.location.pathname === "/kids" ? "black" : "white",
+                    currentpage === "kids" ? "black" : "white",
                 }}
                 onClick={() => handleLinkClick("/kids")}
               >
@@ -117,11 +124,11 @@ export function NavBar() {
                 style={{
                   ...linkStyle,
                   background:
-                    window.location.pathname === "/beauty"
+                    currentpage === "beauty"
                       ? "white"
                       : "transparent",
                   color:
-                    window.location.pathname === "/beauty" ? "black" : "white",
+                    currentpage === "beauty" ? "black" : "white",
                   whiteSpace: "nowrap",
                 }}
                 onClick={() => handleLinkClick("/beauty")}
@@ -133,13 +140,11 @@ export function NavBar() {
                 style={{
                   ...linkStyle,
                   background:
-                    window.location.pathname === "/men" ||
-                    window.location.pathname === "/"
+                    currentpage === "men"
                       ? "white"
                       : "transparent",
                   color:
-                    window.location.pathname === "/men" ||
-                    window.location.pathname === "/"
+                    currentpage === "men"
                       ? "black"
                       : "white",
                 }}
@@ -152,13 +157,14 @@ export function NavBar() {
                 style={{
                   ...linkStyle,
                   background:
-                    window.location.pathname === "/women"
+                    currentpage === "women"
                       ? "white"
                       : "transparent",
                   color:
-                    window.location.pathname === "/women" ? "black" : "white",
+                    currentpage === "women" ? "black" : "white",
+                  whiteSpace: "nowrap",
                 }}
-                onClick={() => handleLinkClick("#women")}
+                onClick={() => handleLinkClick("/women")}
               >
                 Women
               </div>
@@ -169,18 +175,17 @@ export function NavBar() {
                     onClick={() => {
                       navigate("/", { replace: true });
                     }}
-                    height={"50px"}
+                    height={"100%"}
                     width={"60px"}
                     style={{display:"flex", marginRight: "10px",color:"white" }}
                   >
-                    الذئب
-                 
+                    <img src={logo} style={{height:"50px"}}></img>
                 </div>
-              
             </Navbar.Brand>
           </Nav>
         </Container>
       </div>
+      {visible && <Nav2 current_page={currentpage + '/'}></Nav2>}
     </div>
   );
 }

@@ -1,23 +1,26 @@
 import React from "react";
 import ThirdSlider from "../components/section/ThirdSlider";
 import { Container } from "react-bootstrap";
+import Header from "../components/Navs/Header";
+
 
 export default function Bag() {
   return (
-    <Container style={{ position: "relative", top: "70px" }}>
+    <><div>          <Header></Header>
+    </div><><Container style={{ position: "relative", top: "70px" }}>
       <div>
         <div className="d-flex justify-content-between">
           <button
             className="btn text-light "
             style={{ backgroundColor: "#7DCEA0" }}
           >
-            Button One
+            AI Virtual Room
           </button>
           <button
             className="btn "
             style={{ color: "#7DCEA0", border: "1px solid gray" }}
           >
-            Button Two
+            Back
           </button>
         </div>
 
@@ -132,102 +135,11 @@ export default function Bag() {
                   <div className="bg-dark m-2">
                     <img
                       style={{ width: "90px", height: "130px" }}
-                      src="https://images.pexels.com/photos/712316/pexels-photo-712316.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                    />
+                      src="https://images.pexels.com/photos/712316/pexels-photo-712316.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" />
                   </div>
                 </div>
               </div>
             </div>
-            {/* <hr />
-            <div
-              className="tow col-8 my-3  mx-5"
-              style={{ width: "770px", marginRight: "0px" }}
-            >
-              <div className="  d-flex justify-content-between">
-                <div style={{ textAlign: "center" }}>
-                  <div className="h-50 ">
-                    <span style={{ textAlign: "center" }}>producprice</span>
-                  </div>
-                  <div className="h-50 " style={{ textAlign: "center" }}>
-                    <button className="m-1 btn-light">+</button>
-                    <span className="m-1">num</span>
-                    <button className="m-1 btn-light">-</button>
-                  </div>
-                </div>
-                <div className="d-flex " style={{ textAlign: "end" }}>
-                  <div>
-                    <div className="m-3">
-                      <p style={{ margin: "0px", padding: "0px" }}>brand</p>
-                      <p style={{ margin: "0px", padding: "0px" }}>
-                        prouduct name
-                      </p>
-                      <p>size</p>
-                    </div>
-
-                    <div className="d-flex">
-                      <div className="m-2 ">
-                        <i class="bi bi-trash3">delete</i>
-                      </div>
-                      <div className=" m-2 text-secondary">|</div>
-                      <div className="m-2 ">
-                        <i className="bi bi-heart m-2">save later</i>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="bg-dark m-2">
-                    <img
-                      style={{ width: "90px", height: "130px" }}
-                      src="https://images.pexels.com/photos/712316/pexels-photo-712316.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-            <hr />
-            <div
-              className="tow col-8 my-3  mx-5"
-              style={{ width: "770px", marginRight: "0px" }}
-            >
-              <div className="  d-flex justify-content-between">
-                <div style={{ textAlign: "center" }}>
-                  <div className="h-50 ">
-                    <span style={{ textAlign: "center" }}>producprice</span>
-                  </div>
-                  <div className="h-50 " style={{ textAlign: "center" }}>
-                    <button className="m-1 btn-light">+</button>
-                    <span className="m-1">num</span>
-                    <button className="m-1 btn-light">-</button>
-                  </div>
-                </div>
-                <div className="d-flex " style={{ textAlign: "end" }}>
-                  <div>
-                    <div className="m-3">
-                      <p style={{ margin: "0px", padding: "0px" }}>brand</p>
-                      <p style={{ margin: "0px", padding: "0px" }}>
-                        prouduct name
-                      </p>
-                      <p>size</p>
-                    </div>
-
-                    <div className="d-flex">
-                      <div className="m-2 ">
-                        <i class="bi bi-trash3"> delete</i>
-                      </div>
-                      <div className=" m-2 text-secondary">|</div>
-                      <div className="m-2 ">
-                        <i className="bi bi-heart m-2"> save later</i>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="bg-dark m-2">
-                    <img
-                      style={{ width: "90px", height: "130px" }}
-                      src="https://images.pexels.com/photos/712316/pexels-photo-712316.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div> */}
           </div>
         </div>
 
@@ -236,24 +148,18 @@ export default function Bag() {
             className="btn text-light "
             style={{ backgroundColor: "#7DCEA0" }}
           >
-            Button One
-          </button>
-          <button
-            className="btn "
-            style={{ color: "#7DCEA0", border: "1px solid gray" }}
-          >
-            Button Two
+            Process to Chekout
           </button>
         </div>
       </div>
       <section className=" my-5 h-25 " style={{ width: "1300px" }}>
         <div className=" w-100 my-3  " style={{ textAlign: "left" }}>
-          <p>Similar Products</p>
+          <h2>Similar Product </h2>
         </div>
         <div>
           <ThirdSlider id="second"></ThirdSlider>
         </div>
       </section>
-    </Container>
+    </Container></></>
   );
 }

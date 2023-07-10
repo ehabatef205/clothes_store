@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Container } from "react-bootstrap";
 import { Rating } from "@mui/material";
+import Header from "../components/Navs/Header";
 import ThirdSlider from "../components/section/ThirdSlider";
 import * as Product from '../api/product'
 function SelectedProductPage({ products, handleClick }) {
@@ -28,10 +29,14 @@ function SelectedProductPage({ products, handleClick }) {
   const [value, setValue] = useState(0);
 
   return (
+    <div> 
+      <Header></Header>
     <div
       className="viewcontainer justify-content-center   "
       style={{ position: "relative", top: "70px" }}
     >
+          </div>
+
       <div className=" m-3 " style={{ textAlign: "center" }}>
         {" "}
         <nav aria-label="breadcrumb">
@@ -369,6 +374,7 @@ function SelectedProductPage({ products, handleClick }) {
         </section>
       </Container>
     </div>
+    
   );
 }
 

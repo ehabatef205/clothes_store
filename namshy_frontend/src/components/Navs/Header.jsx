@@ -1,12 +1,9 @@
 import React from "react";
 import { NavBar } from "./Nav1";
-import { Nav2 } from "./Nav2";
-export default function Header() {
+export default function Header({visible = true}) {
   return (
     <div className="d-grid">
-      <NavBar></NavBar>
-
-      <Nav2></Nav2>
+      <NavBar visible={visible}></NavBar>
     </div>
   );
 }

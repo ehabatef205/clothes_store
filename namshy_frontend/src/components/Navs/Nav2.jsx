@@ -1,47 +1,44 @@
 import React from "react";
 import "./Nave.css";
 import Nav from "react-bootstrap/Nav";
-import Navbar from "react-bootstrap/Navbar";
 import Container from "react-bootstrap/Container";
-export function Nav2() {
+export function Nav2({current_page}) {
   return (
+        window.location.pathname==="/"?<div></div>:
     <div>
       <Container className="d-flex justify-content-evenly nav2 w-100">
         <Nav className="me-auto text-dark ">
-          <Nav.Link className="text-dark " href="/newarrivals">
+          <Nav.Link className="text-dark " href={current_page + "newarrivals"}>
             New arrivals
           </Nav.Link>
-          <Nav.Link className="text-dark " href="/clothing">
+          <Nav.Link className="text-dark " href={current_page + "clothing"}>
             clothing
           </Nav.Link>
-          <Nav.Link className="text-dark " href="/shoes">
+          <Nav.Link className="text-dark " href={current_page + "shoes"}>
             shoes
           </Nav.Link>
-          <Nav.Link className="text-dark " href="/bags">
+          <Nav.Link className="text-dark " href={current_page + "bags"}>
             Bags
           </Nav.Link>
-          <Nav.Link className="text-dark " href="/accessories">
+          <Nav.Link className="text-dark " href={current_page + "accessories"}>
             accessories
           </Nav.Link>
-          <Nav.Link className="text-dark " href="/grooming">
+          <Nav.Link className="text-dark " href={current_page + "grooming"}>
             grooming
           </Nav.Link>
-          <Nav.Link className="text-dark " href="/">
-            Home
-          </Nav.Link>
-          <Nav.Link className="text-dark " href="/sport">
+          <Nav.Link className="text-dark " href={current_page + "sport"}>
             sport
           </Nav.Link>
-          <Nav.Link className="text-dark " href="/premium">
+          <Nav.Link className="text-dark " href={current_page + "premium"}>
             Premium
           </Nav.Link>
-          <Nav.Link className="text-dark " href="/brand">
+          <Nav.Link className="text-dark " href={current_page + "brand"}>
             Brand
           </Nav.Link>
-          <Nav.Link className="text-dark " href="/gifts">
+          <Nav.Link className="text-dark " href={current_page + "gifts"}>
             Gifts
           </Nav.Link>
-          <Nav.Link className="text-dark " href="/sale">
+          <Nav.Link className="text-dark " href={current_page + "sale"}>
             Sale
           </Nav.Link>
         </Nav>

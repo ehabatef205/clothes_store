@@ -24,7 +24,7 @@ export default function Sider() {
               ></i>
               <a
                 className="link-opacity-75 text-black mx-2"
-                href="page2"
+                href={'/' + word}
                 style={{ textDecoration: "none" }}
               >
                 {word}

@@ -1,7 +1,7 @@
 import { ProductionQuantityLimits } from "@mui/icons-material";
 
 export const size=[1,2,3,4,4,5,6,6,1,2,2,3,4,4,5,5,6,6,7,7,8,8,9,9,9,7,2,6,6,1,5,5,4,4,4,4311]
-export const type=["page 2","link","link1","link","link1","link"]
+export const type=["men","women","beauty","kids","premium"]
 export const options=["option1","option2","option3","option4","option1","option2","option3","option4","option5","option6"]
 export const colors=[
 {id:1,

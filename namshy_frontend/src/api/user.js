@@ -7,7 +7,7 @@ const cookie = new Cookies()
 const token = cookie.get('Auth')
 
 export const sign_up = async ({username, email, password, first_name, last_name, telephone}) => {
-    await axios.post(`${proxy}/sign_up`,{username, email, password, first_name, last_name, telephone})
+    return((await axios.post(`${proxy}/sign_up`,{username, email, password, first_name, last_name, telephone})).data)
 }
 
 export const login = async ({email, password}) => {
