@@ -62,9 +62,10 @@ useEffect(() => {
               <button
                 onClick={() =>
                   { if (product.quantity!==1)
-                  cart.decrease_item(product?._id.then(e => {
-                    window.location.reload(false)
-                  }))}} /*.then(e=>{setCurrentProduct(e)})*/
+                  cart.decrease_item(
+                    product?._id).then((e) => {
+                    window.location.reload(false);
+                  })}} /*.then(e=>{setCurrentProduct(e)})*/
                 className=" btn m-1 btn-light"
               >
                 <i class="bi bi-dash-lg"></i>
