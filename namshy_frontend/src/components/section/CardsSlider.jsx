@@ -6,6 +6,8 @@ import { Card } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import * as product from "../../api/product";
 import { CartContext } from "./Shoppingcartcontext";
+import * as Cart from '../../api/cart'
+import { Cookies } from 'react-cookie'
 
 export function CardsSlider() {
   const [selectedCardIndex, setSelectedCardIndex] = useState(1);
@@ -13,6 +15,7 @@ export function CardsSlider() {
     console.log("add to favorites");
   };
   const { addToCart } = useContext(CartContext);
+  const cookie = new Cookies()
 
   const size = ["m", "l", "xl", "xxl"];
   const navigate = useNavigate();
@@ -31,6 +34,12 @@ export function CardsSlider() {
     setSelectedProduct(product);
     navigate(`/SelectedProductPage/${product._id}`);
   };
+
+  const addtoBag = async (id) => {
+    await Cart.add_cart(id, 1, cookie.get("Auth")).then((e) => {
+      console.log(e)
+    })
+  }
 
   return (
     <div className="containe d-flex mx-1">
@@ -100,7 +109,7 @@ export function CardsSlider() {
                 <button
                   className="btn text-light  "
                   style={{ backgroundColor: "#7DCEA0" }}
-                  onClick={() => addToCart(product._id)}
+                  onClick={() => addtoBag(product._id)}
                 >
                   <i class="bi bi-plus-lg"></i>
                 </button>

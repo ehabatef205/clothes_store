@@ -3,18 +3,28 @@ const Schema = mongoose.Schema
 
 const CartSchema = new Schema({
     user_id: {
-        type: mongoose.Schema.Types.ObjectId,
-        required: true
+        type: String,
     },
     product_id: {
         type: String,
-        required: true
     },
     quantity: {
         type: Number,
-        default: 1
     }
 })
+
+CartSchema.statics.isThisCart = async function (product_id, user_id) {
+    if (!product_id) throw new Error('Invalid product_id')
+    try {
+        const product = await this.findOne({ product_id: product_id, user_id: user_id })
+        if (product) return false
+
+        return true
+    } catch (error) {
+        console.log('error inside isThiscart method ', error.message)
+        return false
+    }
+}
 
 
 module.exports = mongoose.model.Cart || mongoose.model("Cart", CartSchema);

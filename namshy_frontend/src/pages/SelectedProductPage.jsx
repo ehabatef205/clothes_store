@@ -5,19 +5,22 @@ import { Rating } from "@mui/material";
 import Header from "../components/Navs/Header";
 import ThirdSlider from "../components/section/ThirdSlider";
 import * as Product from '../api/product'
+import * as Cart from '../api/cart'
+import { Cookies } from 'react-cookie'
+
 function SelectedProductPage({ products, handleClick }) {
   const [childHeight, setChildHeight] = useState(0);
   const [selected, setSelected] = useState({});
   const size = ["m", "l", "xl", "xxl"]
+  const cookie = new Cookies()
 
   const { id } = useParams();
   useEffect(() => {
-
     const getById = async () => {
       await Product.get_product_by_id(id).then((e) => {
         setSelected(e)
       })
-    } 
+    }
     getById()
 
     const child1 = document.getElementById("child1");
@@ -28,14 +31,20 @@ function SelectedProductPage({ products, handleClick }) {
 
   const [value, setValue] = useState(0);
 
+  const addtoBag = async () => {
+    await Cart.add_cart(id, 1, cookie.get("Auth")).then((e) => {
+      console.log(e)
+    })
+  }
+
   return (
-    <div> 
+    <div>
       <Header visible={false} ></Header>
-    <div
-      className="viewcontainer justify-content-center   "
-      style={{ position: "relative", top: "70px" }}
-    >
-          </div>
+      <div
+        className="viewcontainer justify-content-center   "
+        style={{ position: "relative", top: "70px" }}
+      >
+      </div>
 
       <div className=" m-3" style={{ textAlign: "center" }}>
         {" "}
@@ -57,21 +66,21 @@ function SelectedProductPage({ products, handleClick }) {
           </ol>
         </nav>
       </div>
-      <Container id="parent" className="d-flex flex-wrap" style={{width:"100%"}}>
-        
-        <div className="flex-wrap" style={{display:"flex","flex-direction ":"row",width:"100%",flexDirection:"row"}}>
+      <Container id="parent" className="d-flex flex-wrap" style={{ width: "100%" }}>
+
+        <div className="flex-wrap" style={{ display: "flex", "flex-direction ": "row", width: "100%", flexDirection: "row" }}>
           <div
             id="child1"
             className="d-flex flex-wrap col-lg-6 col-sm-12  "
-            style={{  padding: "0px",justifyContent:"space-between"  }}
+            style={{ padding: "0px", justifyContent: "space-between" }}
           >
-              
+
             {selected?.imageSrc?.map((image, index) => (
               <img
                 key={index}
-                style={{ width: "50%", height:"50%" }}
+                style={{ width: "50%", height: "50%" }}
                 className="d-block   "
-                src={image}     
+                src={image}
                 alt={""}
               />
             ))}
@@ -80,8 +89,8 @@ function SelectedProductPage({ products, handleClick }) {
             id="child2"
             className=" d-flex flex-wrap col-lg-6 col-sm-12 "
             style={{
-           
-              padding:"15px"
+
+              padding: "15px"
             }}
           >
             <div className=" d-flex flex-wrap  ">
@@ -92,7 +101,7 @@ function SelectedProductPage({ products, handleClick }) {
                   <div>
                     <p >{selected?.name}</p>
                   </div>
-                  <div style={{"margin-left": "auto"}} >
+                  <div style={{ "margin-left": "auto" }} >
                     {" "}
                     <a className="text-success">follow brand</a>{" "}
                     <i className="bi bi-share "></i>{" "}
@@ -159,7 +168,7 @@ function SelectedProductPage({ products, handleClick }) {
                       }}
                       className="btn text-success bg-light   my-2"
                     >
-                     
+
                       UK
                     </button>
                     <button
@@ -200,48 +209,48 @@ function SelectedProductPage({ products, handleClick }) {
               {/*  */}
               <div
                 className=" d-flex  w-100   "
-                style={{"flex-direction":"flex-row"}}
+                style={{ "flex-direction": "flex-row" }}
 
               >
-                <div className=" d-flex w-100  " 
-                style={{flexDirection:"flex-row"}}
+                <div className=" d-flex w-100  "
+                  style={{ flexDirection: "flex-row" }}
                 >
-                  <span  className=" mx-3"style={{ textAlign: "center" ,width:"45%"}}>
+                  <span className=" mx-3" style={{ textAlign: "center", width: "45%" }}>
                     <button
                       className="btn text-light my-3 h-75 w-100"
-                      onClick={() => handleClick(products)}
-                      style={{ backgroundColor: "#7DCEA0" , fontSize:"1.2rem"}}
+                      onClick={() => addtoBag()}
+                      style={{ backgroundColor: "#7DCEA0", fontSize: "1.2rem" }}
                     >
                       Add To Bag
                     </button>
                   </span>
-                
 
-                  <span  style={{ textAlign: "center",width:"45%" , fontSize:"1.2rem"}}>
+
+                  <span style={{ textAlign: "center", width: "45%", fontSize: "1.2rem" }}>
                     <button className="btn bg-light my-3  text-success h-75 w-100">
                       Add to wish list{" "}
                     </button>
                   </span>
-                  
-                  </div>
+
+                </div>
               </div>
-              <div className=" d-flex w-75  justify-content-around my-4 "style={{ marginLeft:"75px",gap:"15%"}}
-                >
-              <span className="" style={{ height: "100%" }}>
-                    <img
-                    
-                      src=" https://a.namshicdn.com/web-desktop/2be1a1eca215dfed8e18.svg "
-                      alt=""
-                    />
-                    <div>Free Shipping</div>
-                  </span>
-                  <span className="" style={{ height: "100px" }}>
-                    <img
-                      src="https://a.namshicdn.com/web-desktop/04712760e51a72afe9cc.svg"
-                      alt=""
-                    />
-                    <div>100% Genuine</div>
-                  </span>
+              <div className=" d-flex w-75  justify-content-around my-4 " style={{ marginLeft: "75px", gap: "15%" }}
+              >
+                <span className="" style={{ height: "100%" }}>
+                  <img
+
+                    src=" https://a.namshicdn.com/web-desktop/2be1a1eca215dfed8e18.svg "
+                    alt=""
+                  />
+                  <div>Free Shipping</div>
+                </span>
+                <span className="" style={{ height: "100px" }}>
+                  <img
+                    src="https://a.namshicdn.com/web-desktop/04712760e51a72afe9cc.svg"
+                    alt=""
+                  />
+                  <div>100% Genuine</div>
+                </span>
               </div>
               {/**/}
               <div
@@ -252,24 +261,24 @@ function SelectedProductPage({ products, handleClick }) {
                   style={{ borderBottom: " 1px solid gray", textAlign: "left" }}
                 >
                   Description : {selected?.desc?.description}
-                 </div>
-                              </div>
-          
+                </div>
+              </div>
+
               <div
                 className=" d-flex flex-wrap   "
-                style={{ width: "100%" ,height:"fit-content",borderBottom: " 1px solid gray ", }}
+                style={{ width: "100%", height: "fit-content", borderBottom: " 1px solid gray ", }}
               >
                 <div
                   className="my-4"
                   style={{
-                    
+
                     textAlign: "left",
                   }}
                 >
-                  Info & Care : 
+                  Info & Care :
                 </div>
                 <div className="d-flex">
-                  <div style={{ textAlign: "left",marginTop:"24px",marginLeft:"5px" }}>
+                  <div style={{ textAlign: "left", marginTop: "24px", marginLeft: "5px" }}>
                     {" "}
                     SKU
                     <br />
@@ -306,7 +315,7 @@ function SelectedProductPage({ products, handleClick }) {
                   <div className=" m-3 w-75" style={{ textAlign: "left" }}>
                     {selected?.desc?.brand?.name}
                   </div>
-                 
+
                 </div>
                 <div>
                   Follow this brand to stay updated on exciting launches, new
@@ -321,7 +330,7 @@ function SelectedProductPage({ products, handleClick }) {
         <section
           className=" d-flex flex-wrap justify-content-between  my-5 "
           style={{
-            
+
             width: "100%",
             padding: "10px",
             border: "1px solid gray",
@@ -342,7 +351,7 @@ function SelectedProductPage({ products, handleClick }) {
             />
           </div>
           <div className=" col-lg-4 col-12 d-flex justify-content-around ">
-           
+
             <span className="btn my-3 btn-outline-success w-50 ">
               Rate this product{" "}
             </span>
@@ -368,7 +377,7 @@ function SelectedProductPage({ products, handleClick }) {
         </section>
       </Container>
     </div>
-    
+
   );
 }
 
