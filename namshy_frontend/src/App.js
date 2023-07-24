@@ -9,20 +9,11 @@ import { products } from "./components/section/prodlist";
 import SelectedProductPage from "./pages/SelectedProductPage";
 import Footer from "./components/Navs/footer";
 import Profile from "./pages/profile";
-import * as prod_cat from './api/product_category'
 
 // import CartItems from "./pages/CartItems";
 import ShoppinghcartProvider from './components/section/Shoppingcartcontext'
 function App() {
-  const [categories, setCategories] = useState([])
-  useEffect(() => {
-    const getCategory = async () => {
-      await prod_cat.all_product_category().then(e => {
-        setCategories(e.response)
-      })
-    }
-    getCategory()
-  },[])
+  
    return (
     // <div className="App">
   <ShoppinghcartProvider className="App">

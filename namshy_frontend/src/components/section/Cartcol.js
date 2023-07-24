@@ -1,18 +1,38 @@
 import React, { useContext, useState, useEffect } from "react";
 import { CartContext } from "./Shoppingcartcontext";
 import "./slider.css";
-const Cartcol = ({ product }) => {
-  const { cartItems, removeFromCart, decreaseQuantity, addToCart } =
+import* as productfetch from "../../api/product"
+import * as cart from "../../api/cart"
+
+const Cartcol = ({ product, updateTotalPrice, renderedIndex }) => {
+  const[price_after,setPrice_after]=useState(0)
+  const [data, setData] = useState(false); 
+  const [mytotalstate,setMyTotalState]=useState(0)
+
+const [currentproduct, setCurrentProduct] = useState({});
+useEffect(() => {
+  productfetch.get_product_by_id(product.product_id).then(e=>{  
+    setPrice_after(e.price_after)
+    setCurrentProduct(e)})
+}, [data]);
+
+
+  const {  decreaseQuantity, addToCart } =
     useContext(CartContext);
-  const [totalPrice, setTotalPrice] = useState(0);
+
   useEffect(() => {
     let total = 0;
-    for (const productId in cartItems) {
-      total += product.price * cartItems[productId];
-    }
-    setTotalPrice(total);
-  }, [cartItems, product]);
+      if(price_after>0 && mytotalstate===0) {
+       setMyTotalState(mytotalstate+1)
+      total += currentproduct.price_after * product.quantity;
+      console.log(total)
+      updateTotalPrice(total);}
+  }, [currentproduct]);
+
+
   const size = ["m", "l", "xl", "xxl"];
+  
+  
   return (
     <div className="">
       <div
@@ -22,23 +42,29 @@ const Cartcol = ({ product }) => {
         <div className="  d-flex col-12 col-lg-6">
           <div className="" style={{ textAlign: "center" }}>
             <div className="h-50 ">
-              <span style={{ textAlign: "center" }}>producprice</span>
+              <span style={{ textAlign: "center" }}>Item Price</span>
 
-              <p>{product.price * cartItems[product._id]}</p>
+              <p>{currentproduct?.price_after }</p>
             </div>
             <div className="h-50  " style={{ textAlign: "center" }}>
               <button
-                onClick={() => addToCart(product._id)}
+                onClick={() => cart.increse_item(product?._id).then(e => {
+                  window.location.reload(false)
+                })}/*.then(e=>{setCurrentProduct(e)})*/
                 className="btn m-1 btn-light"
               >
                 <i class="bi bi-plus-lg"></i>
               </button>
               <input
                 className="btn w-25 bg-light m-1"
-                value={cartItems[product._id]}
+                value={product.quantity}
               />
               <button
-                onClick={() => decreaseQuantity(product._id)}
+                onClick={() =>
+                  { if (product.quantity!==1)
+                  cart.decrease_item(product?._id.then(e => {
+                    window.location.reload(false)
+                  }))}} /*.then(e=>{setCurrentProduct(e)})*/
                 className=" btn m-1 btn-light"
               >
                 <i class="bi bi-dash-lg"></i>
@@ -48,8 +74,8 @@ const Cartcol = ({ product }) => {
 
           <div className="d-flex  flex-wrap " style={{ textAlign: "end" }}>
             <div className="m-3 ">
-              <p style={{ margin: "0px", padding: "0px" }}>{/* {product} */}</p>
-              <p style={{ margin: "0px", padding: "0px" }}>{product.name}</p>
+              <p style={{ margin: "0px", padding: "0px" }}>{/* {currentproduct?} */}</p>
+              <p style={{ margin: "0px", padding: "0px" }}>{currentproduct?.name}</p>
               <div
                 className="   justify-content-start my-3"
                 style={{ textAlign: "left" }}
@@ -75,7 +101,9 @@ const Cartcol = ({ product }) => {
                 <div className="m-2 ">
                   <button
                     className="btn"
-                    onClick={() => removeFromCart(product._id)}
+                    onClick={() => cart.Delete_cart_item(product._id).then(e => {
+                      window.location.reload(false)
+                    })}
                   >
                     {" "}
                     <i class="bi bi-trash3">delete</i>
@@ -99,13 +127,13 @@ const Cartcol = ({ product }) => {
             style={{
               height: "465px",
             }}
-            src={product.imageSrc[0]}
+            src={Array.isArray(currentproduct?.imageSrc) && currentproduct.imageSrc.length > 0 ? currentproduct.imageSrc[0] : ""}
           />
         </div>
       </div>
 
       <div>
-        <p>Total Price: ${totalPrice}</p>
+        <p>Sub Total Price: ${currentproduct?.price_after*product?.quantity}</p>
       </div>
     </div>
   );

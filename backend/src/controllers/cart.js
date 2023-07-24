@@ -51,10 +51,11 @@ module.exports.Read_cart_item = async (req, res) => {
 
 module.exports.Read_cart_items = async (req, res) => {
     const usertoken = req.headers.authorization;
+
     const token = usertoken.split(' ');
     const decoded = jwt.verify(token[1], process.env.JWT_KEY);
     const id = decoded.id;
-    console.log(id)
+
 
     await Cart.find({ user_id: id }).then(e => {
         return res.status(200).json({
@@ -103,10 +104,10 @@ module.exports.add_one_quantity = async (req, res) => {
         }
     })
     await Cart.findByIdAndUpdate(_id, { $inc: { quantity: 1 } }, { new: true }).then(e => {
-        res.status(200).json(e)
+       return res.status(200).json(e)
     }).catch(err => {
         console.log(err.message)
-        res.status(401).json({ error: err.message })
+        return res.status(401).json({ error: err.message })
     })
 }
 
