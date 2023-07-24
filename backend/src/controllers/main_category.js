@@ -14,7 +14,9 @@ module.exports.add_mainCategory = async (req, res) => {
 
 module.exports.get_mainCategory = async (req, res) => {
     await MainCategory.find().then(e => {
-        res.status(200).json(e)
+        res.status(200).json({
+            response: e
+        })
     }).catch(err => {
         console.log(err.message)
         res.status(404).json({error:err.message})
@@ -22,7 +24,7 @@ module.exports.get_mainCategory = async (req, res) => {
 }
 
 module.exports.get_mainCategory_by_id = async (req, res) => {
-    const _id = mongoose.Types.ObjectId(req.params.id)
+    const _id = new mongoose.Types.ObjectId(req.params.id)
     await MainCategory.findById(_id).then(e => {
         res.status(200).json(e)
     }).catch(err => {
@@ -32,7 +34,7 @@ module.exports.get_mainCategory_by_id = async (req, res) => {
 }
 
 module.exports.delete_mainCategory = async (req, res) => {
-    const _id = mongoose.Types.ObjectId(req.params.id)
+    const _id = new mongoose.Types.ObjectId(req.params.id)
     await MainCategory.findByIdAndDelete(_id).then(e => {
         res.status(200).json(e)
     }).catch(err => {
@@ -42,7 +44,7 @@ module.exports.delete_mainCategory = async (req, res) => {
 }
 
 module.exports.update_mainCategory = async (req, res) => {
-    const _id = mongoose.Types.ObjectId(req.params.id)
+    const _id = new mongoose.Types.ObjectId(req.params.id)
     const data = req.body
     await MainCategory.findByIdAndUpdate(_id, data, {new: true}).then(e => {
         res.status(200).json(e)

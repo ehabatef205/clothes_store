@@ -2,18 +2,21 @@ import React from "react";
 import "./Section.css";
 export default function SecHeader() {
   return (
-    <div>
+    <div >
       <header
-        className=" second  "
+        className=" second "
         style={{ display: "flex",justifyContent: "space-between" }}
       >
-        <div  style={{
+        <div className="w-100 w-lg-auto" style={{
                 width: "70%"}}>
-          <div style={{ display: "flex","overflow-y":"auto" }}>
+          <div className=" d-flex  flex-wrap " style={{"overflow-y":"auto" }}>
             <a
-              className="btn  d-flex"
+              className="btn m-1 "
               style={{
-                width: "25%", height: "100%" ,
+                paddingLeft:"25px"
+                ,paddingRight:"25px",
+                width: "contain",
+                 height: "100%" ,
                 backgroundColor: "#f7f7f7",
                 borderRadius: "26px",
                 border: "1.5px solid #f7f7f7",
@@ -25,9 +28,11 @@ export default function SecHeader() {
             </a>
 
             <a
-              className="btn "
+              className="btn m-1"
               style={{
-                width: "25%", height: "100%" ,
+                paddingLeft:"25px"
+                ,paddingRight:"25px",
+                width: "contain", height: "100%" ,
                 backgroundColor: "#f7f7f7",
                 borderRadius: "26px",
                 border: "1.5px solid #f7f7f7",
@@ -38,12 +43,15 @@ export default function SecHeader() {
               Sports
             </a>
             <a
-              className="btn "
+              className="btn m-1 "
               style={{
-                width: "25%", height: "100%" ,
+                width: "contain", height: "100%" 
+                ,paddingLeft:"25px"
+                ,paddingRight:"25px",
                 backgroundColor: "#f7f7f7",
                 borderRadius: "26px",
                 border: "1.5px solid #f7f7f7",
+                
               }}
               href="#"
               role="button"
@@ -51,9 +59,11 @@ export default function SecHeader() {
               Streetwear
             </a>
             <a
-              className="btn "
+              className="btn m-1"
               style={{
-                width: "25%", height: "100%" ,
+                paddingLeft:"25px"
+                ,paddingRight:"25px",
+                width: "contain", height: "100%" ,
                 backgroundColor: "#f7f7f7",
                 borderRadius: "26px",
                 border: "1.5px solid #f7f7f7",
@@ -71,7 +81,7 @@ export default function SecHeader() {
             <i>53983 styles </i>
           </div>
         </div>
-        <div className="d-flex" style={{ width: "20%", height: "100%" ,}}>
+        <div className="d-flex d-none d-lg-block" style={{ width: "20%", height: "100%" ,}}>
           <select class="form-select" aria-label="Dropdown">
             <option selected>Suggested</option>
             <option value="option1">Option 1</option>

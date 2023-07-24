@@ -1,6 +1,6 @@
 import axios from 'axios'
 import {backend_url} from '../config'
-const proxy = `${backend_url}/product_category`
+const proxy = `${backend_url}/main_category`
 
 export const add_product_category = async ({name, desc}) => {
     await axios.post(`${proxy}`,{name, desc})

@@ -1,9 +1,16 @@
 .sectionone {
   width: 90%;
-  padding: auto;
+  /* padding: auto; */
   height: fit-content;
   position: relative;
 }
+.section_container{
+  margin-left:8vw ;
+  margin-right: 8vw;
+display: flex;
+justify-content: center;
+}
+
 
 span {
   position: relative;

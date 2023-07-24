@@ -10,6 +10,8 @@ const UserPaymentRoute = require('./api/UserPaymentRouter')
 const mainCategoryRouter = require('./api/main_category')
 const adsSliderRouter = require('./api/ads_slider')
 const subCategoryRouter = require('./api/subcategory') 
+const cart = require('./api/cart')
+const externalRouter = require('./api/externalapis')
 const {Router} = require('express')
 
 const router = Router()
@@ -26,4 +28,7 @@ router.use('/user-payment', UserPaymentRoute)
 router.use('/main_category', mainCategoryRouter)
 router.use('/ads_slider', adsSliderRouter)
 router.use('/subcategory', subCategoryRouter)
+router.use('/cart', cart)
+router.use('/external', externalRouter)
+
 module.exports = router

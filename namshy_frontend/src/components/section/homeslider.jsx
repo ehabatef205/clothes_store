@@ -1,4 +1,7 @@
 import React from "react";
+import './homecard.css'
+
+
 import Carousel from "react-bootstrap/Carousel";
 export default function Homeslider() {
   const src = [
@@ -9,8 +12,8 @@ export default function Homeslider() {
   return (
     <div
       id="carouselExample"
-      className="carousel slide "
-      style={{ height: "500px" , justifyContent:"center" ,borderRadius:"50px",margin:'auto'}}
+      className="carousel slide  "
+      style={{ height: "500px" , maxWidth: "100%", justifyContent:"center" ,borderRadius:"50px",margin:'auto'}}
     >
       <div
         className="carousel-inner"

@@ -1,1 +1,1 @@
-export const backend_url = 'https://wild-rose-gecko-cap.cyclic.app'
+export const backend_url = 'http://5.183.9.124:5000'

@@ -1,17 +1,17 @@
 import React from "react";
 import "./Section.css";
-export default function FirstHeader() {
+export default function FirstHeader({sub}) {
   let label = window.location.pathname.slice(1)
   label = label.toUpperCase().at(0) + label.slice(1)
   return (
     <div>
       <header
-        className=" "
-        style={{ display: "flex", justifyContent: "space-between" }}
+        className="d-flex flex-wrap "
+        style={{ justifyContent: "space-between",direction:"rtl" }}
       >
-        <div className=" w-25">
-          <div>
-            <h3 style={{ display: "flex" }}>{label}</h3>
+        <div className=" "style={{ width:"contain" }}>
+          <div className="w-100 ">
+            <h3 style={{ display: "flex" }}>{sub?.name}</h3>
           </div>
           {/* <div>
             <nav aria-label="breadcrumb">
@@ -40,11 +40,11 @@ export default function FirstHeader() {
           </div> */}
         </div>
         <div
-          className=" d-flex"
-          style={{ width: "170px", justifyContent: "space-between" }}
+          className=" d-flex  " 
+          style={{ width: "contain", justifyContent: "space-between" }}
         >
           <div
-            className="bg-light p-3"
+            className="bg-light p-3 mx-4"
             style={{
               boxShadow: "0 2px 5px rgba(0, 0, 0, 0.25)",
               borderRadius: "50px",
@@ -57,7 +57,7 @@ export default function FirstHeader() {
           </div>
 
           <div
-            className="bg-light  p-3"
+            className="bg-light mx-2 p-3"
             style={{
               boxShadow: "0 2px 5px rgba(0, 0, 0, 0.25)",
               borderRadius: "50px",
@@ -68,7 +68,7 @@ export default function FirstHeader() {
             <i class="bi bi-facebook "></i>
           </div>
           <div
-            className="bg-light   p-3"
+            className="bg-light  mx-4 p-3"
             style={{
               boxShadow: "0 2px 5px rgba(0, 0, 0, 0.25)",
               borderRadius: "50px",

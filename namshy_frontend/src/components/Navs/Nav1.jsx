@@ -1,28 +1,86 @@
+import { useReactMediaRecorder } from "react-media-recorder-2";
 import React, { useState } from "react";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import { Router, Route, Routes } from "react-router-dom";
-import Page1 from "../../pages/page1";
 import "./NavBar.css";
 import logo from "../../images/logo.jpg";
 import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
+import KeyboardVoiceIcon from '@mui/icons-material/KeyboardVoice';
 import { Nav2 } from "./Nav2";
-
-// import logo from '../../images/logo.png'
-
+import * as prod_cat from '../../api/product_category'
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import {backend_url} from '../../config'
+const proxy = `${backend_url}/external/speech`
+
+
+function ResponsiveNavbar({ onMenuClick }) {
+  return (
+    
+    <Nav className="mobile-navbar">
+      {/* Add your navigation links here */}
+      <Nav.Link onClick={() => onMenuClick("/premiumCategory")}>Premium</Nav.Link>
+      <Nav.Link onClick={() => onMenuClick("/kids")}>Kids</Nav.Link>
+      <Nav.Link onClick={() => onMenuClick("/beauty")}>Beauty</Nav.Link>
+      <Nav.Link onClick={() => onMenuClick("/men")}>Men</Nav.Link>
+      <Nav.Link onClick={() => onMenuClick("/women")}>Women</Nav.Link>
+    </Nav>
+  );
+}
 
 export function NavBar({visible = true}) {
-  const currentpage = window.location.pathname.split('/')[1];
+  const [language] = React.useState("en-US");
+  const [categories, setCategories] = useState([])
+
+  const [isActive, setIsActive] = React.useState(false);
+  const { startRecording, stopRecording, mediaBlobUrl, clearBlobUrl } =
+    useReactMediaRecorder({
+      video: false,
+      audio: true,
+      echoCancellation: true,
+    });
+
+    const speechToText = async () => {
+      const audioBlob = await fetch(mediaBlobUrl).then((r) => r.blob());
+      var reader = new FileReader();
+      reader.readAsDataURL(audioBlob);
+      reader.onloadend = function () {
+        var base64String = reader.result;
+        var splited = base64String.substr(base64String.indexOf(",") + 1);
+        axios
+          .post(proxy,
+          { audiofile: splited, languageCode: language },
+         )
+          .then((res) => {
+            setQuery(res.data);
+            console.log(res.data);
+          });
+      };
+    };
+  React.useEffect(() => {
+    const getCategory = async () => {
+      await prod_cat.all_product_category().then(e => {
+        setCategories(e.response)
+      })
+    }
+    getCategory()
+  },[])
+  React.useEffect(() => {
+    if (mediaBlobUrl) {
+
+      speechToText();
+    }
+  }, [mediaBlobUrl]);
+  const currentpage = window.location.pathname.split('/')[2];
   const navigate = useNavigate();
   const [query, setQuery] = useState("");
-  const handleLinkClick = (href) => {
+  const handleLinkClick = (href,name) => {
     
-    navigate(href);
+    navigate(href,{state:{name:name}});
   };
 
   const linkStyle = {
@@ -69,6 +127,21 @@ export function NavBar({visible = true}) {
               <div style={{ color: "#fff" }}>
                 <SearchOutlinedIcon style={{ color: "#000" }} />
               </div>
+              <button 
+                  style={{border:"none" ,backgroundColor:"transparent",color:isActive?"red":"black"}}
+                  onClick={() => {
+                    if (!isActive) {
+                      clearBlobUrl();
+                      startRecording();
+                    } else {
+                      stopRecording();
+                    }
+
+                    setIsActive(!isActive);
+                  }}
+                >
+                  <KeyboardVoiceIcon className="icon" />
+                </button>
               <input
                 style={{
                   color: "#000",
@@ -87,87 +160,25 @@ export function NavBar({visible = true}) {
             </div>
             {/* <div href={"#cart"} style={{marginLeft:'3%'}} onClick={() => setShow(false)}><ShoppingBagOutlinedIcon /></div>  */}
             <div className="hell" style={{width:"50%",display:"flex",flexDirection:"row" ,overflowY:"auto"}}>
-              <div
-                href="/premiumCategory"
+              {categories.map((category)=>(<div
+                href={'/cat/'+category.name}
                 style={{
                   ...linkStyle,
                   background:
-                    currentpage === "premiumCategory"
+                    currentpage === category._id
                       ? "white"
                       : "transparent",
                   color:
-                    currentpage === "premiumCategory"
+                    currentpage === category._id
                       ? "black"
                       : "white",
                 }}
-                onClick={() => handleLinkClick("/premiumCategory")}
+                onClick={() => handleLinkClick('/cat/'+category._id,category.name)}
+                className="navhover navclick"
               >
-                Premium
-              </div>
-              <div
-                href="/kids"
-                style={{
-                  ...linkStyle,
-                  background:
-                    currentpage === "kids"
-                      ? "white"
-                      : "transparent",
-                  color:
-                    currentpage === "kids" ? "black" : "white",
-                }}
-                onClick={() => handleLinkClick("/kids")}
-              >
-                Kids
-              </div>
-              <div
-                href="/beauty"
-                style={{
-                  ...linkStyle,
-                  background:
-                    currentpage === "beauty"
-                      ? "white"
-                      : "transparent",
-                  color:
-                    currentpage === "beauty" ? "black" : "white",
-                  whiteSpace: "nowrap",
-                }}
-                onClick={() => handleLinkClick("/beauty")}
-              >
-                Beauty
-              </div>
-              <div
-                href="/"
-                style={{
-                  ...linkStyle,
-                  background:
-                    currentpage === "men"
-                      ? "white"
-                      : "transparent",
-                  color:
-                    currentpage === "men"
-                      ? "black"
-                      : "white",
-                }}
-                onClick={() => handleLinkClick("/men")}
-              >
-                Men
-              </div>
-              <div
-                href="/women"
-                style={{
-                  ...linkStyle,
-                  background:
-                    currentpage === "women"
-                      ? "white"
-                      : "transparent",
-                  color:
-                    currentpage === "women" ? "black" : "white",
-                  whiteSpace: "nowrap",
-                }}
-                onClick={() => handleLinkClick("/women")}
-              >
-                Women
-              </div>
+                {category.name}
+              </div>))}
+             
             </div>
             <Navbar.Brand>
               
@@ -197,4 +208,3 @@ const container = {
   marginLeft: "3%",
   borderRadius: 50,
 };
-

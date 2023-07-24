@@ -30,14 +30,14 @@ function SelectedProductPage({ products, handleClick }) {
 
   return (
     <div> 
-      <Header></Header>
+      <Header visible={false} ></Header>
     <div
       className="viewcontainer justify-content-center   "
       style={{ position: "relative", top: "70px" }}
     >
           </div>
 
-      <div className=" m-3 " style={{ textAlign: "center" }}>
+      <div className=" m-3" style={{ textAlign: "center" }}>
         {" "}
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb m-0">
@@ -57,29 +57,31 @@ function SelectedProductPage({ products, handleClick }) {
           </ol>
         </nav>
       </div>
-      <Container id="parent"  style={{width:"100%"}}>
-        <div style={{display:"flex","flex-direction":"row",width:"100%",flexDirection:"row"}}>
+      <Container id="parent" className="d-flex flex-wrap" style={{width:"100%"}}>
+        
+        <div className="flex-wrap" style={{display:"flex","flex-direction ":"row",width:"100%",flexDirection:"row"}}>
           <div
             id="child1"
-            className="d-flex flex-wrap col-lg-6 "
-            style={{ width: "43%", padding: "0px",justifyContent:"space-between" ,marginRight:"10px" }}
+            className="d-flex flex-wrap col-lg-6 col-sm-12  "
+            style={{  padding: "0px",justifyContent:"space-between"  }}
           >
               
             {selected?.imageSrc?.map((image, index) => (
               <img
                 key={index}
-                style={{ width: "45%", height:"45%" }}
+                style={{ width: "50%", height:"50%" }}
                 className="d-block   "
-                src={image}
+                src={image}     
                 alt={""}
               />
             ))}
           </div>
           <div
             id="child2"
-            className=" d-flex flex-wrap col"
+            className=" d-flex flex-wrap col-lg-6 col-sm-12 "
             style={{
-              width: "55%",
+           
+              padding:"15px"
             }}
           >
             <div className=" d-flex flex-wrap  ">
@@ -108,7 +110,7 @@ function SelectedProductPage({ products, handleClick }) {
                   style={{ fontSize: "18px" }}
                 >
                   {" "}
-                  <div className=" mx-2">{selected?.price} </div>
+                  <div className=" mx-2">{selected?.price_after} </div>
                 </div>
               </div>
               {/*  */}
@@ -137,7 +139,7 @@ function SelectedProductPage({ products, handleClick }) {
                       }}
                       className="btn text-success bg-light   my-2"
                     >
-                      international{" "}
+                      international
                     </button>
                     <button
                       style={{
@@ -147,7 +149,7 @@ function SelectedProductPage({ products, handleClick }) {
                       }}
                       className="btn text-success bg-light   my-2"
                     >
-                      US{" "}
+                      US
                     </button>
                     <button
                       style={{
@@ -157,7 +159,7 @@ function SelectedProductPage({ products, handleClick }) {
                       }}
                       className="btn text-success bg-light   my-2"
                     >
-                      {" "}
+                     
                       UK
                     </button>
                     <button
@@ -202,28 +204,28 @@ function SelectedProductPage({ products, handleClick }) {
 
               >
                 <div className=" d-flex w-100  " 
-                style={{"flex-direction":"flex-row"}}
+                style={{flexDirection:"flex-row"}}
                 >
-                  <span style={{ textAlign: "center" ,width:"50%"}}>
+                  <span  className=" mx-3"style={{ textAlign: "center" ,width:"45%"}}>
                     <button
-                      className="btn text-light my-3 h-100 w-100"
+                      className="btn text-light my-3 h-75 w-100"
                       onClick={() => handleClick(products)}
-                      style={{ backgroundColor: "#7DCEA0" }}
+                      style={{ backgroundColor: "#7DCEA0" , fontSize:"1.2rem"}}
                     >
                       Add To Bag
                     </button>
                   </span>
                 
 
-                  <span  style={{ textAlign: "center",width:"50%" }}>
-                    <button className="btn bg-light my-3  text-success h-100 w-100">
+                  <span  style={{ textAlign: "center",width:"45%" , fontSize:"1.2rem"}}>
+                    <button className="btn bg-light my-3  text-success h-75 w-100">
                       Add to wish list{" "}
                     </button>
                   </span>
                   
                   </div>
               </div>
-              <div className=" d-flex w-100   "style={{"margin-top":"15px" ,justifyContent:"space-between",gap:"15%"}}
+              <div className=" d-flex w-75  justify-content-around my-4 "style={{ marginLeft:"75px",gap:"15%"}}
                 >
               <span className="" style={{ height: "100%" }}>
                     <img
@@ -249,25 +251,25 @@ function SelectedProductPage({ products, handleClick }) {
                 <div
                   style={{ borderBottom: " 1px solid gray", textAlign: "left" }}
                 >
-                  Description : {selected?.desc}
+                  Description : {selected?.desc?.description}
                  </div>
                               </div>
-              {/*  */}
+          
               <div
                 className=" d-flex flex-wrap   "
-                style={{ width: "100%" ,height:"30%" }}
+                style={{ width: "100%" ,height:"fit-content",borderBottom: " 1px solid gray ", }}
               >
                 <div
                   className="my-4"
                   style={{
-                    borderBottom: " 1px solid gray ",
+                    
                     textAlign: "left",
                   }}
                 >
-                  Info & Care
+                  Info & Care : 
                 </div>
                 <div className="d-flex">
-                  <div style={{ textAlign: "left" }}>
+                  <div style={{ textAlign: "left",marginTop:"24px",marginLeft:"5px" }}>
                     {" "}
                     SKU
                     <br />
@@ -289,7 +291,7 @@ function SelectedProductPage({ products, handleClick }) {
               >
                 <div className="d-flex w-25 ">
                   <a
-                    class="brand-link follow-brand__logo"
+                    className="brand-link follow-brand__logo"
                     href="/adidas_originals/"
                     data-brand-name="adidas Originals"
                     data-brand-url="/adidas_originals/"
@@ -302,17 +304,9 @@ function SelectedProductPage({ products, handleClick }) {
                 </div>
                 <div className=" w-75">
                   <div className=" m-3 w-75" style={{ textAlign: "left" }}>
-                    {selected?.brand}
+                    {selected?.desc?.brand?.name}
                   </div>
-                  <div className="d-flex  w-75">
-                    <a className=" w-50" href="" style={{ color: "#7DCEA0" }}>
-                      Follow Brand
-                    </a>
-                    <div className="  text-secondary">|</div>
-                    <a className="w-50" style={{ color: "#7DCEA0" }} href="">
-                      See All Products
-                    </a>
-                  </div>
+                 
                 </div>
                 <div>
                   Follow this brand to stay updated on exciting launches, new
@@ -323,9 +317,9 @@ function SelectedProductPage({ products, handleClick }) {
           </div>
         </div>
       </Container>
-      <Container className="justify-content-center" style={{ width: "100%" }}>
+      <Container className="justify-content-center " style={{ width: "100%" }}>
         <section
-          className=" d-flex justify-content-between  my-5 mx-4"
+          className=" d-flex flex-wrap justify-content-between  my-5 "
           style={{
             
             width: "100%",
@@ -333,11 +327,11 @@ function SelectedProductPage({ products, handleClick }) {
             border: "1px solid gray",
           }}
         >
-          <div className="w-25 mx-4">
-            <p className="m-1">Do you own or have used the product?</p>
-            <p>Tell your opinion by assigning a rating</p>
+          <div className="col-lg-4 col-7  ">
+            <p className="m-1 mx-3">Do you own or have used the product?</p>
+            <p className="m-1 mx-3">Tell your opinion by assigning a rating</p>
           </div>
-          <div className="w-25">
+          <div className=" col-lg-4  col-5 d-flex justify-content-around">
             <Rating
               className="m-4"
               name="simple-controlled"
@@ -347,9 +341,9 @@ function SelectedProductPage({ products, handleClick }) {
               }}
             />
           </div>
-          <div className="w-25">
-            {" "}
-            <span className="btn my-3 btn-outline-success w-75">
+          <div className=" col-lg-4 col-12 d-flex justify-content-around ">
+           
+            <span className="btn my-3 btn-outline-success w-50 ">
               Rate this product{" "}
             </span>
           </div>

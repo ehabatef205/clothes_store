@@ -1,16 +1,57 @@
-import React from "react";
+
+// import React, { useState, useEffect, useContext } from "react";
 import ThirdSlider from "../components/section/ThirdSlider";
+
+import Cart from './Cart' 
+import React, {useState, useEffect, useContext } from "react";
+
 import { Container } from "react-bootstrap";
+
+import * as prod_cat from '../api/product_category'
+import "../components/section/slider.css";
 import Header from "../components/Navs/Header";
+import { CartContext } from "../components/section/Shoppingcartcontext";
+
+import Empitycart from "../components/section/empitycart";
+const Bag = () => {
+
+  const [totalPrice, setTotalPrice] = useState(0);
 
 
-export default function Bag() {
+  const {  cartItems } = useContext(CartContext);
+  const [isCartEmpty, setIsCartEmpty] = useState(false);
+  useEffect(() => {
+    if (Object.keys(cartItems).length !== 0 
+    // || Object.values(cartItems).every((value) => value === 0)
+    ) {
+      setIsCartEmpty(false);
+    } else {
+      setIsCartEmpty(true);
+    }
+  }, [cartItems]);
+
+    const [categories, setCategories] = useState([])
+  useEffect(() => {
+    const getCategory = async () => {
+      await prod_cat.all_product_category().then(e => {
+        setCategories(e.response)
+      })
+    }
+    getCategory()
+  },[])
   return (
-    <><div>          <Header></Header>
-    </div><><Container style={{ position: "relative", top: "70px" }}>
-      <div>
+    <div>
+      <Header></Header>
+      <Container className="my-4  " style={{ justifyContent: "center" }}>
+          <div className="">
+          {isCartEmpty ? (
+        < Empitycart />
+           
+          ) : (
+            <div className="" style={{ height: "fit-content" }}>
         <div className="d-flex justify-content-between">
-          <button
+
+               <button
             className="btn text-light "
             style={{ backgroundColor: "#7DCEA0" }}
           >
@@ -24,10 +65,10 @@ export default function Bag() {
           </button>
         </div>
 
-        <div className="d-flex m-3 ">
+        <div className="d-flex m-3  d-flex flex-wrap  ">
           <div
             style={{ textAlign: "end" }}
-            className="col-4 d-flex-column justify-content-between  "
+            className="col-12 col-lg-4  d-flex-column justify-content-between  "
           >
             <div className="one">
               <p>Order Summary</p>
@@ -60,10 +101,7 @@ export default function Bag() {
               </div>
             </div>
             <div>
-              <div className="d-flex justify-content-between">
-                <div>SUBTOTAL</div>
-                <div>product price</div>
-              </div>
+             
               <div className="d-flex justify-content-between">
                 <div>SHIPPING</div>
                 <div>50 $</div>
@@ -96,70 +134,45 @@ export default function Bag() {
               </div>
             </div>
           </div>
-          <div>
-            <div
-              className="tow col-8 my-3  mx-5"
-              style={{ width: "770px", marginRight: "0px" }}
-            >
-              <div className="  d-flex justify-content-between">
-                <div style={{ textAlign: "center" }}>
-                  <div className="h-50 ">
-                    <span style={{ textAlign: "center" }}>producprice</span>
-                  </div>
-                  <div className="h-50 " style={{ textAlign: "center" }}>
-                    <button className="btn m-1 btn-light"><i class="bi bi-plus-lg"></i></button>
-                    <span className="m-1">num</span>
-                    <button className=" btn m-1 btn-light"><i class="bi bi-dash-lg"></i></button>
-                  </div>
-                </div>
-                <div className="d-flex " style={{ textAlign: "end" }}>
-                  <div>
-                    <div className="m-3">
-                      <p style={{ margin: "0px", padding: "0px" }}>brand</p>
-                      <p style={{ margin: "0px", padding: "0px" }}>
-                        prouduct name
-                      </p>
-                      <p>size</p>
-                    </div>
+          <div className="  col-12 col-lg-8">
+           
+             
+              {categories?.map((category, index)=>(<Cart
+               category_id = {category._id} category_name={category.name}
 
-                    <div className="d-flex">
-                      <div className="m-2 ">
-                        <i class="bi bi-trash3">delete</i>
-                      </div>
-                      <div className=" m-2 text-secondary">|</div>
-                      <div className="m-2 ">
-                        <i className="bi bi-heart m-2">save later</i>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="bg-dark m-2">
-                    <img
-                      style={{ width: "90px", height: "130px" }}
-                      src="https://images.pexels.com/photos/712316/pexels-photo-712316.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" />
-                  </div>
-                </div>
-              </div>
-            </div>
+               
+              />
+           
+              ))}
+            
           </div>
-        </div>
-
-        <div className="d-flex justify-content-between">
+          </div>
+            <div className="d-flex justify-content-between">
           <button
             className="btn text-light "
             style={{ backgroundColor: "#7DCEA0" }}
           >
             Process to Chekout
           </button>
+        </div> 
+        
         </div>
-      </div>
-      <section className=" my-5 h-25 " style={{ width: "1300px" }}>
-        <div className=" w-100 my-3  " style={{ textAlign: "left" }}>
-          <h2>Similar Product </h2>
-        </div>
-        <div>
-          <ThirdSlider id="second"></ThirdSlider>
-        </div>
-      </section>
-    </Container></></>
-  );
+            )}
+             
+          </div>
+       
+         <section className=" my-5 h-25 " style={{ width: "1300px" }}>
+         <div className=" w-100 my-3  " style={{ textAlign: "left" }}>
+           <h2>Similar Product </h2>
+         </div>
+         <div>
+           <ThirdSlider id="second"></ThirdSlider>
+         </div>
+                       </section> </Container>
+    </div>
+  )
 }
+
+export default Bag
+
+
