@@ -1,38 +1,40 @@
 import React, { useContext, useState, useEffect } from "react";
 import { CartContext } from "./Shoppingcartcontext";
 import "./slider.css";
-import* as productfetch from "../../api/product"
+import * as productfetch from "../../api/product"
 import * as cart from "../../api/cart"
 
 const Cartcol = ({ product, updateTotalPrice, renderedIndex }) => {
-  const[price_after,setPrice_after]=useState(0)
-  const [data, setData] = useState(false); 
-  const [mytotalstate,setMyTotalState]=useState(0)
+  const [price_after, setPrice_after] = useState(0)
+  const [data, setData] = useState(false);
+  const [mytotalstate, setMyTotalState] = useState(0)
 
-const [currentproduct, setCurrentProduct] = useState({});
-useEffect(() => {
-  productfetch.get_product_by_id(product.product_id).then(e=>{  
-    setPrice_after(e.price_after)
-    setCurrentProduct(e)})
-}, [data]);
+  const [currentproduct, setCurrentProduct] = useState({});
+  useEffect(() => {
+    productfetch.get_product_by_id(product.product_id).then(e => {
+      setPrice_after(e.price_after)
+      setCurrentProduct(e)
+    })
+  }, [data]);
 
 
-  const {  decreaseQuantity, addToCart } =
+  const { decreaseQuantity, addToCart } =
     useContext(CartContext);
 
   useEffect(() => {
     let total = 0;
-      if(price_after>0 && mytotalstate===0) {
-       setMyTotalState(mytotalstate+1)
+    if (price_after > 0 && mytotalstate === 0) {
+      setMyTotalState(mytotalstate + 1)
       total += currentproduct.price_after * product.quantity;
       console.log(total)
-      updateTotalPrice(total);}
+      updateTotalPrice(total);
+    }
   }, [currentproduct]);
 
 
   const size = ["m", "l", "xl", "xxl"];
-  
-  
+
+
   return (
     <div className="">
       <div
@@ -44,7 +46,7 @@ useEffect(() => {
             <div className="h-50 ">
               <span style={{ textAlign: "center" }}>Item Price</span>
 
-              <p>{currentproduct?.price_after }</p>
+              <p>{currentproduct?.price_after}</p>
             </div>
             <div className="h-50  " style={{ textAlign: "center" }}>
               <button
@@ -60,12 +62,13 @@ useEffect(() => {
                 value={product.quantity}
               />
               <button
-                onClick={() =>
-                  { if (product.quantity!==1)
-                  cart.decrease_item(
-                    product?._id).then((e) => {
-                    window.location.reload(false);
-                  })}} /*.then(e=>{setCurrentProduct(e)})*/
+                onClick={() => {
+                  if (product.quantity !== 1)
+                    cart.decrease_item(
+                      product?._id).then((e) => {
+                        window.location.reload(false);
+                      })
+                }} /*.then(e=>{setCurrentProduct(e)})*/
                 className=" btn m-1 btn-light"
               >
                 <i class="bi bi-dash-lg"></i>
@@ -134,7 +137,7 @@ useEffect(() => {
       </div>
 
       <div>
-        <p>Sub Total Price: ${currentproduct?.price_after*product?.quantity}</p>
+        <p>Sub Total Price: ${currentproduct?.price_after * product?.quantity}</p>
       </div>
     </div>
   );
