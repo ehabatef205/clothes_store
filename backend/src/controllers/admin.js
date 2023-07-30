@@ -34,7 +34,7 @@ const login = async(req, res, next) => {
                     })
                 }else{
                     res.json({
-                        message: 'No User'
+                        message: 'Id or password is invalid'
                     })
                 }
             })

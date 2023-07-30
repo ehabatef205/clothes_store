@@ -5,6 +5,7 @@ import Bag from "./pages/Bag";
 import Page1 from "./pages/page1";
 import Login from "./pages/login";
 import Signup from "./pages/signup";
+import Checkout from "./pages/checkout";
 import { products } from "./components/section/prodlist";
 import SelectedProductPage from "./pages/SelectedProductPage";
 import Footer from "./components/Navs/footer";
@@ -34,6 +35,7 @@ function App() {
         <Route path="/returns" element={<Profile path={2}/>} />
         <Route path="/login" element={<Login/>}/>
         <Route path="/signup" element={<Signup/>}/>
+        <Route path="/checkout" element={<Checkout/>}/>
       </Routes> 
 
          <footer style={{height:"200px",backgroundColor:"black" ,position:"relative" ,top:"70px"}}><Footer/></footer> 

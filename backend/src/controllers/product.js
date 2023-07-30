@@ -17,7 +17,7 @@ module.exports.AllProducts = (req, res) => {
 }
 module.exports.CreateProduct = async (req, res, next) => {
     const body = req.body
-
+    body.supplier='Wolf'
     const product = new Product(body)
 
     await product.save()

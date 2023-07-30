@@ -1,21 +1,56 @@
 const Order_items = require('../models/Order_items')
+const Cart = require('../models/cart')
+const Product = require('../models/product.js')
 const mongoose = require('mongoose')
+const jwt = require('jsonwebtoken')
+require("dotenv").config();
 
 module.exports.Create_order_item = async (req, res) => {
-    const order_item = req.body
-    await add_order_item(order_item).then(e => {
-        return res.status(200).json(e)
-    }).catch(err => {
-        console.log('err',err)
-        return res.status(401).json(err)
-    })
+    const usertoken = req.headers.authorization;
+    const token = usertoken.split(' ');
+    const decoded = jwt.verify(token[1], process.env.JWT_KEY);
+    const id = decoded.id;
+
+    const body = req.body
+
+    let list = [];
+    
+    console.log(id);
+
+    for (var i = 0; i < body.products.length; i++){
+        console.log(body.products[i].product_id);
+        await Product.findById(body.products[i].product_id).then(async (product) => {
+            await Product.findByIdAndUpdate(body.products[i].product_id, {$set: {quantity: product.quantity - body.products[i].quantity}}).then(async (product1) => {        
+                await Cart.findOneAndDelete({product_id: body.products[i].product_id, user_id:  id}).then(e => {
+                    list.push("Done")
+                })
+            })
+        })
+    }
+
+    if(list.length === body.products.length){
+        await add_order_item(body, id).then(e => {
+            return res.status(200).json(e)
+        }).catch(err => {
+            console.log('err',err)
+            return res.json(err)
+        })
+    }
 }
 
-const add_order_item = async ({order_id, product_id, quantity}) => {
+const add_order_item = async (body, id) => {
     const newOrder_item = new Order_items({
-        order_id,
-        product_id,
-        quantity
+        user_id: id,
+        products: body.products,
+        phone: body.phone,
+        country: body.country,
+        firstName: body.firstName,
+        lastName: body.lastName,
+        address: body.address,
+        city: body.city,
+        zipCode: body.zipCode,
+        payment: body.payment,
+        totalPrice: body.totalPrice
     })
     await newOrder_item.save()
     return newOrder_item
@@ -35,6 +70,8 @@ module.exports.Read_order_item = async (req, res) => {
 }
 
 module.exports.Read_order_items = async (req, res) => {
+
+
     await Order_items.find().then(e =>{
         return res.status(200).json(e)
     }).catch(err => {

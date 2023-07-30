@@ -5,6 +5,7 @@ import Cartcol from "../components/section/Cartcol";
 import React, { useState, useEffect, useContext } from "react";
 
 import { Container } from "react-bootstrap";
+import { useNavigate } from 'react-router-dom';
 
 import * as cart from "../api/cart";
 import "../components/section/slider.css";
@@ -16,8 +17,12 @@ const Bag = () => {
   const updateTotalPrice = (price) => {
     setTotalPrice((prevTotal) => prevTotal + price);
   };
+  const navigate = useNavigate();
 
-
+  const chekoutpage = () => {
+    
+    navigate('/checkout', { state: cartItems });
+  };
   const [cartItems,setCartItems] = useState([]);
   const [isCartEmpty, setIsCartEmpty] = useState(false);
   useEffect(() => {
@@ -172,8 +177,9 @@ const Bag = () => {
                 <button
                   className="btn text-light "
                   style={{ backgroundColor: "#7DCEA0" }}
+                  onClick={chekoutpage}
                 >
-                  Process to Chekout
+                  Proceed to Chekout
                 </button>
               </div>
             </div>

@@ -1,4 +1,3 @@
-const order_details_router = require('./api/order_details')
 const order_items_router = require('./api/order_items')
 const payment_details_router = require('./api/payment_details')
 const product_router=require('./api/product')
@@ -18,7 +17,6 @@ const {Router} = require('express')
 
 const router = Router()
 
-router.use('/order_details',order_details_router)
 router.use('/order_items',order_items_router)
 router.use('/payment_details',payment_details_router)
 router.use('/product',product_router)

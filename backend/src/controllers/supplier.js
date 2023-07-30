@@ -124,8 +124,8 @@ const hide = async (req, res) => {
 }
 const CreateProduct = async (req, res, next) => {
     const body = req.body
-    body.view=false
-    const product = new Product(body)
+    body.supplier=req.body.decoded.name
+    const product = new product(body)
     
     await product.save()
     .then(response => {
@@ -223,11 +223,7 @@ const Allsuppliers = (req, res) => {
 
 const enable = async (req, res) => {
     try{
-        if(!req.body.decoded.admin){
-            return res.json({
-                message: 'An error Occured!'
-                })
-        }
+        
 
         
         
@@ -254,22 +250,20 @@ const enable = async (req, res) => {
 }
 const disable = async (req, res) => {
     try{
-        if(!req.body.decoded.admin){
-            return res.json({
-                message: 'An error Occured!'
-                })
-        }
-
         
+
+        console.log(req.body.decoded)
         const _id = new mongoose.Types.ObjectId(req.params.id)
 
         const name=req.body.name
         supplier.findByIdAndUpdate(_id, { $set: {enabled: false }})
             .then(()=> {
-                product.updateMany({supplier:name},{$set:{view:false}})
-                res.json({
+                product.updateMany({supplier:name},{$set:{view:false}}).then(()=>{
+                    res.json({
                 message: 'disabled'
                 })
+                })
+                
             })
             .catch(error => {
                 console.log(error);

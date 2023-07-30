@@ -1,19 +1,46 @@
 const { Schema, model,ObjectIdSchemaDefinition:ObjectId  } = require('mongoose')
 
-const Order_items_Schema = new Schema({
-    order_id :{
+const order_items_Schema = new Schema({
+    user_id :{
         type:String,
-        required:true,
-        unique:false
     },
-    product_id:{
-        type:String,
-        default:0
+    products:[
+        {
+            product_id: {
+                type: String
+            },
+            quantity: {
+                type: String
+            }
+        }
+    ],
+    phone: {
+        type: String,
     },
-    quantity:{
-        type:Number,
-        required:true
+    country: {
+        type: String,
+    },
+    firstName: {
+        type: String,
+    },
+    lastName: {
+        type: String,
+    },
+    address: {
+        type: String,
+    },
+    city: {
+        type: String,
+    },
+    zipCode: {
+        type: String,
+    },
+    payment: {
+        type: String
+    },
+    totalPrice: {
+        type: String
     }
 },{timestamps:true})
-  
-module.exports = model.Order_items || model("Order_items", Order_items_Schema);
+
+module.exports =model("Order_items", order_items_Schema);
