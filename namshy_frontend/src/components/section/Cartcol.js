@@ -79,7 +79,7 @@ const Cartcol = ({ product, updateTotalPrice, renderedIndex }) => {
           <div className="d-flex  flex-wrap " style={{ textAlign: "end" }}>
             <div className="m-3 ">
               <p style={{ margin: "0px", padding: "0px" }}>{/* {currentproduct?} */}</p>
-              <p style={{ margin: "0px", padding: "0px" }}>{currentproduct?.name}</p>
+              <span style={{ fontWeight: 'bold' }}><p style={{ margin: "0px", padding: "0px" }}>{currentproduct?.name}</p></span>
               <div
                 className="   justify-content-start my-3"
                 style={{ textAlign: "left" }}
@@ -110,14 +110,14 @@ const Cartcol = ({ product, updateTotalPrice, renderedIndex }) => {
                     })}
                   >
                     {" "}
-                    <i class="bi bi-trash3">delete</i>
+                    <i class="bi bi-trash3">Delete</i>
                   </button>
                 </div>
                 <div className=" m-2 text-secondary">|</div>
                 <div className="m-2 ">
                   <button className="btn">
                     {" "}
-                    <i className="bi bi-heart m-2">save later</i>
+                    <i className="bi bi-heart m-2">Save later</i>
                   </button>
                 </div>
               </div>
@@ -137,7 +137,7 @@ const Cartcol = ({ product, updateTotalPrice, renderedIndex }) => {
       </div>
 
       <div>
-        <p>Sub Total Price: ${currentproduct?.price_after * product?.quantity}</p>
+      <span style={{ fontWeight: 'bold' }}> <p>Sub Total Price for this product : ${currentproduct?.price_after * product?.quantity}</p></span>s
       </div>
     </div>
   );
