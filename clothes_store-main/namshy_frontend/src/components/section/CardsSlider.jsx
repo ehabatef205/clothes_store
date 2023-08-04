@@ -10,6 +10,11 @@ import * as Cart from '../../api/cart'
 import { Cookies } from 'react-cookie'
 
 export function CardsSlider() {
+  const handlewButtonClick = (index) => {
+    setSelectedwCardIndex(index);
+  };
+  const [selectedwCardIndex, setSelectedwCardIndex] = useState(1);
+
   const [selectedCardIndex, setSelectedCardIndex] = useState(1);
   const addToFavorites = () => {
     console.log("add to favorites");
@@ -29,7 +34,9 @@ export function CardsSlider() {
     };
     getProducts();
   }, []);
-
+  const handleButtonClick = (index) => {
+      setSelectedCardIndex(index);
+    };
   const handleImageClick = (product) => {
     setSelectedProduct(product);
     navigate(`/SelectedProductPage/${product._id}`);
@@ -43,8 +50,15 @@ export function CardsSlider() {
 
   return (
     <div className="containe d-flex mx-1">
-      {products.map((product) => (
-        <div className="carda my-2" key={product._id}>
+      {products.map((product,index) => (
+        <div className="carda my-2" key={product._id} style={{
+          border: selectedCardIndex === index
+          ? '1px solid #d99d2b'
+          : selectedwCardIndex === index
+          ? '1px solid red'
+          : '0.5px solid #C8D2D1'
+
+        }}>
           <div
             className="carousel-wrapper"
             onClick={() => handleImageClick(product)}
@@ -101,7 +115,10 @@ export function CardsSlider() {
                 <button
                   className="btn text-light   "
                   style={{ backgroundColor: "#d99d2b", marginRight: "2px" }}
-                  onClick={() => addToFavorites()}
+                  onClick={() => {
+                    addToFavorites();
+                    handlewButtonClick(index);
+                  }}
                 >
                   <i className="bi bi-heart"></i>
                 </button>
@@ -109,7 +126,11 @@ export function CardsSlider() {
                 <button
                   className="btn text-light  "
                   style={{ backgroundColor: "#d99d2b" }}
-                  onClick={() => addtoBag(product._id)}
+                  
+                  onClick={() => {
+                    addtoBag(product._id);
+                    handleButtonClick(index);
+                  }}
                 >
                   <i class="bi bi-plus-lg"></i>
                 </button>

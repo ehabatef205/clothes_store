@@ -9,8 +9,16 @@ import * as Cart from '../../api/cart'
 import { Cookies } from 'react-cookie'
 
 export function Product({ product, index }) {
+    const handlewButtonClick = (index) => {
+        setSelectedwCardIndex(index);
+      };
+      const [selectedwCardIndex, setSelectedwCardIndex] = useState(1);
+    
     const { addToCart } = useContext(CartContext);
     const [selectedProduct, setSelectedProduct] = useState(null);
+    const handleButtonClick = (index) => {
+        setSelectedCardIndex(index);
+      };
     const navigate = useNavigate();
     const [selectedCardIndex, setSelectedCardIndex] = useState(1);
     const cookie = new Cookies()
@@ -34,19 +42,22 @@ export function Product({ product, index }) {
         <div>
             <div
                 className="card m-2 carousel-wrapper"
-
+                key={index}
                 style={{
-                    border:
-                        selectedCardIndex === index
-                            ? "1px solid #58b368"
-                            : "0.5px solid #C8D2D1",
-                    width: "288px",
+                    border: selectedCardIndex === index
+    ? '1px solid #d99d2b'
+    : selectedwCardIndex === index
+    ? '1px solid red'
+    : '0.5px solid #C8D2D1',width: "288px",
                     height: "320px",
                 }}
-                key={index}
+               
             >
 
-                <Carousel controls={false} style={{ justifyContent: "center" }} onClick={() => handleImageClick(product)}>
+                <Carousel controls={false} style={{ justifyContent: "center" }} onClick={() => {
+  handleImageClick(product);
+ 
+}}>
                     {product.imageSrc.map((image, index) => (
 
                         <Carousel.Item key={index}>
@@ -54,6 +65,8 @@ export function Product({ product, index }) {
                             <img
                                 className="d-block  "
                                 style={{
+         
+
                                     width: "90%",
                                     height: "250px",
                                     margin: "auto",
@@ -77,7 +90,11 @@ export function Product({ product, index }) {
                         <button
                             className="btn text-light   "
                             style={{ backgroundColor: "#d99d2b", marginRight: "2px" }}
-                            onClick={() => addToFavorites()}
+                            
+                            onClick={() => {
+                                addToFavorites();
+                                handlewButtonClick(index);
+                              }}
                         >
                             <i className="bi bi-heart"></i>
                         </button>
@@ -85,7 +102,10 @@ export function Product({ product, index }) {
                         <button
                             className="btn text-light  "
                             style={{ backgroundColor: "#d99d2b" }}
-                            onClick={() => addtoBag(product._id)}
+                            onClick={() => {
+                                addtoBag(product._id);
+                                handleButtonClick(index);
+                              }}
                         >
                             <i class="bi bi-plus-lg"></i>
                         </button>

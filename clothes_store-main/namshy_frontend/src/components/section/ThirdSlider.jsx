@@ -13,8 +13,14 @@ export default function ThirdSlider({ id }) {
   const addToFavorites = () => {
       console.log("add to favorites")
   }
- 
+  const handlewButtonClick = (index) => {
+    setSelectedwCardIndex(index);
+  };
+  const [selectedwCardIndex, setSelectedwCardIndex] = useState(1);
 
+  const handleButtonClick = (index) => {
+      setSelectedCardIndex(index);
+    };
   const { addToCart } = useContext(CartContext);
 
   
@@ -69,7 +75,11 @@ export default function ThirdSlider({ id }) {
               {cardData.slice(0, isSmallScreen ?  2: cardData.length).map((card, index) => (
                   <Card
                     className="mx-3 "
-                    style={{ width: "18rem" }}
+                    style={{  border: selectedCardIndex === index
+                      ? '1px solid #d99d2b'
+                      : selectedwCardIndex === index
+                      ? '1px solid red'
+                      : '0.5px solid #C8D2D1',width: "18rem"}}
                     key={index}
                   >
                     <Card.Img variant="top" src={card.src} onClick={() => handleImageClick(product)}/>
@@ -82,7 +92,10 @@ export default function ThirdSlider({ id }) {
                         <button
                             className="btn text-light   "
                             style={{ backgroundColor: "#d99d2b", marginRight: "2px" }}
-                            onClick={() => addToFavorites()}
+                            onClick={() => {
+                              addToFavorites();
+                              handlewButtonClick(index);
+                            }}
                         >
                             <i className="bi bi-heart"></i>
                         </button>
@@ -91,7 +104,10 @@ export default function ThirdSlider({ id }) {
                             className="btn text-light  "
                             style={{ backgroundColor: "#d99d2b" }}
                             
-                            onClick={() => addToCart(card.id)}
+                            onClick={() => {
+                              addToCart(card.id);
+                              handleButtonClick(index);
+                            }}
                         >
                             <i class="bi bi-plus-lg"></i>
                         </button>
@@ -106,7 +122,11 @@ export default function ThirdSlider({ id }) {
               {cardData.slice(0, isSmallScreen ?  2: cardData.length).map((card, index) => (
                   <Card
                     className="mx-3 "
-                    style={{ width: "18rem" }}
+                    style={{  border: selectedCardIndex === index
+                      ? '1px solid #d99d2b'
+                      : selectedwCardIndex === index
+                      ? '1px solid red'
+                      : '0.5px solid #C8D2D1',width: "18rem" }}
                     key={index}
                   >
                     <Card.Img variant="top" src={card.src}onClick={() => handleImageClick(product)} />
@@ -119,7 +139,10 @@ export default function ThirdSlider({ id }) {
                         <button
                             className="btn text-light   "
                             style={{ backgroundColor: "#d99d2b", marginRight: "2px" }}
-                            onClick={() => addToFavorites()}
+                            onClick={() => {
+                              addToFavorites();
+                              handlewButtonClick(index);
+                            }}
                         >
                             <i className="bi bi-heart"></i>
                         </button>
@@ -128,7 +151,10 @@ export default function ThirdSlider({ id }) {
                             className="btn text-light  "
                             style={{ backgroundColor: "#d99d2b" }}
                            
-                            onClick={() => addToCart(card.id)}
+                            onClick={() => {
+                              addToCart(card.id);
+                              handleButtonClick(index);
+                            }}
                         >
                             <i class="bi bi-plus-lg"></i>
                         </button>
@@ -143,7 +169,11 @@ export default function ThirdSlider({ id }) {
               {cardData.slice(0, isSmallScreen ?  2: cardData.length).map((card, index) => (
                   <Card
                     className="mx-3 "
-                    style={{ width: "18rem" }}
+                    style={{ border: selectedCardIndex === index
+                      ? '1px solid #d99d2b'
+                      : selectedwCardIndex === index
+                      ? '1px solid red'
+                      : '0.5px solid #C8D2D1', width: "18rem" }}
                     key={index}
                   >
                     <Card.Img variant="top" src={card.src} onClick={() => handleImageClick(product)} />
@@ -156,7 +186,10 @@ export default function ThirdSlider({ id }) {
                         <button
                             className="btn text-light   "
                             style={{ backgroundColor: "#d99d2b" ,marginRight: "2px"}}
-                            onClick={() => addToFavorites()}
+                            onClick={() => {
+                              addToFavorites();
+                              handlewButtonClick(index);
+                            }}
                         >
                             <i className="bi bi-heart"></i>
                         </button>
@@ -164,7 +197,11 @@ export default function ThirdSlider({ id }) {
                         <button
                             className="btn text-light  "
                             style={{ backgroundColor: "#d99d2b" }}
-                            onClick={() => addToCart(card.id)}
+                          
+                            onClick={() => {
+                              addToCart(card.id);
+                              handleButtonClick(index);
+                            }}
                             
                         >
                             <i class="bi bi-plus-lg"></i>

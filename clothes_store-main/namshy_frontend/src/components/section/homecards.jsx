@@ -8,6 +8,7 @@ import './homecard.css'
 export default function Homecards(
   {  type_name }
   ) {
+   
   const category_id = window.location.pathname.split('/')[2];
   const [products, setProducts] = useState([]);
   const [filter, setFilter] = useState("");
