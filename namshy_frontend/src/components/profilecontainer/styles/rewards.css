@@ -1,0 +1,81 @@
+.HEAD {
+    display: flex;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    background-color: rgb(251, 251, 251);
+    border-bottom: 1px solid rgb(230, 230, 230);
+}
+.Loyalty__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-auto-rows: auto;
+    grid-gap: 15px;
+}
+.LoyaltyDashboard {
+    display: grid;
+    grid-auto-rows: auto;
+    grid-gap: 15px;
+}
+.LD-rewards-title {
+    text-align: center;
+    padding: 15px 0;
+    color: #838383;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 300;
+}
+.LoyaltyDashboard__rewards .LD-rewards-panel .LD-reward-tier .LD-reward-tier-promotions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+.LoyaltyDashboard__rewards .LD-rewards-panel .LD-reward-tier .LD-reward-tier-promotions .LD-reward-block {
+    border: 1px solid #eee;
+    border-radius: 10px;
+    margin: 20px;
+    height: 150px;
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.LoyaltyDashboard__rewards .LD-rewards-panel .LD-reward-tier .LD-reward-tier-promotions .LD-reward-block .LD-reward-block-details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    word-break: break-all;
+}
+.LoyaltyDashboard__rewards .LD-rewards-panel .LD-reward-tier .LD-reward-tier-promotions .LD-reward-block .LD-reward-block-details #loyalty-reward-block-amount {
+    font-size: 28px;
+    font-weight: 600;
+    padding: 5px;
+    text-align: center;
+}
+
+.LoyaltyDashboard__rewards .LD-rewards-panel .LD-reward-tier .LD-reward-tier-promotions .LD-reward-block .LD-reward-block-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #f78374;
+    padding: 15px;
+    border-radius: 0 0 10px 10px;
+    color: #fff;
+    cursor: pointer;
+}
+.section {
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    color: #000;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 6px;
+    padding: 20px;
+    transition: .3s;
+}

@@ -1,0 +1,88 @@
+.sectionone {
+  width: 90%;
+  /* padding: auto; */
+  height: fit-content;
+  position: relative;
+}
+.section_container{
+  margin-left:8vw ;
+  margin-right: 8vw;
+display: flex;
+justify-content: center;
+}
+
+
+span {
+  position: relative;
+}
+#nn {
+  position: relative;
+  background-color: rgb(176, 151, 151);
+  height: 300px;
+}
+/*  */
+
+.swiper {
+  width: 100%;
+  /* height: 500px; */
+}
+
+.swiper-slide {
+  text-align: center;
+  font-size: 18px;
+  margin: 0px !important;
+  height: 200px !important;
+
+  width: 200px !important;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.swiper-slide img {
+  display: block;
+  width: 200px;
+  height: 200px;
+
+  object-fit: cover;
+}
+.second {
+  width: 100%;
+}
+.adslider img {
+  height: fit-content;
+  box-sizing: content-box;
+}
+.para {
+  height: 180px;
+  margin-bottom: 70px;
+}
+.sider1 {
+  /* top: 395px; */
+
+  height: fit-content;
+  position: relative;
+}
+.sider {
+  /* background-color: aqua!important; */
+}
+.cards {
+  padding: 0px !important;
+  /* width: 988px; */
+  /* height: 500px; */
+  /* background-color: blue; */
+  position: relative;
+  /* left: 212px; */
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.change1:hover i,
+.change1:hover a {
+  color: rgb(154, 142, 142) !important;
+}
+.change2:hover input,
+.change2:hover span {
+  text-decoration: underline;
+}
