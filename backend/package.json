@@ -27,7 +27,9 @@
     "googleapis": "^122.0.0",
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^7.2.4",
+    "nodemailer": "^6.9.4",
     "nodemon": "^2.0.22",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "xlsx": "^0.18.5"
   }
 }
