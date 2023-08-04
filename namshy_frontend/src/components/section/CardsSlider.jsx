@@ -7,12 +7,14 @@ import { useNavigate } from "react-router-dom";
 import * as product from "../../api/product";
 import { CartContext } from "./Shoppingcartcontext";
 import * as Cart from '../../api/cart'
+import * as Wish from '../../api/wish'
 import { Cookies } from 'react-cookie'
 
 export function CardsSlider(props) {
   const [selectedCardIndex, setSelectedCardIndex] = useState(1);
-  const addToFavorites = () => {
-    console.log("add to favorites");
+  const addToFavorites = async(id) => {
+    await Wish.add_cart(id, 1, cookie.get("Auth"))
+    
   };
   const { addToCart } = useContext(CartContext);
   const cookie = new Cookies()
@@ -103,7 +105,7 @@ export function CardsSlider(props) {
                 <button
                   className="btn text-light   "
                   style={{ backgroundColor: "#d99d2b", marginRight: "2px" }}
-                  onClick={() => addToFavorites()}
+                  onClick={() => addToFavorites(product._id)}
                 >
                   <i className="bi bi-heart"></i>
                 </button>

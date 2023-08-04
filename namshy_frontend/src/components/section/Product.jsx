@@ -6,6 +6,7 @@ import './homecard.css';
 import { CartContext } from './Shoppingcartcontext';
 import { useNavigate } from "react-router-dom";
 import * as Cart from '../../api/cart'
+import * as Wish from '../../api/wish'
 import { Cookies } from 'react-cookie'
 
 export function Product({ product, index }) {
@@ -14,9 +15,12 @@ export function Product({ product, index }) {
     const navigate = useNavigate();
     const [selectedCardIndex, setSelectedCardIndex] = useState(1);
     const cookie = new Cookies()
-    const addToFavorites = () => {
-        console.log("add to favorites")
-    }
+    const addToFavorites = async (id) => {
+        console.log("add to favorites");
+        await Wish.add_cart(id, 1, cookie.get("Auth")).then((e) => {
+          console.log(e);
+        });
+      };
 
     const handleImageClick = (product) => {
         setSelectedProduct(product);
@@ -28,6 +32,7 @@ export function Product({ product, index }) {
             console.log(e)
         })
     }
+    
 
     //   console.log("card",product)
     return (
@@ -77,7 +82,7 @@ export function Product({ product, index }) {
                         <button
                             className="btn text-light   "
                             style={{ backgroundColor: "#d99d2b", marginRight: "2px" }}
-                            onClick={() => addToFavorites()}
+                            onClick={() => addToFavorites(product._id)}
                         >
                             <i className="bi bi-heart"></i>
                         </button>

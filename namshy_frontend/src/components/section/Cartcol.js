@@ -2,7 +2,8 @@ import React, { useContext, useState, useEffect } from "react";
 import { CartContext } from "./Shoppingcartcontext";
 import "./slider.css";
 import * as productfetch from "../../api/product"
-import * as cart from "../../api/cart"
+import * as wish from "../../api/wish"
+import { Cookies } from "react-cookie";
 
 const Cartcol = ({ product, updateTotalPrice, renderedIndex ,load}) => {
   const [price_after, setPrice_after] = useState(0)
@@ -16,6 +17,13 @@ const Cartcol = ({ product, updateTotalPrice, renderedIndex ,load}) => {
       setCurrentProduct(e)
     })
   }, [data]);
+  const cookie = new Cookies();
+  const addToFavorites = async (id) => {
+    console.log("add to favorites");
+    await wish.add_cart(id, 1, cookie.get("Auth")).then((e) => {
+      console.log(e);
+    });
+  };
 
 
   const { decreaseQuantity, addToCart } =
@@ -49,30 +57,12 @@ const Cartcol = ({ product, updateTotalPrice, renderedIndex ,load}) => {
               <p>{currentproduct?.price_after}</p>
             </div>
             <div className="h-50  " style={{ textAlign: "center" }}>
-              <button
-                onClick={() => cart.increse_item(product?._id).then(e => {
-                  load()
-                })}/*.then(e=>{setCurrentProduct(e)})*/
-                className="btn m-1 btn-light"
-              >
-                <i class="bi bi-plus-lg"></i>
-              </button>
+             
               <input
                 className="btn w-25 bg-light m-1"
                 value={product.quantity}
               />
-              <button
-                onClick={() => {
-                  if (product.quantity !== 1)
-                    cart.decrease_item(
-                      product?._id).then((e) => {
-                        load()
-                      })
-                }} /*.then(e=>{setCurrentProduct(e)})*/
-                className=" btn m-1 btn-light"
-              >
-                <i class="bi bi-dash-lg"></i>
-              </button>
+              
             </div>
           </div>
 
@@ -105,7 +95,7 @@ const Cartcol = ({ product, updateTotalPrice, renderedIndex ,load}) => {
                 <div className="m-2 ">
                   <button
                     className="btn"
-                    onClick={() => cart.Delete_cart_item(product._id).then(e => {
+                    onClick={() => wish.Delete_cart_item(product._id).then(e => {
                       load()
                     })}
                   >
@@ -115,7 +105,7 @@ const Cartcol = ({ product, updateTotalPrice, renderedIndex ,load}) => {
                 </div>
                 <div className=" m-2 text-secondary">|</div>
                 <div className="m-2 ">
-                  <button className="btn">
+                <button className="btn"  onClick={()=>{addToFavorites(product._id)}}>
                     {" "}
                     <i className="bi bi-heart m-2">save later</i>
                   </button>

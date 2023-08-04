@@ -6,6 +6,7 @@ import Header from "../components/Navs/Header";
 import ThirdSlider from "../components/section/ThirdSlider";
 import * as Product from '../api/product'
 import * as Cart from '../api/cart'
+import * as Wish from '../api/wish'
 import { Cookies } from 'react-cookie'
 
 function SelectedProductPage({ products, handleClick }) {
@@ -33,6 +34,11 @@ function SelectedProductPage({ products, handleClick }) {
 
   const addtoBag = async () => {
     await Cart.add_cart(id, 1, cookie.get("Auth")).then((e) => {
+      console.log(e)
+    })
+  }
+  const addtowish = async () => {
+    await Wish.add_cart(id, 1, cookie.get("Auth")).then((e) => {
       console.log(e)
     })
   }
@@ -227,7 +233,9 @@ function SelectedProductPage({ products, handleClick }) {
 
 
                   <span style={{ textAlign: "center", width: "45%", fontSize: "1.2rem" }}>
-                    <button className="btn bg-light my-3  text-dark h-75 w-100">
+                    <button 
+                    onClick={() => addtowish()}
+                    className="btn bg-light my-3  text-dark h-75 w-100">
                       Add to wish list{" "}
                     </button>
                   </span>

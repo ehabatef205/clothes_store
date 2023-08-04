@@ -10,6 +10,7 @@ import { products } from "./components/section/prodlist";
 import SelectedProductPage from "./pages/SelectedProductPage";
 import Footer from "./components/Navs/footer";
 import Profile from "./pages/profile";
+import Wishlist from "./pages/Wishlist";
 
 // import CartItems from "./pages/CartItems";
 import ShoppinghcartProvider from './components/section/Shoppingcartcontext'
@@ -25,6 +26,7 @@ function App() {
         <Route path="/SelectedProductPage/:id" element={<SelectedProductPage products={products} ></SelectedProductPage>} />     
    
         <Route path="Bag" element={<Bag/>} />
+        <Route path="favorites" element={<Wishlist/>} />
 
         <Route path="/" element={<Home />} />
         <Route path="/cat/:id" element={<Home />} />
