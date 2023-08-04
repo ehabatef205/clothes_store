@@ -1,4 +1,3 @@
-// import React, { useState, useEffect, useContext } from "react";
 import ThirdSlider from "../components/section/ThirdSlider";
 
 import Cartcol from "../components/section/Cartcol";

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Router, Route, Routes } from "react-router-dom";
 import Home from "./pages/home";
 import Bag from "./pages/Bag";
+// import Wishlist from "./pages/Wishlist";
 import Page1 from "./pages/page1";
 import Login from "./pages/login";
 import Signup from "./pages/signup";
@@ -13,6 +14,7 @@ import Profile from "./pages/profile";
 
 // import CartItems from "./pages/CartItems";
 import ShoppinghcartProvider from './components/section/Shoppingcartcontext'
+import Wishlist from "./pages/Wishlist";
 function App() {
   
    return (
@@ -25,6 +27,7 @@ function App() {
         <Route path="/SelectedProductPage/:id" element={<SelectedProductPage products={products} ></SelectedProductPage>} />     
    
         <Route path="Bag" element={<Bag/>} />
+        <Route path="favorites" element={<Wishlist/>} />
 
         <Route path="/" element={<Home />} />
         <Route path="/cat/:id" element={<Home />} />
@@ -36,6 +39,7 @@ function App() {
         <Route path="/login" element={<Login/>}/>
         <Route path="/signup" element={<Signup/>}/>
         <Route path="/checkout" element={<Checkout/>}/>
+        
       </Routes> 
 
          <footer style={{height:"200px",backgroundColor:"black" ,position:"relative" ,top:"70px"}}><Footer/></footer> 
