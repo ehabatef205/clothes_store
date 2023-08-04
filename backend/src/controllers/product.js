@@ -134,7 +134,7 @@ module.exports.getDataFromExcel = async (req, res) => {
         }
 
         data.push({
-            supplier: "Wolf",
+            supplier: req.body.supplier||"Wolf",
             category_id: req.body.category_id,
             subCategory: req.body.subCategory,
             typeOfProduct: workbook_response[i].typeOfProduct,
