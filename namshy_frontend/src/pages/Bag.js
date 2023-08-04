@@ -23,12 +23,16 @@ const Bag = () => {
     
     navigate('/checkout', { state: cartItems });
   };
+  const load=()=>{
+    cart.get_cart().then(e=>{setCartItems(e)})
+ }
   const [cartItems,setCartItems] = useState([]);
   const [isCartEmpty, setIsCartEmpty] = useState(false);
   useEffect(() => {
-    cart.get_cart().then(e=>{setCartItems(e)})
+    load()
     
   }, []);
+  
   useEffect(() => {
 
     if (
@@ -55,13 +59,13 @@ const Bag = () => {
               <div className="d-flex justify-content-between">
                 <button
                   className="btn text-light "
-                  style={{ backgroundColor: "#d99d2b" }}
+                  style={{ backgroundColor: "#7DCEA0" }}
                 >
                   AI Virtual Room
                 </button>
                 <button
                   className="btn "
-                  style={{ color: "#d99d2b", border: "1px solid gray" }}
+                  style={{ color: "#7DCEA0", border: "1px solid gray" }}
                 >
                   Back
                 </button>
@@ -113,12 +117,14 @@ const Bag = () => {
                     <div className="d-flex justify-content-between">
                       <div>
                         <p>
-                        <span style={{ fontWeight: 'bold' }}><p style={{ padding: "10px 20px", textAlign: "center", color: "black" , fontSize:"25px" }}>Total Price: {totalPrice} $</p></span>
+                          <span className="mx-2" style={{ fontSize: "1.3rem" }}>
+                            Total
+                          </span>
                         </p>
                       </div>
                       <div>
                         <p className="mx-2" style={{ fontSize: "1.2rem" }}>
-                          
+                          totat cost
                         </p>
                       </div>
                     </div>
@@ -160,8 +166,10 @@ const Bag = () => {
                         <div>
                           <Cartcol 
                           key={index}
+                         
                            product={product} 
                            updateTotalPrice={updateTotalPrice} 
+                           load={load}
                           renderedIndex={index} 
                            />
                         </div>
@@ -171,9 +179,10 @@ const Bag = () => {
                 </div>
               </div>
               <div className="d-flex justify-content-between">
+              <p>Total Price: {totalPrice} $</p>
                 <button
                   className="btn text-light "
-                  style={{ backgroundColor: "#d99d2b" }}
+                  style={{ backgroundColor: "#7DCEA0" }}
                   onClick={chekoutpage}
                 >
                   Proceed to Chekout

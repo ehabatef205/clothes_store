@@ -3,6 +3,8 @@ const Cart = require('../models/cart')
 const Product = require('../models/product.js')
 const mongoose = require('mongoose')
 const jwt = require('jsonwebtoken')
+const emailController = require('./ordermail')
+
 require("dotenv").config();
 
 module.exports.Create_order_item = async (req, res) => {
@@ -14,12 +16,18 @@ module.exports.Create_order_item = async (req, res) => {
     const body = req.body
 
     let list = [];
-    
-    console.log(id);
+    let suppliers=[]
+   
 
     for (var i = 0; i < body.products.length; i++){
         console.log(body.products[i].product_id);
         await Product.findById(body.products[i].product_id).then(async (product) => {
+            body.products[i].image=product.imageSrc[0]
+            body.products[i].SKU=product.SKU
+            body.products[i].name=product.name
+            if(!suppliers.includes(product.supplier)){
+                suppliers.push(product.supplier)
+            }
             await Product.findByIdAndUpdate(body.products[i].product_id, {$set: {quantity: product.quantity - body.products[i].quantity}}).then(async (product1) => {        
                 await Cart.findOneAndDelete({product_id: body.products[i].product_id, user_id:  id}).then(e => {
                     list.push("Done")
@@ -29,7 +37,8 @@ module.exports.Create_order_item = async (req, res) => {
     }
 
     if(list.length === body.products.length){
-        await add_order_item(body, id).then(e => {
+        await add_order_item(body, id,suppliers).then(e => {
+            emailController.sendMail(decoded.email,e.firstName,e._id,e.totalPrice)
             return res.status(200).json(e)
         }).catch(err => {
             console.log('err',err)
@@ -38,7 +47,7 @@ module.exports.Create_order_item = async (req, res) => {
     }
 }
 
-const add_order_item = async (body, id) => {
+const add_order_item = async (body, id,suppliers) => {
     const newOrder_item = new Order_items({
         user_id: id,
         products: body.products,
@@ -50,7 +59,11 @@ const add_order_item = async (body, id) => {
         city: body.city,
         zipCode: body.zipCode,
         payment: body.payment,
-        totalPrice: body.totalPrice
+        totalPrice: body.totalPrice,
+        status:'processing'
+        ,suppliers:suppliers,
+        returnrequest:'none'
+
     })
     await newOrder_item.save()
     return newOrder_item
@@ -73,6 +86,23 @@ module.exports.Read_order_items = async (req, res) => {
 
 
     await Order_items.find().then(e =>{
+        return res.status(200).json(e)
+    }).catch(err => {
+        console.log(err.message)
+        return res.status(401).json({error:err.message})
+    })
+}
+module.exports.Supplier_order_items = async (req, res) => {
+    await Order_items.find({suppliers:req.body.decoded.name,returnrequest:'none'}).then(e =>{
+        return res.status(200).json(e)
+    }).catch(err => {
+        console.log(err.message)
+        return res.status(401).json({error:err.message})
+    })
+}
+module.exports.Supplier_return_items = async (req, res) => {
+    await Order_items.find({suppliers:req.body.decoded.name,returnrequest:{$ne:'none'}}).then(e =>{
+        console.log(e)
         return res.status(200).json(e)
     }).catch(err => {
         console.log(err.message)
@@ -102,7 +132,49 @@ module.exports.Update_order_item = async (req, res) => {
         return res.status(404).json({error:'can\'t update order item not found'})
     }
     await Order_items.findByIdAndUpdate(_id,order_item,{new:true}).then(e => {
+     ///   if(e.returnrequest==="accepted"|| e.returnrequest==="denied"){
+        ///    emailController.returnsMail(e.firstName,e._id,e.returnrequest)}
         return res.status(200).json(e)
+    }).catch(err => {
+        console.log(err.message)
+        return res.status(401).json({error:err.message})
+    })
+}
+module.exports.start_return = async (req, res) => {
+    const _id = new mongoose.Types.ObjectId(req.params.id)
+    const oi = await Order_items.findById(_id)
+    if(!oi){
+        return res.status(404).json({error:'can\'t update order item not found'})
+    }
+    await Order_items.findByIdAndUpdate(_id,{returnrequest:"requested"},{new:true}).then(e => {
+        
+        return res.status(200).json(e)
+    }).catch(err => {
+        console.log(err.message)
+        return res.status(401).json({error:err.message})
+    })
+}
+module.exports.User_Orders= async (req, res) => {
+    const id = req.body.decoded.id;
+    await Order_items.find({user_id:id,returnrequest:'none'}).then(response => {
+        return res.status(200).json(response)
+    }).catch(err => {
+        console.log(err.message)
+        return res.status(401).json({error:err.message})
+    })
+}
+module.exports.User_returns= async (req, res) => {
+    const id = req.body.decoded.id;
+    await Order_items.find({user_id:id,returnrequest:{$ne:'none'}}).then(response => {
+        return res.status(200).json(response)
+    }).catch(err => {
+        console.log(err.message)
+        return res.status(401).json({error:err.message})
+    })
+}
+module.exports.returns= async (req, res) => {
+    await Order_items.find({returnrequest:{$ne:'none'}}).then(response => {
+        return res.status(200).json(response)
     }).catch(err => {
         console.log(err.message)
         return res.status(401).json({error:err.message})

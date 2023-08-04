@@ -4,7 +4,7 @@ import "./slider.css";
 import * as productfetch from "../../api/product"
 import * as cart from "../../api/cart"
 
-const Cartcol = ({ product, updateTotalPrice, renderedIndex }) => {
+const Cartcol = ({ product, updateTotalPrice, renderedIndex ,load}) => {
   const [price_after, setPrice_after] = useState(0)
   const [data, setData] = useState(false);
   const [mytotalstate, setMyTotalState] = useState(0)
@@ -51,7 +51,7 @@ const Cartcol = ({ product, updateTotalPrice, renderedIndex }) => {
             <div className="h-50  " style={{ textAlign: "center" }}>
               <button
                 onClick={() => cart.increse_item(product?._id).then(e => {
-                  window.location.reload(false)
+                  load()
                 })}/*.then(e=>{setCurrentProduct(e)})*/
                 className="btn m-1 btn-light"
               >
@@ -66,7 +66,7 @@ const Cartcol = ({ product, updateTotalPrice, renderedIndex }) => {
                   if (product.quantity !== 1)
                     cart.decrease_item(
                       product?._id).then((e) => {
-                        window.location.reload(false);
+                        load()
                       })
                 }} /*.then(e=>{setCurrentProduct(e)})*/
                 className=" btn m-1 btn-light"
@@ -79,7 +79,7 @@ const Cartcol = ({ product, updateTotalPrice, renderedIndex }) => {
           <div className="d-flex  flex-wrap " style={{ textAlign: "end" }}>
             <div className="m-3 ">
               <p style={{ margin: "0px", padding: "0px" }}>{/* {currentproduct?} */}</p>
-              <span style={{ fontWeight: 'bold' }}><p style={{ margin: "0px", padding: "0px" }}>{currentproduct?.name}</p></span>
+              <p style={{ margin: "0px", padding: "0px" }}>{currentproduct?.name}</p>
               <div
                 className="   justify-content-start my-3"
                 style={{ textAlign: "left" }}
@@ -106,18 +106,18 @@ const Cartcol = ({ product, updateTotalPrice, renderedIndex }) => {
                   <button
                     className="btn"
                     onClick={() => cart.Delete_cart_item(product._id).then(e => {
-                      window.location.reload(false)
+                      load()
                     })}
                   >
                     {" "}
-                    <i class="bi bi-trash3">Delete</i>
+                    <i class="bi bi-trash3">delete</i>
                   </button>
                 </div>
                 <div className=" m-2 text-secondary">|</div>
                 <div className="m-2 ">
                   <button className="btn">
                     {" "}
-                    <i className="bi bi-heart m-2">Save later</i>
+                    <i className="bi bi-heart m-2">save later</i>
                   </button>
                 </div>
               </div>
@@ -137,7 +137,7 @@ const Cartcol = ({ product, updateTotalPrice, renderedIndex }) => {
       </div>
 
       <div>
-      <span style={{ fontWeight: 'bold' }}> <p>Sub Total Price for this product : ${currentproduct?.price_after * product?.quantity}</p></span>s
+        <p>Sub Total Price: ${currentproduct?.price_after * product?.quantity}</p>
       </div>
     </div>
   );

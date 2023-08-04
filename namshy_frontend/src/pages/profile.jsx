@@ -7,7 +7,8 @@ import returnicon from "../images/returnicon.svg"
 import creditcards from "../images/creditcards.svg"
 import "./Profile.css";
 import ProfileInfo from "../components/profilecontainer/ProfileInfo"
-import Rewards from "../components/profilecontainer/rewards";
+
+import Returns from "../components/profilecontainer/returns"
 import Orders from "../components/profilecontainer/orders"
 import Credit from "../components/profilecontainer/cedit";
 import { NavBar } from "../components/Navs/Nav1";
@@ -18,7 +19,7 @@ import * as user from '../api/user'
 function Profile({path}) {
   const [subpages,setsubpages]=React.useState([
     (<ProfileInfo />),
-    (<Rewards/>),
+    (<Returns/>),
     (<Orders/>),
     (<Credit/>)
   ])
@@ -28,7 +29,7 @@ function Profile({path}) {
       setUserData(data.respone)
       setsubpages(([
         (<ProfileInfo Uinfo={data.respone}/>),
-        (<Rewards/>),
+        (<Returns/>),
         (<Orders/>),
         (<Credit/>)
       ]))
@@ -65,25 +66,7 @@ function Profile({path}) {
             </div>
           </div>
         </a>
-        <a href="/my-rewards/">
-          <div className="navmember">
-            <div>
-              <div className="navicons outline-icon">
-                <img
-                  src={rewardsicon}
-                  alt="My rewards"
-                />
-              </div>
-              <div className="navtext">My rewards</div>
-            </div>
-            <div>
-              <img
-                src={navarrow}
-                className="navarrow" alt="<<"
-              />
-            </div>
-          </div>
-        </a>
+        
         <a href="/orders/">
           <div className="navmember">
             <div>

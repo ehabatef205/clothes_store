@@ -1,10 +1,33 @@
 import axios from 'axios'
+import {Cookies} from 'react-cookie'
+
 import {backend_url} from '../config'
 const proxy = `${backend_url}/order_items`
+const cookie = new Cookies()
+
+
 
 export const add_order_item = async ({order_id, product_id, quantity}) => {
     await axios.post(`${proxy}/create`,{order_id, product_id, quantity})
 }
+
+
+
+export const my_orders = async () => {
+    const token = cookie.get('Auth')
+    return (await(await axios.post(`${proxy}/myorders`,{},{headers: { 'Authorization': token }})))
+}
+export const my_returns = async () => {
+    const token = cookie.get('Auth')
+    return (await( await axios.post(`${proxy}/myreturns`,{},{headers: { 'Authorization': token }})))
+}
+
+export const requestreturn = async (id) => {
+    const token =await cookie.get('Auth')
+    console.log(token )
+    return (await( await axios.post(`${proxy}/requestreturn/${id}`,{},{headers: { 'Authorization': token }})))
+}
+
 
 export const all_order_items = async () => {
     return (await (await axios.get(`${proxy}`)).data)
