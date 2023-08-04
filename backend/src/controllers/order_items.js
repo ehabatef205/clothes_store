@@ -132,8 +132,8 @@ module.exports.Update_order_item = async (req, res) => {
         return res.status(404).json({error:'can\'t update order item not found'})
     }
     await Order_items.findByIdAndUpdate(_id,order_item,{new:true}).then(e => {
-        if(e.returnrequest==="accepted"|| e.returnrequest==="denied"){
-            emailController.returnsMail(e.firstName,e._id,e.returnrequest)}
+     ///   if(e.returnrequest==="accepted"|| e.returnrequest==="denied"){
+        ///    emailController.returnsMail(e.firstName,e._id,e.returnrequest)}
         return res.status(200).json(e)
     }).catch(err => {
         console.log(err.message)
