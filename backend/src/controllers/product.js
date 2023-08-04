@@ -1,4 +1,5 @@
 const Product = require('../models/product.js')
+const Wish = require('../models/wish.js')
 const Cart = require('../models/cart.js')
 const mongoose = require('mongoose')
 const xlsx = require('xlsx');
@@ -60,7 +61,13 @@ module.exports.DeleteProduct = async (req, res) => {
     let _id = new mongoose.Types.ObjectId(req.params.id)
     await Cart.find({ product_id: _id }).then(async (carts) => {
         for (var i = 0; i < carts.length; i++) {
-            await Cart.findOneAndDelete({ product_id: carts[i].product_id });
+            await Cart.deleteMany({ product_id: carts[i].product_id });
+        }
+    })
+
+    await Wish.find({ product_id: _id }).then(async (wishs) => {
+        for (var i = 0; i < wishs.length; i++) {
+            await Wish.deleteMany({ product_id: wishs[i].product_id });
         }
     })
 
