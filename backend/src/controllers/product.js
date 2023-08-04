@@ -1,6 +1,7 @@
 const Product = require('../models/product.js')
+const Cart = require('../models/cart.js')
 const mongoose = require('mongoose')
-
+const xlsx = require('xlsx');
 
 module.exports.AllProducts = (req, res) => {
     Product.find()
@@ -17,7 +18,7 @@ module.exports.AllProducts = (req, res) => {
 }
 module.exports.CreateProduct = async (req, res, next) => {
     const body = req.body
-    body.supplier='Wolf'
+    body.supplier = 'Wolf'
     const product = new Product(body)
 
     await product.save()
@@ -57,6 +58,12 @@ module.exports.UpdateViewProduct = async (req, res) => {
 
 module.exports.DeleteProduct = async (req, res) => {
     let _id = new mongoose.Types.ObjectId(req.params.id)
+    await Cart.find({ product_id: _id }).then(async (carts) => {
+        for (var i = 0; i < carts.length; i++) {
+            await Cart.findOneAndDelete({ product_id: carts[i].product_id });
+        }
+    })
+
     await Product.deleteOne({ _id: _id }).then(e => {
         return res.status(200).json(e)
     }).catch(err => {
@@ -97,4 +104,91 @@ module.exports.getProductBySubCategory = async (req, res) => {
     }).catch(err => {
         return res.json({ message: err.message })
     })
+}
+
+module.exports.getDataFromExcel = async (req, res) => {
+    const workbook = xlsx.readFile(req.files.excel.tempFilePath);  // Step 2
+    let workbook_sheet = workbook.SheetNames;                // Step 3
+    let workbook_response = xlsx.utils.sheet_to_json(        // Step 4
+        workbook.Sheets[workbook_sheet[0]]
+    );
+
+    let data = [];
+
+    for (var i = 0; i < workbook_response.length; i++) {
+        let images = [];
+        if (workbook_response[i].image1) {
+            images.push(workbook_response[i].image1)
+        }
+        if (workbook_response[i].image2) {
+            images.push(workbook_response[i].image2)
+        }
+        if (workbook_response[i].image3) {
+            images.push(workbook_response[i].image3)
+        }
+        if (workbook_response[i].image4) {
+            images.push(workbook_response[i].image4)
+        }
+        if (workbook_response[i].image5) {
+            images.push(workbook_response[i].image5)
+        }
+
+        data.push({
+            supplier: "Wolf",
+            category_id: req.body.category_id,
+            subCategory: req.body.subCategory,
+            typeOfProduct: workbook_response[i].typeOfProduct,
+            name: workbook_response[i].name,
+            quantity: workbook_response[i].quantity,
+            SKU: workbook_response[i].SKU.toString(),
+            price_before: workbook_response[i].price_before,
+            price_after: workbook_response[i].price_after,
+            imageSrc: images,
+            desc: {
+                color: workbook_response[i].color,
+                type: workbook_response[i].type,
+                brand: {
+                    name: workbook_response[i].nameOfBrand,
+                    logo: workbook_response[i].logo
+                },
+                description: workbook_response[i].description
+            },
+            sizes: {
+                s: workbook_response[i].s,
+                m: workbook_response[i].m,
+                l: workbook_response[i].l,
+                xl: workbook_response[i].xl,
+                xxl: workbook_response[i].xxl
+            },
+            view: workbook_response[i].view
+        })
+    }
+    res.status(200).json({
+        data: data,
+    });
+}
+
+module.exports.CreateProducts = async (req, res, next) => {
+    const products = req.body.products
+
+    let done = [];
+    for (var i = 0; i < products.length; i++) {
+        const product = new Product(products[i])
+        await product.save()
+            .then(response => {
+                done.push("done")
+            })
+            .catch(error => {
+
+                res.json({
+                    message: error.message
+                })
+            })
+    }
+
+    if (done.length === products.length) {
+        res.json({
+            message: "Done"
+        })
+    }
 }

@@ -1,9 +1,11 @@
 const express = require("express");
+const fileUpload = require('express-fileupload')
 const app = express();
 const port = 5000;
 const mongoose = require("mongoose");
 const router = require("./src/routes/index");
 const cors = require("cors");
+const bodyparser = require('body-parser')
 
 const connectDB = async () => {
   try {
@@ -22,7 +24,10 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 
-app.use(express.json({ limit: "50mb" }));
+app.use(express.json());
+app.use(fileUpload({
+  useTempFiles: true,
+}))
 
 app.use(router);
 

@@ -1,20 +1,18 @@
-const User=require("../models/User")
-const supplier= require("../models/supplier")
+const User = require("../models/User")
+const supplier = require("../models/supplier")
 const bcrypt = require("bcrypt")
 const { hashSync, genSaltSync } = require("bcrypt");
 const jwt = require('jsonwebtoken');
-const product = require("../models/product");
+const Product = require("../models/product");
 const mongoose = require('mongoose')
 require("dotenv").config();
 
-
-
 const signUp = async (req, res) => {
-    try{
+    try {
         const body = req.body;
         const isNewUser = await User.isThisEmailUse(body.email)
         const isNewsupplier = await supplier.isThisEmailUse(body.email)
-        if(!isNewUser&&!isNewsupplier &&req.body.decoded.admin){
+        if (!isNewUser && !isNewsupplier && req.body.decoded.admin) {
             return res.json({
                 message: 'This email is already in use'
             })
@@ -34,15 +32,15 @@ const signUp = async (req, res) => {
             name: body.name,
             email: body.email,
             password: body.password,
-            enabled:true
+            enabled: true
         })
         supp.save()
-        .then(response => {
-            res.json({
-            message: "Sign up is successfully"
+            .then(response => {
+                res.json({
+                    message: "Sign up is successfully"
+                })
             })
-        })
-    }catch(error){
+    } catch (error) {
         res.json({
             message: "Error"
         })
@@ -50,7 +48,7 @@ const signUp = async (req, res) => {
 }
 
 const show = async (req, res) => {
-    try{
+    try {
         const usertoken = req.headers.authorization;
         const token = usertoken.split(' ');
         const decoded = jwt.verify(token[1], process.env.JWT_KEY);
@@ -58,64 +56,64 @@ const show = async (req, res) => {
         const _id = new mongoose.Types.ObjectId(req.params.id)
 
         const body = req.body;
-        product.findById(_id).then((product)=>{
-            if(product.supplier!== decoded.name){
+        Product.findById(_id).then((product) => {
+            if (product.supplier !== decoded.name) {
                 return res.json({
                     message: "Error"
                 })
             }
 
         })
-        
-        product.findByIdAndUpdate(_id, { $set: {view: true }})
-            .then(()=> {
+
+        Product.findByIdAndUpdate(_id, { $set: { view: true } })
+            .then(() => {
                 res.json({
-                message: 'Shown'
+                    message: 'Shown'
                 })
             })
             .catch(error => {
                 console.log(error);
                 res.json({
-        
-                message: 'An error Occured!'
+
+                    message: 'An error Occured!'
                 })
             })
-    }catch (error) {
+    } catch (error) {
         res.json({
             message: "Error"
         })
     }
 }
 const hide = async (req, res) => {
-    try{
+    try {
         const usertoken = req.headers.authorization;
         const token = usertoken.split(' ');
         const decoded = jwt.verify(token[1], process.env.JWT_KEY);
         const _id = new mongoose.Types.ObjectId(req.params.id)
 
-        product.findById(_id).then((product)=>{
-            if(product.supplier!== decoded.name){
+        Product.findById(_id).then((product) => {
+            if (product.supplier !== decoded.name) {
                 return res.json({
                     message: "UNAUTHED"
                 })
             }
 
         })
-        
-        product.findByIdAndUpdate(_id, { $set: {view: false }})
-            .then(()=> {
+
+        Product.findByIdAndUpdate(_id, { $set: { view: false } })
+            .then(() => {
                 res.json({
-                message: 'Hidden'
+                    message: 'Hidden'
                 })
             })
             .catch(error => {
                 console.log(error);
                 res.json({
-        
-                message: 'An error Occured!'
+
+                    message: 'An error Occured!'
                 })
             })
-    }catch (error) {
+    } catch (error) {
         console.log(error)
         res.json({
             message: "Error"
@@ -124,26 +122,26 @@ const hide = async (req, res) => {
 }
 const CreateProduct = async (req, res, next) => {
     const body = req.body
-    body.supplier=req.body.decoded.name
-    const product = new product(body)
-    
+    body.supplier = req.body.decoded.name
+    const product = new Product(body)
+
     await product.save()
-    .then(response => {
-        res.json({
-           response
+        .then(response => {
+            res.json({
+                response
+            })
         })
-    })
-    .catch(error => {
-       
-        res.json({
-            message: error.message
+        .catch(error => {
+
+            res.json({
+                message: error.message
+            })
         })
-    })
 }
 
 
-const login = async(req, res, next) => {
-    try{
+const login = async (req, res, next) => {
+    try {
         var email = req.body.email
         var password = req.body.password
         const isNewSupplier = await supplier.isThisEmailUse(email)
@@ -152,127 +150,124 @@ const login = async(req, res, next) => {
                 message: 'Id or password is invalid'
             })
         }
-        supplier.findOne({$or: [{email: email}, {password: password}]})
+        supplier.findOne({ $or: [{ email: email }, { password: password }] })
             .then(supp => {
-                if(supp){
-                    bcrypt.compare(password, supp.password, function(err, result){
-                        if(err){
+                if (supp) {
+                    bcrypt.compare(password, supp.password, function (err, result) {
+                        if (err) {
                             res.json({
                                 error: err
                             })
                         }
 
-                        if(result && supp.enabled){
-                            let token = jwt.sign({email:supp.email, id: supp._id,name:supp.name}, process.env.JWT_KEY)
+                        if (result && supp.enabled) {
+                            let token = jwt.sign({ email: supp.email, id: supp._id, name: supp.name }, process.env.JWT_KEY)
                             res.json({
                                 message: 'Login Successful!',
                                 token: token,
                             })
-                        }else{
+                        } else {
                             res.json({
                                 message: "Id or password is invalid"
                             })
                         }
                     })
-                }else{
+                } else {
                     res.json({
                         message: 'No User'
                     })
                 }
             })
-    }catch (error) {
+    } catch (error) {
         res.json({
-          message: "Error"
+            message: "Error"
         })
     }
 }
-const myProducts=async (req, res) => {
-    try{
+
+const myProducts = async (req, res) => {
+    try {
         const usertoken = req.headers.authorization;
         const token = usertoken.split(' ');
         const decoded = jwt.verify(token[1], process.env.JWT_KEY);
-    
+
         const name = decoded.name;
-        product.find({supplier:name}).then((response)=>{
+        Product.find({ supplier: name }).then((response) => {
             res.json(response)
         })
 
-}catch (error) {
-    res.json({
-      message: "Error"
-    })
-}
+    } catch (error) {
+        res.json({
+            message: "Error"
+        })
+    }
 }
 
 const Allsuppliers = (req, res) => {
     supplier.find()
-    .then(response => {
-        res.json({
-            response
+        .then(response => {
+            res.json({
+                response
+            })
         })
-    })
-    .catch(error => {
-        res.json({
-            message: 'An error Occured!'
+        .catch(error => {
+            res.json({
+                message: 'An error Occured!'
+            })
         })
-    })
-   
-    
+
+
 }
 
 
 const enable = async (req, res) => {
-    try{
-        
-
-        
-        
+    try {
         const _id = new mongoose.Types.ObjectId(req.params.id)
 
-        supplier.findByIdAndUpdate(_id, { $set: {enabled: true }})
-            .then(()=> {
+        supplier.findByIdAndUpdate(_id, { $set: { enabled: true } })
+            .then(() => {
                 res.json({
-                message: 'enabled'
+                    message: 'enabled'
                 })
             })
             .catch(error => {
                 console.log(error);
                 res.json({
-        
-                message: 'An error Occured!'
+
+                    message: 'An error Occured!'
                 })
             })
-    }catch (error) {
+    } catch (error) {
         res.json({
             message: "Error"
         })
     }
 }
 const disable = async (req, res) => {
-    try{
-        
+    try {
+
 
         console.log(req.body.decoded)
         const _id = new mongoose.Types.ObjectId(req.params.id)
 
-        const name=req.body.name
-        supplier.findByIdAndUpdate(_id, { $set: {enabled: false }})
-            .then(()=> {
-                product.updateMany({supplier:name},{$set:{view:false}}).then(()=>{
+        const name = req.body.name
+        supplier.findByIdAndUpdate(_id, { $set: { enabled: false } })
+            .then(() => {
+                Product.updateMany({ supplier: name }, { $set: { view: false } }).then(() => {
                     res.json({
-                message: 'disabled'
+                        message: 'disabled'
+                    })
                 })
-                })
-                
+
             })
             .catch(error => {
                 console.log(error);
                 res.json({
-        
-                message: 'An error Occured!'
+
+                    message: 'An error Occured!'
                 })
             })
-    }catch (error) {
+    } catch (error) {
         console.log(error)
         res.json({
             message: "Error"
@@ -280,5 +275,5 @@ const disable = async (req, res) => {
     }
 }
 module.exports = {
-     signUp,login,show,hide,CreateProduct,myProducts,Allsuppliers,enable,disable
+    signUp, login, show, hide, CreateProduct, myProducts, Allsuppliers, enable, disable
 }
