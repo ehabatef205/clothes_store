@@ -17,21 +17,6 @@ import axios from "axios";
 import {backend_url} from '../../config'
 const proxy = `${backend_url}/external/speech`
 
-
-function ResponsiveNavbar({ onMenuClick }) {
-  return (
-    
-    <Nav className="mobile-navbar">
-      {/* Add your navigation links here */}
-      <Nav.Link onClick={() => onMenuClick("/premiumCategory")}>Premium</Nav.Link>
-      <Nav.Link onClick={() => onMenuClick("/kids")}>Kids</Nav.Link>
-      <Nav.Link onClick={() => onMenuClick("/beauty")}>Beauty</Nav.Link>
-      <Nav.Link onClick={() => onMenuClick("/men")}>Men</Nav.Link>
-      <Nav.Link onClick={() => onMenuClick("/women")}>Women</Nav.Link>
-    </Nav>
-  );
-}
-
 export function NavBar({visible = true}) {
   const [language] = React.useState("en-US");
   const [categories, setCategories] = useState([])

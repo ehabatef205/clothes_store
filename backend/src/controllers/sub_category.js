@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const SubCategory = require('../models/subcategory')
+const Product = require('../models/product')
 
 module.exports.add_subcategory = async (req, res) => {
     const body = req.body
@@ -8,7 +9,7 @@ module.exports.add_subcategory = async (req, res) => {
         res.status(200).json(e)
     }).catch(err => {
         console.log(err.message)
-        res.status(401).json({error:err.message})
+        res.status(401).json({ error: err.message })
     })
 }
 
@@ -19,7 +20,7 @@ module.exports.get_subcategory = async (req, res) => {
         })
     }).catch(err => {
         console.log(err.message)
-        res.status(404).json({error: err.message})
+        res.status(404).json({ error: err.message })
     })
 }
 
@@ -29,19 +30,19 @@ module.exports.get_subcategory_by_id = async (req, res) => {
         res.status(200).json(e)
     }).catch(err => {
         console.log(err.message)
-        res.status(404).json({error: err.message})
+        res.status(404).json({ error: err.message })
     })
 }
 
 module.exports.get_subcategory_by_main_category = async (req, res) => {
     const id = req.params.id
-    SubCategory.find({main_category: id}).then(e => {
+    SubCategory.find({ main_category: id }).then(e => {
         res.status(200).json({
             response: e
         })
     }).catch(err => {
         console.log(err.message)
-        res.status(404).json({error: err.message})
+        res.status(404).json({ error: err.message })
     })
 }
 
@@ -51,17 +52,17 @@ module.exports.delete_subcategory = async (req, res) => {
         res.status(200).json(e)
     }).catch(err => {
         console.log(err.message)
-        res.status(401).json({error: err.message})
+        res.status(401).json({ error: err.message })
     })
 }
 
 module.exports.update_subcategory = async (req, res) => {
     const _id = new mongoose.Types.ObjectId(req.params.id)
     const data = req.body
-    SubCategory.findByIdAndUpdate(_id, data, {new: true}).then(e => {
+    SubCategory.findByIdAndUpdate(_id, data, { new: true }).then(e => {
         res.status(200).json(e)
     }).catch(err => {
         console.log(err.message)
-        res.status(401).json({error: err.message})
+        res.status(401).json({ error: err.message })
     })
 }

@@ -30,7 +30,7 @@ export default function Page1() {
       >
         <div className="sectionone d-flex flex-wrap">
           <div className="w-100 ">
-            <FirstHeader  sub={Subcategory} />
+            <FirstHeader sub={Subcategory} />
           </div>
 
           <div
@@ -55,7 +55,7 @@ export default function Page1() {
                 <SecHeader />
               </div>
               <div className=" cards w-100 ">
-                <CardsSlider></CardsSlider>
+                <CardsSlider id={sub}></CardsSlider>
               </div>
             </div>
           </div>

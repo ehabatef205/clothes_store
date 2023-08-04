@@ -86,7 +86,7 @@ module.exports.getProductByType = async (req, res) => {
     if (_id === 'undefined') {
         _id = { $gte: "" }
     }
-    await Product.find({ category_id: _id, typeOfProduct: req.body.typeOfProduct }).then(e => {
+    await Product.find({ category_id: _id, typeOfProduct: req.body.typeOfProduct, view: true }).then(e => {
         return res.json({
             response: e
         })
@@ -96,6 +96,17 @@ module.exports.getProductByType = async (req, res) => {
 }
 
 module.exports.getProductBySubCategory = async (req, res) => {
+    let _id = req.params.id
+    await Product.find({ subCategory: _id, view: true }).then(e => {
+        return res.json({
+            response: e
+        })
+    }).catch(err => {
+        return res.json({ message: err.message })
+    })
+}
+
+module.exports.getProductBySubCategory2 = async (req, res) => {
     let _id = req.params.id
     await Product.find({ subCategory: _id }).then(e => {
         return res.json({
@@ -134,7 +145,7 @@ module.exports.getDataFromExcel = async (req, res) => {
         }
 
         data.push({
-            supplier: req.body.supplier||"Wolf",
+            supplier: req.body.supplier || "Wolf",
             category_id: req.body.category_id,
             subCategory: req.body.subCategory,
             typeOfProduct: workbook_response[i].typeOfProduct,

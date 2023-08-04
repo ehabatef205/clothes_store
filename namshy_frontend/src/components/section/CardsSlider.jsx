@@ -9,7 +9,7 @@ import { CartContext } from "./Shoppingcartcontext";
 import * as Cart from '../../api/cart'
 import { Cookies } from 'react-cookie'
 
-export function CardsSlider() {
+export function CardsSlider(props) {
   const [selectedCardIndex, setSelectedCardIndex] = useState(1);
   const addToFavorites = () => {
     console.log("add to favorites");
@@ -22,9 +22,11 @@ export function CardsSlider() {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [products, setProducts] = useState([]);
   useEffect(() => {
+
     const getProducts = async () => {
-      await product.all_product().then((e) => {
+      await product.get_product_by_category(props.id).then((e) => {
         setProducts(e.response);
+        console.log(e.response)
       });
     };
     getProducts();
