@@ -4,7 +4,7 @@ import "./slider.css";
 import * as productfetch from "../../api/product"
 import * as cart from "../../api/cart"
 
-const Cartcol = ({ product, updateTotalPrice, renderedIndex }) => {
+const Cartcol = ({ product, updateTotalPrice, renderedIndex ,load}) => {
   const [price_after, setPrice_after] = useState(0)
   const [data, setData] = useState(false);
   const [mytotalstate, setMyTotalState] = useState(0)
@@ -51,7 +51,7 @@ const Cartcol = ({ product, updateTotalPrice, renderedIndex }) => {
             <div className="h-50  " style={{ textAlign: "center" }}>
               <button
                 onClick={() => cart.increse_item(product?._id).then(e => {
-                  window.location.reload(false)
+                  load()
                 })}/*.then(e=>{setCurrentProduct(e)})*/
                 className="btn m-1 btn-light"
               >
@@ -66,7 +66,7 @@ const Cartcol = ({ product, updateTotalPrice, renderedIndex }) => {
                   if (product.quantity !== 1)
                     cart.decrease_item(
                       product?._id).then((e) => {
-                        window.location.reload(false);
+                        load()
                       })
                 }} /*.then(e=>{setCurrentProduct(e)})*/
                 className=" btn m-1 btn-light"
@@ -106,7 +106,7 @@ const Cartcol = ({ product, updateTotalPrice, renderedIndex }) => {
                   <button
                     className="btn"
                     onClick={() => cart.Delete_cart_item(product._id).then(e => {
-                      window.location.reload(false)
+                      load()
                     })}
                   >
                     {" "}

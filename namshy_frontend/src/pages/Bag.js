@@ -23,12 +23,16 @@ const Bag = () => {
     
     navigate('/checkout', { state: cartItems });
   };
+  const load=()=>{
+    cart.get_cart().then(e=>{setCartItems(e)})
+ }
   const [cartItems,setCartItems] = useState([]);
   const [isCartEmpty, setIsCartEmpty] = useState(false);
   useEffect(() => {
-    cart.get_cart().then(e=>{setCartItems(e)})
+    load()
     
   }, []);
+  
   useEffect(() => {
 
     if (
@@ -162,8 +166,10 @@ const Bag = () => {
                         <div>
                           <Cartcol 
                           key={index}
+                         
                            product={product} 
                            updateTotalPrice={updateTotalPrice} 
+                           load={load}
                           renderedIndex={index} 
                            />
                         </div>
