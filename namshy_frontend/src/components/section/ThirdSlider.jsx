@@ -81,7 +81,7 @@ export default function ThirdSlider({ id }) {
                          <div className="col-6">
                         <button
                             className="btn text-light   "
-                            style={{ backgroundColor: "#7DCEA0", marginRight: "2px" }}
+                            style={{ backgroundColor: "#d99d2b", marginRight: "2px" }}
                             onClick={() => addToFavorites()}
                         >
                             <i className="bi bi-heart"></i>
@@ -89,8 +89,8 @@ export default function ThirdSlider({ id }) {
 
                         <button
                             className="btn text-light  "
-                            style={{ backgroundColor: "#7DCEA0" }}
-                            // onClick={() => addToCart(product)}
+                            style={{ backgroundColor: "#d99d2b" }}
+                            
                             onClick={() => addToCart(card.id)}
                         >
                             <i class="bi bi-plus-lg"></i>
@@ -118,7 +118,7 @@ export default function ThirdSlider({ id }) {
                          <div className="col-6">
                         <button
                             className="btn text-light   "
-                            style={{ backgroundColor: "#7DCEA0", marginRight: "2px" }}
+                            style={{ backgroundColor: "#d99d2b", marginRight: "2px" }}
                             onClick={() => addToFavorites()}
                         >
                             <i className="bi bi-heart"></i>
@@ -126,8 +126,8 @@ export default function ThirdSlider({ id }) {
 
                         <button
                             className="btn text-light  "
-                            style={{ backgroundColor: "#7DCEA0" }}
-                            // onClick={() => addToCart(product)}
+                            style={{ backgroundColor: "#d99d2b" }}
+                           
                             onClick={() => addToCart(card.id)}
                         >
                             <i class="bi bi-plus-lg"></i>
@@ -155,7 +155,7 @@ export default function ThirdSlider({ id }) {
                          <div className="col-6">
                         <button
                             className="btn text-light   "
-                            style={{ backgroundColor: "#7DCEA0" }}
+                            style={{ backgroundColor: "#d99d2b" ,marginRight: "2px"}}
                             onClick={() => addToFavorites()}
                         >
                             <i className="bi bi-heart"></i>
@@ -163,9 +163,9 @@ export default function ThirdSlider({ id }) {
 
                         <button
                             className="btn text-light  "
-                            style={{ backgroundColor: "#7DCEA0" }}
+                            style={{ backgroundColor: "#d99d2b" }}
                             onClick={() => addToCart(card.id)}
-                            // onClick={() => addToCart(product)}
+                            
                         >
                             <i class="bi bi-plus-lg"></i>
                         </button>
@@ -178,7 +178,7 @@ export default function ThirdSlider({ id }) {
           </div>
           <button
             className="carousel-control-prev"
-            style={{ left: "-180px" }}
+            style={{ left: "-180px" , height:"fit-content", top:"165px"}}
             type="button"
             data-bs-target={`#${id}`}
             data-bs-slide="prev"
@@ -193,7 +193,7 @@ export default function ThirdSlider({ id }) {
           <button
             className="carousel-control-next"
             type="button"
-            style={{ right: "-100px" }}
+            style={{ right: "-100px", height:"fit-content", top:"165px" }}
             data-bs-target={`#${id}`}
             data-bs-slide="next"
           >

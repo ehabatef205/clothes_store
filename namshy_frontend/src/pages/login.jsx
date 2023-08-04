@@ -4,7 +4,7 @@ import "../components/section/slider.css";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import * as user from '../api/user'
-import logo from '../images/logo.jpg'
+import logoo from '../images/logoo.png'
 import { Cookies } from 'react-cookie'
 import { NavBar } from "../components/Navs/Nav1";
 
@@ -55,7 +55,7 @@ export default function Login() {
                 style={login}
             >
                 <div className="" style={{ flexDirection: "column", height: "fit-content", width: "80vw", justifyContent: "center", alignItems: "center", display: "flex" }}>
-                    <img src={logo} alt="logo" height={"100px"} width={"200px"} />
+                    <img src={logoo} alt="logo" height={"200px"} width={"200px"}  className="bg-dark"/>
                     <h4>Log In</h4>
                     <input
                         ref={emailRef}
@@ -110,7 +110,7 @@ const inputText = {
 const loginButton = {
     marginTop: "20px",
     border: "none",
-    backgroundColor: "rgb(0, 111, 225)",
+    backgroundColor: "#d99d2b",
     width: "40%",
     color: "#fff",
     padding: "10px",
@@ -120,7 +120,7 @@ const loginButton = {
 const loginButton2 = {
     marginTop: "20px",
     border: "none",
-    backgroundColor: "rgb(0, 111, 225)",
+    backgroundColor: "#d99d2b",
     width: "40%",
     color: "#fff",
     padding: "10px",

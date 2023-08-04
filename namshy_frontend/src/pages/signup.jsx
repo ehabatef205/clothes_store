@@ -172,7 +172,7 @@ const inputText2 = {
 const signupButton = {
   marginTop: "20px",
   border: "none",
-  backgroundColor: "rgb(0, 111, 225)",
+  backgroundColor: "#d99d2b",
   width: "40%",
   color: "#fff",
   padding: "10px",
@@ -182,7 +182,7 @@ const signupButton = {
 const signupButton2 = {
   marginTop: "20px",
   border: "none",
-  backgroundColor: "rgb(0, 111, 225)",
+  backgroundColor: "#d99d2b",
   width: "40%",
   color: "#fff",
   padding: "10px",

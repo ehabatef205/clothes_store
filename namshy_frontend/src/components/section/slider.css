@@ -38,7 +38,7 @@
     height: 50%;
     width: 30%;
     min-width: 300px;
-    border: #7DCEA0 1px;
+    border: #d99d2b 1px;
   }
   
   
@@ -65,7 +65,7 @@ border-radius: 50%;
       display: inline-flex;
   }
   .carousel-indicators [data-bs-target] {
-    background-color: #7DCEA0 !important;} 
+    background-color: #d99d2b !important;} 
   .carousel-wrapper .caption {
     display: none;
   }
@@ -85,7 +85,7 @@ border-radius: 50%;
   align-items: center;
 }
 .carousel-wrapper {
-  border: #7DCEA0 1px;
+  border: #d99d2b 1px;
   position: relative;
  height: 465px;
   /* max-height: 466px; */
@@ -106,13 +106,13 @@ border-radius: 50%;
 } */
 .wiper-button-prev{    width: 500px;
     height: 500px;
-    color:  #7DCEA0 ;
+    color:  #d99d2b ;
     z-index: 5;
     border: 3px solid;
 }
 
   .btnfilter:hover {
-    background-color: #7DCEA0 !important;
+    background-color: #d99d2b !important;
   }
 
   /* /////////////////////////////// */

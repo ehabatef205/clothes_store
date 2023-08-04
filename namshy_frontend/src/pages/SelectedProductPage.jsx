@@ -103,7 +103,7 @@ function SelectedProductPage({ products, handleClick }) {
                   </div>
                   <div style={{ "margin-left": "auto" }} >
                     {" "}
-                    <a className="text-success">follow brand</a>{" "}
+                    <a className="text-dark">follow brand</a>{" "}
                     <i className="bi bi-share "></i>{" "}
                   </div>
                 </div>
@@ -134,7 +134,7 @@ function SelectedProductPage({ products, handleClick }) {
                   <div>
                     <b style={{ fontSize: "25px" }}>size</b>
                   </div>
-                  <div style={{ fontSize: "15px" }} className="text-success">
+                  <div style={{ fontSize: "15px" }} className="text-dark">
                     show size chart
                   </div>
                 </div>
@@ -146,7 +146,7 @@ function SelectedProductPage({ products, handleClick }) {
                         borderRadius: "2px",
                         fontSize: "17px",
                       }}
-                      className="btn text-success bg-light   my-2"
+                      className="btn text-dark bg-light   my-2"
                     >
                       international
                     </button>
@@ -156,7 +156,7 @@ function SelectedProductPage({ products, handleClick }) {
                         borderRadius: "2px",
                         fontSize: "17px",
                       }}
-                      className="btn text-success bg-light   my-2"
+                      className="btn text-dark bg-light   my-2"
                     >
                       US
                     </button>
@@ -166,7 +166,7 @@ function SelectedProductPage({ products, handleClick }) {
                         borderRadius: "2px",
                         fontSize: "17px",
                       }}
-                      className="btn text-success bg-light   my-2"
+                      className="btn text-dark bg-light   my-2"
                     >
 
                       UK
@@ -177,7 +177,7 @@ function SelectedProductPage({ products, handleClick }) {
                         borderRadius: "2px",
                         fontSize: "17px",
                       }}
-                      className="btn text-success bg-light   my-2"
+                      className="btn text-dark bg-light   my-2"
                     >
                       EU{" "}
                     </button>
@@ -219,7 +219,7 @@ function SelectedProductPage({ products, handleClick }) {
                     <button
                       className="btn text-light my-3 h-75 w-100"
                       onClick={() => addtoBag()}
-                      style={{ backgroundColor: "#7DCEA0", fontSize: "1.2rem" }}
+                      style={{ backgroundColor: "#d99d2b", fontSize: "1.2rem" }}
                     >
                       Add To Bag
                     </button>
@@ -227,7 +227,7 @@ function SelectedProductPage({ products, handleClick }) {
 
 
                   <span style={{ textAlign: "center", width: "45%", fontSize: "1.2rem" }}>
-                    <button className="btn bg-light my-3  text-success h-75 w-100">
+                    <button className="btn bg-light my-3  text-dark h-75 w-100">
                       Add to wish list{" "}
                     </button>
                   </span>
@@ -352,7 +352,7 @@ function SelectedProductPage({ products, handleClick }) {
           </div>
           <div className=" col-lg-4 col-12 d-flex justify-content-around ">
 
-            <span className="btn my-3 btn-outline-success w-50 ">
+            <span className="btn my-3 btn-outline-warning w-50 ">
               Rate this product{" "}
             </span>
           </div>

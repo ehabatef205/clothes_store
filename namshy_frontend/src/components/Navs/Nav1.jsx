@@ -4,7 +4,7 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import "./NavBar.css";
-import logo from "../../images/logo.jpg";
+import logoo from "../../images/logoo.png";
 import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
@@ -187,10 +187,10 @@ export function NavBar({visible = true}) {
                       navigate("/", { replace: true });
                     }}
                     height={"100%"}
-                    width={"60px"}
-                    style={{display:"flex", marginRight: "10px",color:"white" }}
+                    width={"90px"}
+                    style={{display:"flex", marginRight: "20px",color:"white" }}
                   >
-                    <img src={logo} style={{height:"50px"}}></img>
+                    <img src={logoo} style={{height:"70px",width:"100px"}}></img>
                 </div>
             </Navbar.Brand>
           </Nav>

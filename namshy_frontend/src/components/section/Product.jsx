@@ -76,7 +76,7 @@ export function Product({ product, index }) {
                     <div>
                         <button
                             className="btn text-light   "
-                            style={{ backgroundColor: "#7DCEA0", marginRight: "2px" }}
+                            style={{ backgroundColor: "#d99d2b", marginRight: "2px" }}
                             onClick={() => addToFavorites()}
                         >
                             <i className="bi bi-heart"></i>
@@ -84,7 +84,7 @@ export function Product({ product, index }) {
 
                         <button
                             className="btn text-light  "
-                            style={{ backgroundColor: "#7DCEA0" }}
+                            style={{ backgroundColor: "#d99d2b" }}
                             onClick={() => addtoBag(product._id)}
                         >
                             <i class="bi bi-plus-lg"></i>
