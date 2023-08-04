@@ -113,14 +113,12 @@ const Bag = () => {
                     <div className="d-flex justify-content-between">
                       <div>
                         <p>
-                          <span className="mx-2" style={{ fontSize: "1.3rem" }}>
-                            Total
-                          </span>
+                        <span style={{ fontWeight: 'bold' }}><p style={{ padding: "10px 20px", textAlign: "center", color: "black" , fontSize:"25px" }}>Total Price: {totalPrice} $</p></span>
                         </p>
                       </div>
                       <div>
                         <p className="mx-2" style={{ fontSize: "1.2rem" }}>
-                          totat cost
+                          
                         </p>
                       </div>
                     </div>
@@ -173,7 +171,6 @@ const Bag = () => {
                 </div>
               </div>
               <div className="d-flex justify-content-between">
-              <p>Total Price: {totalPrice} $</p>
                 <button
                   className="btn text-light "
                   style={{ backgroundColor: "#7DCEA0" }}
