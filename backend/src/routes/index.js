@@ -13,6 +13,7 @@ const cart = require('./api/cart')
 const externalRouter = require('./api/externalapis')
 const supplieraccess=require('./api/supplier')
 const admin=require('./api/admin')
+
 const {Router} = require('express')
 
 const router = Router()
@@ -32,4 +33,5 @@ router.use('/cart', cart)
 router.use('/external', externalRouter)
 router.use('/supp',supplieraccess)
 router.use('/admin',admin)
+
 module.exports = router

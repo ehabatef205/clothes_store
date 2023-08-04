@@ -9,6 +9,16 @@ const order_items_Schema = new Schema({
             product_id: {
                 type: String
             },
+            name: {
+                type: String
+            },
+            image: {
+                type: String
+            },
+            price: {
+                type: Number
+            },
+            SKU:{type:String},
             quantity: {
                 type: String
             }
@@ -40,7 +50,14 @@ const order_items_Schema = new Schema({
     },
     totalPrice: {
         type: String
-    }
+    },
+    status:{
+        type:String
+    },///processing,shipping/completed 
+    suppliers:
+    [String],
+    returnrequest:
+    {type:String}/// none,requested , accepted , denied
 },{timestamps:true})
 
 module.exports =model("Order_items", order_items_Schema);

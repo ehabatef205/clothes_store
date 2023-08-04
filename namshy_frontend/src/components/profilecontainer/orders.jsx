@@ -1,24 +1,37 @@
-import React from "react";
-import Box from "./box.svg"
-import "./styles/orders.css";
+import { React, useState, useEffect } from "react";
+import * as OrdersApi from '../../api/order_items'
+import "./table.css"
+import ViewOrders from "./ViewOrdes";
 
-const Orders = () => {
-    return(
-  <div>
-    <div class="head">
-      <div class="headtext">My orders</div>
-    </div>
-    <br />
-    <div class="error-card">
-      <div class="error-card__title">You have no orders to be displayed</div>
-      <div class="error-card__text">
-        <p>you shall see your orders upon the first purchases</p>
-      </div>
-      <div class="error-card__image">
-        <img src={Box} alt="No order history" />
-      </div>
-    </div>
-  </div>
-    )
-};
+function Orders() {
+    const [OrderList, setOrderList] = useState([])
+    const load = async () => {
+        await OrdersApi.my_orders().then(e => {
+            console.log(e)
+            setOrderList(e.data)
+        })
+    }
+
+    useEffect(() => {
+       
+        load()
+    }, [])
+
+    return (
+        <div>
+            <div className="add   ">
+                <div className="w-100  addheder col-12" style={{ borderBottom: "1px solid gray", textAlign: "center" }} >
+                    {" "}
+                    <h1>Orders</h1>
+                </div>
+                <div style={{ width: "100%" }}>
+                    {OrderList.map((Order, index) => (
+                        <ViewOrders key={index} order={Order} load={load} />
+                    ))}
+                </div>
+            </div>
+        </div>
+    );
+}
+
 export default Orders
