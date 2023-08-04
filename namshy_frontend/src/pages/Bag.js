@@ -23,8 +23,8 @@ const Bag = () => {
 
     navigate('/checkout', { state: cartItems });
   };
-  const load = () => {
-    cart.get_cart().then(e => { setCartItems(e) })
+  const load = async () => {
+    await cart.get_cart().then(e => { setCartItems(e) })
   }
   const [cartItems, setCartItems] = useState([]);
   const [isCartEmpty, setIsCartEmpty] = useState(false);
@@ -162,12 +162,11 @@ const Bag = () => {
                 <div className="  col-12 col-lg-8">
                   <div>
                     <div className="d-flex justify-content-around flex-wrap">
-                      {cartItems?.map((product, index) => (
+                      {cartItems?.map((cart, index) => (
                         <div>
                           <Cartcol
                             key={index}
-
-                            product={product}
+                            cart={cart}
                             updateTotalPrice={updateTotalPrice}
                             load={load}
                             renderedIndex={index}

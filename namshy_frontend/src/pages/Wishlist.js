@@ -15,18 +15,18 @@ import Empitywish from "../components/section/empitywish";
 
 
 const Wishlist = () => {
-  
-  const navigate = useNavigate();
- 
 
-  const [cartItems,setCartItems] = useState([]);
+  const navigate = useNavigate();
+
+
+  const [cartItems, setCartItems] = useState([]);
   const [isCartEmpty, setIsCartEmpty] = useState(false);
-  const load=()=>{
-    cart.get_cart().then(e=>{setCartItems(e)})
- }
+  const load = () => {
+    cart.get_cart().then(e => { setCartItems(e) })
+  }
   useEffect(() => {
     load()
-    
+
   }, []);
   useEffect(() => {
 
@@ -41,7 +41,7 @@ const Wishlist = () => {
       setIsCartEmpty(true);
     }
   }, [cartItems]);
-  
+
   return (
     <div>
       <Header></Header>
@@ -52,7 +52,7 @@ const Wishlist = () => {
           ) : (
             <div className="" style={{ height: "fit-content" }}>
               <div className="d-flex justify-content-between">
-                
+
                 <button
                   className="btn "
                   style={{ color: "#d99d2b", border: "1px solid gray" }}
@@ -62,25 +62,25 @@ const Wishlist = () => {
               </div>
 
               <div className="d-flex m-3  d-flex flex-wrap  ">
-                
+
                 <div className="  col-12 ">
                   <div >
                     <div className="d-flex justify-content-around flex-wrap ">
                       {cartItems?.map((product, index) => (
                         <div className="col-12 col-lg-4 " >
-                          <Wishlistcol 
-                          key={index}
-                           product={product} 
-                          renderedIndex={index} 
-                          load={load}
-                           />
+                          <Wishlistcol
+                            key={index}
+                            product={product}
+                            renderedIndex={index}
+                            load={load}
+                          />
                         </div>
                       ))}
                     </div>
                   </div>
                 </div>
               </div>
-              
+
             </div>
           )}
         </div>

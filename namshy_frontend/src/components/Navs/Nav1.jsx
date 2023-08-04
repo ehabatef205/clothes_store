@@ -14,10 +14,11 @@ import { Nav2 } from "./Nav2";
 import * as prod_cat from '../../api/product_category'
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import {backend_url} from '../../config'
+import { Cookies } from 'react-cookie'
+import { backend_url } from '../../config'
 const proxy = `${backend_url}/external/speech`
 
-export function NavBar({visible = true}) {
+export function NavBar({ visible = true }) {
   const [language] = React.useState("en-US");
   const [categories, setCategories] = useState([])
 
@@ -29,23 +30,23 @@ export function NavBar({visible = true}) {
       echoCancellation: true,
     });
 
-    const speechToText = async () => {
-      const audioBlob = await fetch(mediaBlobUrl).then((r) => r.blob());
-      var reader = new FileReader();
-      reader.readAsDataURL(audioBlob);
-      reader.onloadend = function () {
-        var base64String = reader.result;
-        var splited = base64String.substr(base64String.indexOf(",") + 1);
-        axios
-          .post(proxy,
+  const speechToText = async () => {
+    const audioBlob = await fetch(mediaBlobUrl).then((r) => r.blob());
+    var reader = new FileReader();
+    reader.readAsDataURL(audioBlob);
+    reader.onloadend = function () {
+      var base64String = reader.result;
+      var splited = base64String.substr(base64String.indexOf(",") + 1);
+      axios
+        .post(proxy,
           { audiofile: splited, languageCode: language },
-         )
-          .then((res) => {
-            setQuery(res.data);
-            console.log(res.data);
-          });
-      };
+        )
+        .then((res) => {
+          setQuery(res.data);
+          console.log(res.data);
+        });
     };
+  };
   React.useEffect(() => {
     const getCategory = async () => {
       await prod_cat.all_product_category().then(e => {
@@ -53,7 +54,7 @@ export function NavBar({visible = true}) {
       })
     }
     getCategory()
-  },[])
+  }, [])
   React.useEffect(() => {
     if (mediaBlobUrl) {
 
@@ -63,15 +64,17 @@ export function NavBar({visible = true}) {
   const currentpage = window.location.pathname.split('/')[2];
   const navigate = useNavigate();
   const [query, setQuery] = useState("");
-  const handleLinkClick = (href,name) => {
-    
-    navigate(href,{state:{name:name}});
+  const handleLinkClick = (href, name) => {
+
+    navigate(href, { state: { name: name } });
   };
 
   const linkStyle = {
     padding: "0.5rem 2.1rem",
     borderRight: "1px solid white",
   };
+
+  const cookie = new Cookies()
 
   return (
     <div>
@@ -104,7 +107,11 @@ export function NavBar({visible = true}) {
             >
               <ShoppingBagOutlinedIcon style={{ color: "#fff" }} />
             </a>
-            <a href={"/favorites"} style={{ paddingLeft: "2%" }}>
+            <a onClick={() => {
+              if (cookie.get('Auth') != null) {
+                navigate("/favorites");
+              }
+            }} style={{ paddingLeft: "2%" }}>
               <FavoriteBorderOutlinedIcon style={{ color: "#fff" }} />
             </a>
 
@@ -112,21 +119,21 @@ export function NavBar({visible = true}) {
               <div style={{ color: "#fff" }}>
                 <SearchOutlinedIcon style={{ color: "#000" }} />
               </div>
-              <button 
-                  style={{border:"none" ,backgroundColor:"transparent",color:isActive?"red":"black"}}
-                  onClick={() => {
-                    if (!isActive) {
-                      clearBlobUrl();
-                      startRecording();
-                    } else {
-                      stopRecording();
-                    }
+              <button
+                style={{ border: "none", backgroundColor: "transparent", color: isActive ? "red" : "black" }}
+                onClick={() => {
+                  if (!isActive) {
+                    clearBlobUrl();
+                    startRecording();
+                  } else {
+                    stopRecording();
+                  }
 
-                    setIsActive(!isActive);
-                  }}
-                >
-                  <KeyboardVoiceIcon className="icon" />
-                </button>
+                  setIsActive(!isActive);
+                }}
+              >
+                <KeyboardVoiceIcon className="icon" />
+              </button>
               <input
                 style={{
                   color: "#000",
@@ -144,9 +151,9 @@ export function NavBar({visible = true}) {
               />
             </div>
             {/* <div href={"#cart"} style={{marginLeft:'3%'}} onClick={() => setShow(false)}><ShoppingBagOutlinedIcon /></div>  */}
-            <div className="hell" style={{width:"50%",display:"flex",flexDirection:"row" ,overflowY:"auto"}}>
-              {categories.map((category)=>(<div
-                href={'/cat/'+category.name}
+            <div className="hell" style={{ width: "50%", display: "flex", flexDirection: "row", overflowY: "auto" }}>
+              {categories.map((category) => (<div
+                href={'/cat/' + category.name}
                 style={{
                   ...linkStyle,
                   background:
@@ -158,25 +165,25 @@ export function NavBar({visible = true}) {
                       ? "black"
                       : "white",
                 }}
-                onClick={() => handleLinkClick('/cat/'+category._id,category.name)}
+                onClick={() => handleLinkClick('/cat/' + category._id, category.name)}
                 className="navhover navclick"
               >
                 {category.name}
               </div>))}
-             
+
             </div>
             <Navbar.Brand>
-              
-                <div 
-                    onClick={() => {
-                      navigate("/", { replace: true });
-                    }}
-                    height={"100%"}
-                    width={"90px"}
-                    style={{display:"flex", marginRight: "20px",color:"white" }}
-                  >
-                    <img src={logoo} style={{height:"70px",width:"100px"}}></img>
-                </div>
+
+              <div
+                onClick={() => {
+                  navigate("/", { replace: true });
+                }}
+                height={"100%"}
+                width={"90px"}
+                style={{ display: "flex", marginRight: "20px", color: "white" }}
+              >
+                <img src={logoo} style={{ height: "70px", width: "100px" }}></img>
+              </div>
             </Navbar.Brand>
           </Nav>
         </Container>

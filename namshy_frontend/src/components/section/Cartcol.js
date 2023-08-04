@@ -3,20 +3,21 @@ import { CartContext } from "./Shoppingcartcontext";
 import "./slider.css";
 import * as productfetch from "../../api/product"
 import * as wish from "../../api/wish"
+import * as cartDB from "../../api/cart"
 import { Cookies } from "react-cookie";
 
-const Cartcol = ({ product, updateTotalPrice, renderedIndex ,load}) => {
+const Cartcol = ({ cart, updateTotalPrice, renderedIndex, load }) => {
   const [price_after, setPrice_after] = useState(0)
   const [data, setData] = useState(false);
   const [mytotalstate, setMyTotalState] = useState(0)
 
   const [currentproduct, setCurrentProduct] = useState({});
   useEffect(() => {
-    productfetch.get_product_by_id(product.product_id).then(e => {
+    productfetch.get_product_by_id(cart.product_id).then(e => {
       setPrice_after(e.price_after)
       setCurrentProduct(e)
     })
-  }, [data]);
+  }, [cart]);
   const cookie = new Cookies();
   const addToFavorites = async (id) => {
     console.log("add to favorites");
@@ -33,7 +34,7 @@ const Cartcol = ({ product, updateTotalPrice, renderedIndex ,load}) => {
     let total = 0;
     if (price_after > 0 && mytotalstate === 0) {
       setMyTotalState(mytotalstate + 1)
-      total += currentproduct.price_after * product.quantity;
+      total += currentproduct.price_after * cart.quantity;
       console.log(total)
       updateTotalPrice(total);
     }
@@ -57,12 +58,33 @@ const Cartcol = ({ product, updateTotalPrice, renderedIndex ,load}) => {
               <p>{currentproduct?.price_after}</p>
             </div>
             <div className="h-50  " style={{ textAlign: "center" }}>
-             
+
+              <button
+                onClick={() => cartDB.increse_item(cart?._id).then(e => {
+                  load()
+                })}/*.then(e=>{setCurrentProduct(e)})*/
+                className="btn m-1 btn-light"
+              >
+                <i class="bi bi-plus-lg"></i>
+              </button>
+
               <input
                 className="btn w-25 bg-light m-1"
-                value={product.quantity}
+                value={cart.quantity}
               />
-              
+
+              <button
+                onClick={() => {
+                  if (cart.quantity !== 1)
+                    cartDB.decrease_item(
+                      cart?._id).then((e) => {
+                        load()
+                      })
+                }} /*.then(e=>{setCurrentProduct(e)})*/
+                className=" btn m-1 btn-light"
+              >
+                <i class="bi bi-dash-lg"></i>
+              </button>
             </div>
           </div>
 
@@ -95,7 +117,7 @@ const Cartcol = ({ product, updateTotalPrice, renderedIndex ,load}) => {
                 <div className="m-2 ">
                   <button
                     className="btn"
-                    onClick={() => wish.Delete_cart_item(product._id).then(e => {
+                    onClick={() => cartDB.Delete_cart_item(cart._id).then(e => {
                       load()
                     })}
                   >
@@ -105,7 +127,7 @@ const Cartcol = ({ product, updateTotalPrice, renderedIndex ,load}) => {
                 </div>
                 <div className=" m-2 text-secondary">|</div>
                 <div className="m-2 ">
-                <button className="btn"  onClick={()=>{addToFavorites(product._id)}}>
+                  <button className="btn" onClick={() => { addToFavorites(cart.product_id) }}>
                     {" "}
                     <i className="bi bi-heart m-2">save later</i>
                   </button>
@@ -127,7 +149,7 @@ const Cartcol = ({ product, updateTotalPrice, renderedIndex ,load}) => {
       </div>
 
       <div>
-        <p>Sub Total Price: ${currentproduct?.price_after * product?.quantity}</p>
+        <p>Sub Total Price: ${currentproduct?.price_after * cart?.quantity}</p>
       </div>
     </div>
   );

@@ -1,9 +1,15 @@
 const express = require("express");
 const app = express();
 const port = 5000;
+const fileUpload = require('express-fileupload')
 const mongoose = require("mongoose");
 const router = require("./src/routes/index");
 const cors = require("cors");
+
+app.use(express.json());
+app.use(fileUpload({
+  useTempFiles: true,
+}))
 
 const connectDB = async () => {
   try {
