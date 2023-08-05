@@ -210,3 +210,18 @@ module.exports.CreateProducts = async (req, res, next) => {
         })
     }
 }
+
+module.exports.SearchByName = (req, res) => {
+    Product.find({name:{ $regex: '.*' + req.body.query + '.*' }}).limit(8)
+    .then(response => {
+
+        res.json({
+            response
+        })
+    })
+    .catch(error => {
+        res.json({
+            message: 'An error Occured!'
+        })
+    })
+}
