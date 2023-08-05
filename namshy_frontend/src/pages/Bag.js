@@ -49,6 +49,30 @@ const Bag = () => {
     }
   }, [cartItems]);
 
+
+  const updateCartItemPrice = (index, price) => {
+    setCartItems((prevItems) => {
+      const updatedItems = [...prevItems];
+      updatedItems[index].calculatedPrice = price;
+      return updatedItems;
+    });
+  };
+
+  const calculateTotalPrice = (items) => {
+    let total = 0;
+    items.forEach((item) => {
+      total += item.calculatedPrice ||0;
+    });
+    return total;
+  };
+
+  useEffect(() => {
+    const newTotalPrice = calculateTotalPrice(cartItems);
+    setTotalPrice(newTotalPrice);
+  }, [cartItems]);
+
+
+
   return (
     <div>
       <Header></Header>
@@ -177,6 +201,7 @@ const Bag = () => {
                             key={index}
                             cart={cart}
                             updateTotalPrice={updateTotalPrice}
+                            updateCartItemPrice={updateCartItemPrice}
                             load={load}
                             renderedIndex={index}
                           />
