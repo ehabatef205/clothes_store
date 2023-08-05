@@ -46,7 +46,7 @@ const Cartcol = ({ cart, updateTotalPrice, renderedIndex, load }) => {
   const colors = ["red", 
     "black", 
     "brown", 
-    "yellow"];
+    "yellow",'green','purple'];
 
 
   return (
