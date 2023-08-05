@@ -220,7 +220,7 @@ module.exports.uplodaImage = async (req, res, next) => {
     let images = [];
 
     for (var i = 1; i < req.files.length; i++) {
-        images.push(req.files[i].path)
+        images.push(`http://5.183.9.124:5000/${req.files[i].path}`)
     }
 
     const body = req.body
