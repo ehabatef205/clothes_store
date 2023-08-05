@@ -9,8 +9,8 @@ import { Cookies } from "react-cookie";
 const Cartcol = ({ cart, updateTotalPrice, renderedIndex, load }) => {
   const [price_after, setPrice_after] = useState(0)
   const [Sizet, setSizet] = useState('m');
+  const [totals, setTotals] = useState(0)
   const [Colort, setColort] = useState('red');
-  const [mytotalstate, setMyTotalState] = useState(0)
 
   const [currentproduct, setCurrentProduct] = useState({});
   useEffect(() => {
@@ -30,16 +30,29 @@ const Cartcol = ({ cart, updateTotalPrice, renderedIndex, load }) => {
 
   const { decreaseQuantity, addToCart } =
     useContext(CartContext);
+    const add =() => {
+      let total = 0;
+  
+      total += currentproduct.price_after * cart.quantity;
+      
+      if(total){
+      
+      updateTotalPrice(total-totals);
+      setTotals(total)}
+      
+    }
 
   useEffect(() => {
     let total = 0;
-    if (price_after > 0 && mytotalstate === 0) {
-      setMyTotalState(mytotalstate + 1)
+  
       total += currentproduct.price_after * cart.quantity;
-      console.log(total)
-      updateTotalPrice(total);
-    }
-  }, [setPrice_after]);
+      
+      if(total){
+      
+      updateTotalPrice(total-totals);
+      setTotals(total)}
+    
+  }, [cart]);
 
 
   const size = ["m", "l", "xl", "xxl"];
@@ -152,6 +165,7 @@ const Cartcol = ({ cart, updateTotalPrice, renderedIndex, load }) => {
                   <button
                     className="btn"
                     onClick={() => cartDB.Delete_cart_item(cart._id).then(e => {
+                      updateTotalPrice(-totals);
                       load()
                     })}
                   >
@@ -177,6 +191,7 @@ const Cartcol = ({ cart, updateTotalPrice, renderedIndex, load }) => {
             style={{
               height: "465px",
             }}
+            onLoad={add}
             src={Array.isArray(currentproduct?.imageSrc) && currentproduct.imageSrc.length > 0 ? currentproduct.imageSrc[0] : ""}
           />
         </div>
