@@ -8,7 +8,8 @@ import { Cookies } from "react-cookie";
 
 const Cartcol = ({ cart, updateTotalPrice, renderedIndex, load }) => {
   const [price_after, setPrice_after] = useState(0)
-  const [data, setData] = useState(false);
+  const [Sizet, setSizet] = useState('m');
+  const [Colort, setColort] = useState('red');
   const [mytotalstate, setMyTotalState] = useState(0)
 
   const [currentproduct, setCurrentProduct] = useState({});
@@ -42,6 +43,10 @@ const Cartcol = ({ cart, updateTotalPrice, renderedIndex, load }) => {
 
 
   const size = ["m", "l", "xl", "xxl"];
+  const colors = ["red", 
+    "black", 
+    "brown", 
+    "yellow"];
 
 
   return (
@@ -104,11 +109,39 @@ const Cartcol = ({ cart, updateTotalPrice, renderedIndex, load }) => {
                       cursor: "pointer",
                       width: "70px",
                       borderRadius: "2px",
+                      backgroundColor:size===Sizet? 
+                      Colort:"transparent",
+                      color:size===Sizet? 
+                      'white':"gray",
+                      
                     }}
                     key={index}
                     className="btn  btn-outline-secondary "
+
+                    onClick={() =>{setSizet(size)}}
                   >
                     {size}
+                  </button>
+                ))}
+                <div style={ {height:"30px"}}>{" \n"}</div>
+                 
+                {colors.map((color, index) => (
+                  <button
+                    style={{
+                      zIndex: 3,
+                      cursor: "pointer",
+                      width: "70px",
+                      borderRadius: "2px",
+                      backgroundColor:color,
+                      color:color,
+                      
+                    }}
+                    key={index}
+                    className="btn  btn-outline-secondary "
+
+                    onClick={() =>{setColort(color)}}
+                  >
+                    0
                   </button>
                 ))}
               </div>
