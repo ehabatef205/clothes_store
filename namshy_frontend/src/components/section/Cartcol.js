@@ -6,13 +6,12 @@ import * as wish from "../../api/wish"
 import * as cartDB from "../../api/cart"
 import { Cookies } from "react-cookie";
 
-const Cartcol = ({ cart, updateTotalPrice, updateCartItemPrice, renderedIndex, load }) => {
+const Cartcol = ({ cart, updateTotalPrice, renderedIndex, load }) => {
   const [price_after, setPrice_after] = useState(0)
   const [Sizet, setSizet] = useState('m');
   const [Colort, setColort] = useState('red');
   const [mytotalstate, setMyTotalState] = useState(0)
 
-  
   const [currentproduct, setCurrentProduct] = useState({});
   useEffect(() => {
     productfetch.get_product_by_id(cart.product_id).then(e => {
@@ -40,15 +39,8 @@ const Cartcol = ({ cart, updateTotalPrice, updateCartItemPrice, renderedIndex, l
       console.log(total)
       updateTotalPrice(total);
     }
-  }, [currentproduct]);
-  useEffect(() => {
-    // ... Other code
+  }, [setPrice_after]);
 
-    const calculatedPrice = currentproduct.price_after * cart.quantity;
-    updateCartItemPrice(renderedIndex, calculatedPrice);
-
-    // ... Other code
-  }, [currentproduct, cart, updateCartItemPrice]);
 
   const size = ["m", "l", "xl", "xxl"];
   const colors = ["red", 

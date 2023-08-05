@@ -2,7 +2,9 @@ import React, { useContext, useState, useEffect } from "react";
 import { CartContext } from "./Shoppingcartcontext";
 import "./slider.css";
 import * as productfetch from "../../api/product"
-import * as cart from "../../api/wish"
+import * as cart from "../../api/cart"
+import * as wish from "../../api/wish"
+
 
 
 import { Cookies } from "react-cookie";
@@ -14,8 +16,7 @@ const Wishlistcol = ({ product, renderedIndex, load }) => {
       console.log(e);
     });
   };
-  const [data, setData] = useState(false);
-  const [mytotalstate, setMyTotalState] = useState(0)
+
 
   const [currentproduct, setCurrentProduct] = useState({});
   useEffect(() => {
@@ -60,7 +61,7 @@ const Wishlistcol = ({ product, renderedIndex, load }) => {
             <div className="my-1 ">
               <button
                 className="btn"
-                onClick={() => cart.Delete_cart_item(product._id).then(e => {
+                onClick={() => wish.Delete_cart_item(product._id).then(e => {
                   load()
                 })}
               >
@@ -71,7 +72,7 @@ const Wishlistcol = ({ product, renderedIndex, load }) => {
             <div className=" my-1 text-secondary ">|</div>
             <div className="my-1">
               <button className="btn"
-                onClick={() => { addtoBag(product._id) }}>
+                onClick={() => { addtoBag(currentproduct._id) }}>
                 {" "}
                 <i className="bi bi-cart m-2">Add to cart</i>
 
