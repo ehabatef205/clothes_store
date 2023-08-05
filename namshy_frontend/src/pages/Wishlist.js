@@ -54,6 +54,7 @@ const Wishlist = () => {
               <div className="d-flex justify-content-between">
 
                 <button
+                 onClick={()=>{navigate(-1)}}
                   className="btn "
                   style={{ color: "#d99d2b", border: "1px solid gray" }}
                 >

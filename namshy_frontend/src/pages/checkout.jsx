@@ -22,7 +22,7 @@ const Checkout = () => {
       })
     }
 
-    setPriceProducts(allPrice)
+    setPriceProducts(allPrice+50)
 
   }
   useEffect(() => {

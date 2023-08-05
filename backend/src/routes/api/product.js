@@ -28,5 +28,6 @@ router.post('/from_excel', product_controller.CreateProducts)
 router.put('/:id', product_controller.UpdateProduct)
 router.put('/view/:id', product_controller.UpdateViewProduct)
 router.delete('/:id', product_controller.DeleteProduct)
+router.post('/search',product_controller.SearchByName)
 
 module.exports = router

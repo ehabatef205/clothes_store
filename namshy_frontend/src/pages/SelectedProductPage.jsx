@@ -13,6 +13,7 @@ function SelectedProductPage({ products, handleClick }) {
   const [childHeight, setChildHeight] = useState(0);
   const [selected, setSelected] = useState({});
   const size = ["m", "l", "xl", "xxl"]
+  const [Sizet, setSizet] = useState('m');
   const cookie = new Cookies()
 
   const { id } = useParams();
@@ -195,11 +196,16 @@ function SelectedProductPage({ products, handleClick }) {
                     {" "}
                     {size.map((size, index) => (
                       <button
+                      onClick={() =>{setSizet(size)}}
                         style={{
                           zIndex: 3,
                           cursor: "pointer",
                           width: "70px",
                           borderRadius: "2px",
+                          backgroundColor:size===Sizet? 
+                          "gray":"transparent",
+                          color:size===Sizet? 
+                          'white':"gray",
                         }}
                         key={index}
                         className="btn  btn-outline-secondary "
@@ -288,16 +294,10 @@ function SelectedProductPage({ products, handleClick }) {
                 <div className="d-flex">
                   <div style={{ textAlign: "left", marginTop: "24px", marginLeft: "5px" }}>
                     {" "}
-                    SKU
-                    <br />
-                    Color
-                    <br /> Neack Type
-                    <br /> size shown in image
-                    <br />
-                    supplier style No
-                    <br />
-                    washing instructions
-                    <br /> product material
+                    SKU {selected?.SKU}
+  
+                    <br /> 
+                    product material : {selected?.desc?.type}
                   </div>
                 </div>
               </div>
@@ -314,7 +314,7 @@ function SelectedProductPage({ products, handleClick }) {
                     data-brand-url="/adidas_originals/"
                   >
                     <img
-                      src="https://a.namshicdn.com/brand/adidas_originals.jpg"
+                      src={selected?.desc?.brand?.logo}
                       data-nm-invalid-image-remover=""
                     />
                   </a>
