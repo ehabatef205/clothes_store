@@ -126,7 +126,12 @@ module.exports.getProductBySubCategory2 = async (req, res) => {
 }
 
 module.exports.getDataFromExcel = async (req, res) => {
-    const workbook = xlsx.readFile(req.files.excel.tempFilePath);  // Step 2
+    if (!req.file) {
+        return res.status(400).send('No file uploaded');
+    }
+
+    const excelPath = req.file.path;
+    const workbook = xlsx.readFile(excelPath);  // Step 2
     let workbook_sheet = workbook.SheetNames;                // Step 3
     let workbook_response = xlsx.utils.sheet_to_json(        // Step 4
         workbook.Sheets[workbook_sheet[0]]
@@ -214,18 +219,18 @@ module.exports.CreateProducts = async (req, res, next) => {
 
 
 module.exports.SearchByName = (req, res) => {
-    Product.find({name:{ $regex: '.*' + req.body.query + '.*' }}).limit(8)
-    .then(response => {
+    Product.find({ name: { $regex: '.*' + req.body.query + '.*' } }).limit(8)
+        .then(response => {
 
-        res.json({
-            response
+            res.json({
+                response
+            })
         })
-    })
-    .catch(error => {
-        res.json({
-            message: 'An error Occured!'
+        .catch(error => {
+            res.json({
+                message: 'An error Occured!'
+            })
         })
-    })
 }
 module.exports.uplodaImage = async (req, res, next) => {
     if (!req.files || req.files.length === 0) {
