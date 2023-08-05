@@ -85,7 +85,7 @@ module.exports.Read_order_item = async (req, res) => {
 module.exports.Read_order_items = async (req, res) => {
 
 
-    await Order_items.find().then(e =>{
+    await Order_items.find({returnrequest:'none'}).then(e =>{
         return res.status(200).json(e)
     }).catch(err => {
         console.log(err.message)

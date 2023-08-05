@@ -93,7 +93,7 @@ module.exports.getProductByType = async (req, res) => {
     if (_id === 'undefined') {
         _id = { $gte: "" }
     }
-    await Product.find({ category_id: _id, typeOfProduct: req.body.typeOfProduct, view: true }).limit(12).then(e => {
+    await Product.find({ category_id: _id, typeOfProduct: req.body.typeOfProduct, view: true }).limit(8).then(e => {
         return res.json({
             response: e
         })
