@@ -3,6 +3,7 @@ const Wish = require('../models/wish.js')
 const Cart = require('../models/cart.js')
 const mongoose = require('mongoose')
 const xlsx = require('xlsx');
+const multer = require('multer')
 
 module.exports.AllProducts = (req, res) => {
     Product.find()
@@ -211,6 +212,7 @@ module.exports.CreateProducts = async (req, res, next) => {
     }
 }
 
+
 module.exports.SearchByName = (req, res) => {
     Product.find({name:{ $regex: '.*' + req.body.query + '.*' }}).limit(8)
     .then(response => {
@@ -225,3 +227,61 @@ module.exports.SearchByName = (req, res) => {
         })
     })
 }
+module.exports.uplodaImage = async (req, res, next) => {
+    if (!req.files || req.files.length === 0) {
+        return res.status(400).send('No file uploaded');
+    }
+
+    let images = [];
+
+    for (var i = 1; i < req.files.length; i++) {
+        images.push(req.files[i].path)
+    }
+
+    const body = req.body
+    body.supplier = 'Wolf'
+    body.imageSrc = images;
+    const product = new Product({
+        supplier: 'Wolf',
+        category_id: body.category_id,
+        subCategory: body.subCategory,
+        typeOfProduct: body.typeOfProduct,
+        name: body.name,
+        quantity: body.quantity,
+        SKU: body.SKU,
+        price_before: body.price_before,
+        price_after: body.price_after,
+        imageSrc: images,
+        desc: {
+            color: body.color,
+            type: body.type,
+            brand: {
+                name: body.nameOfBrand,
+                logo: req.files[0].path,
+            },
+            description: body.description,
+        },
+        sizes: {
+            s: body.s,
+            m: body.m,
+            l: body.l,
+            xl: body.xl,
+            xxl: body.xxl
+        },
+        view: true
+    })
+
+    await product.save()
+        .then(response => {
+            res.json({
+                response
+            })
+        })
+        .catch(error => {
+
+            res.json({
+                message: error.message
+            })
+        })
+}
+

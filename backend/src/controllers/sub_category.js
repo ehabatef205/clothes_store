@@ -36,6 +36,18 @@ module.exports.get_subcategory_by_id = async (req, res) => {
 
 module.exports.get_subcategory_by_main_category = async (req, res) => {
     const id = req.params.id
+    SubCategory.find({ main_category: id, view: true }).then(e => {
+        res.status(200).json({
+            response: e
+        })
+    }).catch(err => {
+        console.log(err.message)
+        res.status(404).json({ error: err.message })
+    })
+}
+
+module.exports.get_subcategory_by_main_category2 = async (req, res) => {
+    const id = req.params.id
     SubCategory.find({ main_category: id }).then(e => {
         res.status(200).json({
             response: e
@@ -64,5 +76,19 @@ module.exports.update_subcategory = async (req, res) => {
     }).catch(err => {
         console.log(err.message)
         res.status(401).json({ error: err.message })
+    })
+}
+
+module.exports.UpdateViewSubcategory = async (req, res) => {
+    const body = req.body
+    let _id = new mongoose.Types.ObjectId(req.params.id)
+    await SubCategory.findOneAndUpdate({ _id: _id }, { $set: body }, { new: true }).then(e => {
+        Product.updateMany({ subCategory: _id }, { $set: { view: false } }).then(() => {
+            res.json({
+                message: 'disabled'
+            })
+        })
+    }).catch(err => {
+        return res.json({ message: "Error" })
     })
 }

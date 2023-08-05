@@ -5,8 +5,11 @@ const SubCategorySchema = new Schema({
     name: {
         type: String
     },
-    main_category:{
+    main_category: {
         type: String
+    },
+    view: {
+        type: Boolean
     }
 })
 
