@@ -1,5 +1,5 @@
 import { useReactMediaRecorder } from "react-media-recorder-2";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
@@ -9,18 +9,19 @@ import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
-import KeyboardVoiceIcon from '@mui/icons-material/KeyboardVoice';
+import KeyboardVoiceIcon from "@mui/icons-material/KeyboardVoice";
 import { Nav2 } from "./Nav2";
-import * as prod_cat from '../../api/product_category'
+import * as prod_cat from "../../api/product_category";
+import { searchProduct } from "../../api/product";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { Cookies } from 'react-cookie'
-import { backend_url } from '../../config'
-const proxy = `${backend_url}/external/speech`
+import { Cookies } from "react-cookie";
+import { backend_url } from "../../config";
+const proxy = `${backend_url}/external/speech`;
 
 export function NavBar({ visible = true }) {
   const [language] = React.useState("en-US");
-  const [categories, setCategories] = useState([])
+  const [categories, setCategories] = useState([]);
 
   const [isActive, setIsActive] = React.useState(false);
   const { startRecording, stopRecording, mediaBlobUrl, clearBlobUrl } =
@@ -38,9 +39,7 @@ export function NavBar({ visible = true }) {
       var base64String = reader.result;
       var splited = base64String.substr(base64String.indexOf(",") + 1);
       axios
-        .post(proxy,
-          { audiofile: splited, languageCode: language },
-        )
+        .post(proxy, { audiofile: splited, languageCode: language })
         .then((res) => {
           setQuery(res.data);
           console.log(res.data);
@@ -49,23 +48,32 @@ export function NavBar({ visible = true }) {
   };
   React.useEffect(() => {
     const getCategory = async () => {
-      await prod_cat.all_product_category().then(e => {
-        setCategories(e.response)
-      })
-    }
-    getCategory()
-  }, [])
+      await prod_cat.all_product_category().then((e) => {
+        setCategories(e.response);
+      });
+    };
+    getCategory();
+  }, []);
   React.useEffect(() => {
     if (mediaBlobUrl) {
-
       speechToText();
     }
   }, [mediaBlobUrl]);
-  const currentpage = window.location.pathname.split('/')[2];
+  const currentpage = window.location.pathname.split("/")[2];
   const navigate = useNavigate();
   const [query, setQuery] = useState("");
-  const handleLinkClick = (href, name) => {
 
+  const [items, setItems] = useState([]);
+  useEffect(() => {
+    if (query === "") setItems([]);
+    else {
+      searchProduct(query).then((e) => {
+        setItems(e.data.response);
+      });
+    }
+  }, [query]);
+
+  const handleLinkClick = (href, name) => {
     navigate(href, { state: { name: name } });
   };
 
@@ -74,7 +82,7 @@ export function NavBar({ visible = true }) {
     borderRight: "1px solid white",
   };
 
-  const cookie = new Cookies()
+  const cookie = new Cookies();
 
   return (
     <div>
@@ -107,11 +115,14 @@ export function NavBar({ visible = true }) {
             >
               <ShoppingBagOutlinedIcon style={{ color: "#fff" }} />
             </a>
-            <a onClick={() => {
-              if (cookie.get('Auth') != null) {
-                navigate("/favorites");
-              }
-            }} style={{ paddingLeft: "2%" }}>
+            <a
+              onClick={() => {
+                if (cookie.get("Auth") != null) {
+                  navigate("/favorites");
+                }
+              }}
+              style={{ paddingLeft: "2%" }}
+            >
               <FavoriteBorderOutlinedIcon style={{ color: "#fff" }} />
             </a>
 
@@ -120,7 +131,11 @@ export function NavBar({ visible = true }) {
                 <SearchOutlinedIcon style={{ color: "#000" }} />
               </div>
               <button
-                style={{ border: "none", backgroundColor: "transparent", color: isActive ? "red" : "black" }}
+                style={{
+                  border: "none",
+                  backgroundColor: "transparent",
+                  color: isActive ? "red" : "black",
+                }}
                 onClick={() => {
                   if (!isActive) {
                     clearBlobUrl();
@@ -151,29 +166,34 @@ export function NavBar({ visible = true }) {
               />
             </div>
             {/* <div href={"#cart"} style={{marginLeft:'3%'}} onClick={() => setShow(false)}><ShoppingBagOutlinedIcon /></div>  */}
-            <div className="hell" style={{ width: "50%", display: "flex", flexDirection: "row", overflowY: "auto" }}>
-              {categories.map((category) => (<div
-                href={'/cat/' + category.name}
-                style={{
-                  ...linkStyle,
-                  background:
-                    currentpage === category._id
-                      ? "white"
-                      : "transparent",
-                  color:
-                    currentpage === category._id
-                      ? "black"
-                      : "white",
-                }}
-                onClick={() => handleLinkClick('/cat/' + category._id, category.name)}
-                className="navhover navclick"
-              >
-                {category.name}
-              </div>))}
-
+            <div
+              className="hell"
+              style={{
+                width: "50%",
+                display: "flex",
+                flexDirection: "row",
+                overflowY: "auto",
+              }}
+            >
+              {categories.map((category) => (
+                <div
+                  href={"/cat/" + category.name}
+                  style={{
+                    ...linkStyle,
+                    background:
+                      currentpage === category._id ? "white" : "transparent",
+                    color: currentpage === category._id ? "black" : "white",
+                  }}
+                  onClick={() =>
+                    handleLinkClick("/cat/" + category._id, category.name)
+                  }
+                  className="navhover navclick"
+                >
+                  {category.name}
+                </div>
+              ))}
             </div>
             <Navbar.Brand>
-
               <div
                 onClick={() => {
                   navigate("/", { replace: true });
@@ -182,13 +202,59 @@ export function NavBar({ visible = true }) {
                 width={"90px"}
                 style={{ display: "flex", marginRight: "20px", color: "white" }}
               >
-                <img src={logoo} style={{ height: "70px", width: "100px" }}></img>
+                <img
+                  src={logoo}
+                  style={{ height: "70px", width: "100px" }}
+                ></img>
               </div>
             </Navbar.Brand>
           </Nav>
+          <div
+            style={{
+              width: "100%",
+              display: "flex",
+              justifyContent: "center",
+              position: "absolute",
+            }}
+          >
+            <div
+              className="list-group"
+              style={{
+                width: "40vw",
+                marginTop: "3px",
+                marginRight: "20%",
+                zIndex: 9999,
+                
+              }}
+            >
+              {items?.map((item) => {
+                return (
+                  <a
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      direction: "ltr",
+                    }}
+                    className="list-group-item list-group-item-action"
+                    key={item._id}
+                    href={"/selectedproductpage/" + item._id}
+                  >
+                    <img
+                      style={{ height: "50px", marginRight: "5px" }}
+                      src={item?.imageSrc[0]}
+                      alt={item.name}
+                    />
+                    {item.name}
+                    <i style={{ position: "relative" }}>{item.price_after}</i>
+                  </a>
+                );
+              })}
+            </div>
+          </div>
         </Container>
       </div>
-      {visible && <Nav2 current_page={currentpage + '/'}></Nav2>}
+      {visible && <Nav2 current_page={currentpage + "/"}></Nav2>}
     </div>
   );
 }

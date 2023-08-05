@@ -3,6 +3,8 @@ import ThirdSlider from "../components/section/ThirdSlider";
 
 import Cartcol from "../components/section/Cartcol";
 import React, { useState, useEffect, useContext } from "react";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import { Container } from "react-bootstrap";
 import { useNavigate } from 'react-router-dom';
@@ -58,12 +60,19 @@ const Bag = () => {
             <div className="" style={{ height: "fit-content" }}>
               <div className="d-flex justify-content-between">
                 <button
+                onClick={()=>{
+                  toast.warning("Waiting to activate Ai Virtual Room", {
+                    position: toast.POSITION.TOP_LEFT
+                })
+                }}
                   className="btn text-light "
                   style={{ backgroundColor: "#d99d2b" }}
                 >
                   AI Virtual Room
                 </button>
+                <ToastContainer/>
                 <button
+                onClick={()=>{navigate(-1)}}
                   className="btn "
                   style={{ color: "#d99d2b", border: "1px solid gray" }}
                 >
@@ -73,7 +82,7 @@ const Bag = () => {
 
               <div className="d-flex m-3  d-flex flex-wrap  ">
                 <div
-                  style={{ textAlign: "end" }}
+                  style={{ textAlign: "end",height:"80%" }}
                   className="col-12 col-lg-4  d-flex-column justify-content-between  "
                 >
                   <div className="one">
@@ -124,7 +133,7 @@ const Bag = () => {
                       </div>
                       <div>
                         <p className="mx-2" style={{ fontSize: "1.2rem" }}>
-                          totat cost
+                          {totalPrice+50}$
                         </p>
                       </div>
                     </div>
@@ -178,7 +187,7 @@ const Bag = () => {
                 </div>
               </div>
               <div className="d-flex justify-content-between">
-                <p>Total Price: {totalPrice} $</p>
+                <p>Total Price: {totalPrice+50} $</p>
                 <button
                   className="btn text-light "
                   style={{ backgroundColor: "#d99d2b" }}

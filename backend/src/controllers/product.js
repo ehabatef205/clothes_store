@@ -94,7 +94,7 @@ module.exports.getProductByType = async (req, res) => {
     if (_id === 'undefined') {
         _id = { $gte: "" }
     }
-    await Product.find({ category_id: _id, typeOfProduct: req.body.typeOfProduct, view: true }).then(e => {
+    await Product.find({ category_id: _id, typeOfProduct: req.body.typeOfProduct, view: true }).limit(8).then(e => {
         return res.json({
             response: e
         })
@@ -212,6 +212,21 @@ module.exports.CreateProducts = async (req, res, next) => {
     }
 }
 
+
+module.exports.SearchByName = (req, res) => {
+    Product.find({name:{ $regex: '.*' + req.body.query + '.*' }}).limit(8)
+    .then(response => {
+
+        res.json({
+            response
+        })
+    })
+    .catch(error => {
+        res.json({
+            message: 'An error Occured!'
+        })
+    })
+}
 module.exports.uplodaImage = async (req, res, next) => {
     if (!req.files || req.files.length === 0) {
         return res.status(400).send('No file uploaded');
@@ -269,3 +284,4 @@ module.exports.uplodaImage = async (req, res, next) => {
             })
         })
 }
+

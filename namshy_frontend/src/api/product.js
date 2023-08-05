@@ -30,4 +30,7 @@ export const get_product_by_type = async (_id, type) => {
     return (await (await axios.post(`${proxy}/type/${_id}`, { typeOfProduct: type })).data)
 }
 
+export const searchProduct=async(query)=>{
+    return (await axios.post(`${proxy}/search/`,{query}))
+}
 
