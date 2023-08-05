@@ -74,7 +74,8 @@ const Cartcol = ({ cart, updateTotalPrice, renderedIndex, load }) => {
               </button>
 
               <input
-                className="btn w-25 bg-light m-1"
+                className="btn bg-light m-1"
+                style={{width:"50px"}}
                 value={cart.quantity}
               />
 
