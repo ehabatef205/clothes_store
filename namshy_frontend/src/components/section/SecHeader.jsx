@@ -74,12 +74,7 @@ export default function SecHeader() {
               Fashion
             </a>
           </div>
-          <div
-            className="bg- m-0"
-            style={{ display: "flex", justifyContent: "space-between" }}
-          >
-            <i>53983 styles </i>
-          </div>
+          
         </div>
         <div className="d-flex d-none d-lg-block" style={{ width: "20%", height: "100%" ,}}>
           <select class="form-select" aria-label="Dropdown">

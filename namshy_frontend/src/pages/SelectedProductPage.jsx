@@ -108,11 +108,7 @@ function SelectedProductPage({ products, handleClick }) {
                   <div>
                     <p >{selected?.name}</p>
                   </div>
-                  <div style={{ "margin-left": "auto" }} >
-                    {" "}
-                    <a className="text-dark">follow brand</a>{" "}
-                    <i className="bi bi-share "></i>{" "}
-                  </div>
+                  
                 </div>
                 <div className="  w-100">
                   <p style={{ textAlign: "left", fontSize: "25px" }}>

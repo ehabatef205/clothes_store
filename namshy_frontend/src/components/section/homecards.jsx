@@ -29,6 +29,8 @@ export default function Homecards(
 
       <Container
         style={{
+          display:"flex",
+          flexDirection:"column",
           justifyContent: "center",
           backgroundColor: "rgba(178, 182, 186, 0.219)",
           marginTop:"4%",
@@ -41,8 +43,9 @@ export default function Homecards(
             height: "70px",
             textAlign: "left",
             display: "flex",
-            "flex-direction": "row",
+            flexDirection: "row",
             justifyContent:"space-between"
+            ,marginTop:"20px"
           }}
         >
           <div style={{ display: "inline-flex", fontSize: "2rem" }}>

@@ -109,9 +109,7 @@ export function NavBar({ visible = true }) {
             </a>
             <a
               style={{ paddingLeft: "2%" }}
-              onClick={() => {
-                navigate("/Bag");
-              }}
+              href="/bag"
             >
               <ShoppingBagOutlinedIcon style={{ color: "#fff" }} />
             </a>
@@ -121,7 +119,7 @@ export function NavBar({ visible = true }) {
                   navigate("/favorites");
                 }
               }}
-              style={{ paddingLeft: "2%" }}
+              style={{ paddingLeft: "2%",cursor:"pointer" }}
             >
               <FavoriteBorderOutlinedIcon style={{ color: "#fff" }} />
             </a>
@@ -204,7 +202,7 @@ export function NavBar({ visible = true }) {
               >
                 <img
                   src={logoo}
-                  style={{ height: "70px", width: "100px" }}
+                  style={{ height: "70px", width: "100px",cursor:"pointer" }}
                 ></img>
               </div>
             </Navbar.Brand>
