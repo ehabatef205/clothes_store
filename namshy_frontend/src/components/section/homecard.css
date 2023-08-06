@@ -6,7 +6,7 @@
   }
   
 
-  .carousel-indicators [data-bs-target] {
+.banners  .carousel-indicators [data-bs-target] {
     height: 10px!important;
     width: 70px !important;
     background-color: #d99d2b !important;

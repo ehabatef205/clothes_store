@@ -5,14 +5,14 @@ import './homecard.css'
 import Carousel from "react-bootstrap/Carousel";
 export default function Homeslider() {
   const src = [
-    "https://images.pexels.com/photos/317377/pexels-photo-317377.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    "https://images.pexels.com/photos/414645/pexels-photo-414645.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    "https://images.pexels.com/photos/2074130/pexels-photo-2074130.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+    "banner.jpg",
+    "banner2.jpg",
+    "banner3.jpg"
   ]
   return (
     <div
       id="carouselExample"
-      className="carousel slide  "
+      className="carousel slide banners "
       style={{ height: "500px" , maxWidth: "100%", justifyContent:"center" ,borderRadius:"50px",margin:'auto'}}
     >
       <div

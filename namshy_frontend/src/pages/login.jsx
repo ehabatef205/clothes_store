@@ -22,7 +22,8 @@ export default function Login() {
         navigate("/signup", { replace: true });
     };
 
-    const logIn = async () => {
+    const logIn = async (e) => {
+        e.preventDefault()
         setLoading(true);
         cookie.remove("Auth")
         await user.login({ email: emailRef.current.value, password: passwordRef.current.value }).then(async (res) => {
@@ -57,6 +58,7 @@ export default function Login() {
                 <div className="" style={{ flexDirection: "column", height: "fit-content", width: "80vw", justifyContent: "center", alignItems: "center", display: "flex" }}>
                     <img src={logoo} alt="logo" height={"200px"} width={"200px"}  className="bg-dark"/>
                     <h4>Log In</h4>
+                    <form  onSubmit={logIn} style={{ flexDirection: "column", height: "fit-content", width: "80vw", justifyContent: "center", alignItems: "center", display: "flex" }}>
                     <input
                         ref={emailRef}
                         style={inputText}
@@ -69,7 +71,7 @@ export default function Login() {
                         placeholder="password"
                         type="password"
                     />
-                    {!loading && <button onClick={logIn} style={loginButton}>
+                    {!loading && <button type="submit" style={loginButton}>
                         Login
                     </button>}
                     {loading && <button style={loginButton2} disabled>
@@ -81,6 +83,7 @@ export default function Login() {
                             Sign up
                         </span>
                     </div>
+                    </form>
                 </div>
                 <ToastContainer />
             </div>

@@ -76,6 +76,7 @@ export function NavBar({ visible = true }) {
   const handleLinkClick = (href, name) => {
     navigate(href, { state: { name: name } });
   };
+  const profileElements=["profile","orders","returns"]
 
   const linkStyle = {
     padding: "0.5rem 2.1rem",
@@ -105,13 +106,19 @@ export function NavBar({ visible = true }) {
             }}
           >
             <a style={{ paddingLeft: "2%" }} href={"/profile"}>
-              <AccountCircleOutlinedIcon style={{ color: "#fff" }} />
+              <AccountCircleOutlinedIcon style={{ 
+                
+                    color:
+                        profileElements.includes(window.location.pathname.split("/")[1]) ? "#d99d2b" : "white", }}  className="navhover navclick"/>
             </a>
             <a
               style={{ paddingLeft: "2%" }}
               href="/bag"
             >
-              <ShoppingBagOutlinedIcon style={{ color: "#fff" }} />
+              <ShoppingBagOutlinedIcon style={{ 
+
+                    color:
+                        window.location.pathname.split("/")[1] ==='bag' ? "#d99d2b" : "white", }}  className="navhover navclick"/>
             </a>
             <a
               onClick={() => {
@@ -121,12 +128,15 @@ export function NavBar({ visible = true }) {
               }}
               style={{ paddingLeft: "2%",cursor:"pointer" }}
             >
-              <FavoriteBorderOutlinedIcon style={{ color: "#fff" }} />
+              <FavoriteBorderOutlinedIcon style={{ 
+                
+                    color:
+                        window.location.pathname.split("/")[1] ==='favorites' ? "#d99d2b" : "white", }}  className="navhover navclick"/>
             </a>
 
             <div style={container}>
               <div style={{ color: "#fff" }}>
-                <SearchOutlinedIcon style={{ color: "#000" }} />
+                <SearchOutlinedIcon style={{ color: "#000" }}  />
               </div>
               <button
                 style={{

@@ -25,3 +25,9 @@
     display: flex;
     justify-content: space-between;
 }
+
+.carousel-indicators [data-bs-target] {
+    height: 10px!important;
+    width: 70px !important;
+    background-color: #d99d2b !important;
+  } 
