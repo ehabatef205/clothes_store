@@ -270,7 +270,7 @@ function SelectedProductPage({ products, handleClick }) {
                 <div
                   style={{ borderBottom: " 1px solid gray", textAlign: "left" }}
                 >
-                  Description : {selected?.desc?.description}
+                  Description :<br></br> {selected?.desc?.description}
                 </div>
               </div>
 

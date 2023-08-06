@@ -232,6 +232,27 @@ module.exports.SearchByName = (req, res) => {
             })
         })
 }
+
+module.exports.cart = (req, res) => {
+    const ids= req.body.products
+    Product.find({
+        '_id': { 
+          $in: ids
+        }
+      })
+        .then(response => {
+
+            res.json({
+                response
+            })
+        })
+        .catch(error => {
+            res.json({
+                message: 'An error Occured!'
+            })
+        })
+}
+
 module.exports.uplodaImage = async (req, res, next) => {
     if (!req.files || req.files.length === 0) {
         return res.status(400).send('No file uploaded');

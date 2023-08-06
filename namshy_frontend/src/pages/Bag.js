@@ -10,15 +10,17 @@ import { Container } from "react-bootstrap";
 import { useNavigate } from 'react-router-dom';
 
 import * as cart from "../api/cart";
+import {carts}  from "../api/product";
 import "../components/section/slider.css";
 import Header from "../components/Navs/Header";
 
 import Empitycart from "../components/section/empitycart";
 const Bag = () => {
   const [totalPrice, setTotalPrice] = useState(0);
-  const updateTotalPrice = (price) => {
-    setTotalPrice((prevTotal) => prevTotal + price);
-  };
+  const [cartItems, setCartItems] = useState([]);
+  const [ProductItems, setProductItems] = useState([]);
+  const [isCartEmpty, setIsCartEmpty] = useState(false);
+ 
   const navigate = useNavigate();
 
   const chekoutpage = () => {
@@ -26,13 +28,24 @@ const Bag = () => {
     navigate('/checkout', { state: cartItems });
   };
   const load = async () => {
-    await cart.get_cart().then(e => { setCartItems(e) })
+    const productArr= []
+    const cartArr= await cart.get_cart()
+    cartArr.forEach(element => {
+      productArr.push(element.product_id)
+    });
+    const products=await carts(productArr)
+    setCartItems(cartArr)
+    console.log(products)
+    setProductItems(products)
+    var total=0
+    products.forEach((element,index)=>{
+      total+=element.price_after*cartArr[index].quantity
+    })
+    setTotalPrice(total)
   }
-  const [cartItems, setCartItems] = useState([]);
-  const [isCartEmpty, setIsCartEmpty] = useState(false);
+
   useEffect(() => {
     load()
-
   }, []);
 
   useEffect(() => {
@@ -176,9 +189,10 @@ const Bag = () => {
                           <Cartcol
                             key={index}
                             cart={cart}
-                            updateTotalPrice={updateTotalPrice}
+
+                            product={ProductItems[index]}
                             load={load}
-                            renderedIndex={index}
+                           
                           />
                         </div>
                       ))}

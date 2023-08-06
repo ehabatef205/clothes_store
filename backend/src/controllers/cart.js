@@ -71,7 +71,7 @@ module.exports.Delete_cart_item = async (req, res) => {
     const _id = new mongoose.Types.ObjectId(req.params.id)
     const oi = await Cart.findById(_id)
     if (!oi) {
-        return res.status(404).json({ error: 'can\'t delete cart item not found' })
+        return res.status(204).json({ error: 'can\'t delete cart item not found' })
     }
     await Cart.findByIdAndDelete(_id).then(e => {
         return res.status(200).json(e)
@@ -112,13 +112,13 @@ module.exports.add_one_quantity = async (req, res) => {
 }
 
 module.exports.remove_one_quantity = async (req, res) => {
-    const _id = new mongoose.Types.ObjectId(req.params.id)
-    await Cart.findById(_id).then(e => {
+    const id = new mongoose.Types.ObjectId(req.params.id)
+    await Cart.findById(id).then(e => {
         if (!e) {
             return res.status(404).json({ error: 'can\'t update cart not found!' })
         }
     })
-    await Cart.findByIdAndUpdate(_id, { $inc: { quantity: -1 } }, { new: true }).then(e => {
+    await Cart.updateOne({_id:id,quantity:{$gt:1}} , { $inc: { quantity: -1 } }, { new: true }).then(e => {
         res.status(200).json(e)
     }).catch(err => {
         console.log(err.message)

@@ -1,24 +1,20 @@
 import React, { useContext, useState, useEffect } from "react";
-import { CartContext } from "./Shoppingcartcontext";
+
 import "./slider.css";
 import * as productfetch from "../../api/product"
 import * as wish from "../../api/wish"
 import * as cartDB from "../../api/cart"
 import { Cookies } from "react-cookie";
 
-const Cartcol = ({ cart, updateTotalPrice, renderedIndex, load }) => {
-  const [price_after, setPrice_after] = useState(0)
-  const [Sizet, setSizet] = useState('m');
-  const [totals, setTotals] = useState(0)
-  const [Colort, setColort] = useState('red');
+const Cartcol = ({ cart, load ,product }) => {
 
-  const [currentproduct, setCurrentProduct] = useState({});
-  useEffect(() => {
-    productfetch.get_product_by_id(cart.product_id).then(e => {
-      setPrice_after(e.price_after)
-      setCurrentProduct(e)
-    })
-  }, [cart]);
+  
+  const [active, setactive] = useState(true);
+
+  const [Sizet, setSizet] = useState('m');
+
+  const [Colort, setColort] = useState('red');
+  
   const cookie = new Cookies();
   const addToFavorites = async (id) => {
     console.log("add to favorites");
@@ -28,32 +24,7 @@ const Cartcol = ({ cart, updateTotalPrice, renderedIndex, load }) => {
   };
 
 
-  const { decreaseQuantity, addToCart } =
-    useContext(CartContext);
-    const add =() => {
-      let total = 0;
   
-      total += currentproduct.price_after * cart.quantity;
-      
-      if(total){
-      
-      updateTotalPrice(total-totals);
-      setTotals(total)}
-      
-    }
-
-  useEffect(() => {
-    let total = 0;
-  
-      total += currentproduct.price_after * cart.quantity;
-      
-      if(total){
-      
-      updateTotalPrice(total-totals);
-      setTotals(total)}
-    
-  }, [cart]);
-
 
   const size = ["m", "l", "xl", "xxl"];
   const colors = ["red", 
@@ -73,14 +44,19 @@ const Cartcol = ({ cart, updateTotalPrice, renderedIndex, load }) => {
             <div className="h-50 ">
               <span style={{ textAlign: "center" }}>Item Price</span>
 
-              <p>{currentproduct?.price_after}</p>
+              <p>{product?.price_after}</p>
             </div>
             <div className="h-50  " style={{ textAlign: "center" }}>
 
               <button
-                onClick={() => cartDB.increse_item(cart?._id).then(e => {
+              
+                onClick={() =>{
+                  setactive(false)
+                  if(active)
+                   cartDB.increse_item(cart?._id).then(e => {
                   load()
-                })}/*.then(e=>{setCurrentProduct(e)})*/
+                  setactive(true)
+                })}}/*.then(e=>{setproduct(e)})*/
                 className="btn m-1 btn-light"
               >
                 <i class="bi bi-plus-lg"></i>
@@ -93,13 +69,17 @@ const Cartcol = ({ cart, updateTotalPrice, renderedIndex, load }) => {
               />
 
               <button
+              
                 onClick={() => {
                   if (cart.quantity !== 1)
+                    setactive(false)
+                    if(active)
                     cartDB.decrease_item(
                       cart?._id).then((e) => {
                         load()
+                        setactive(true)
                       })
-                }} /*.then(e=>{setCurrentProduct(e)})*/
+                }} /*.then(e=>{setproduct(e)})*/
                 className=" btn m-1 btn-light"
               >
                 <i class="bi bi-dash-lg"></i>
@@ -109,8 +89,8 @@ const Cartcol = ({ cart, updateTotalPrice, renderedIndex, load }) => {
 
           <div className="d-flex  flex-wrap " style={{ textAlign: "end" }}>
             <div className="m-3 ">
-              <p style={{ margin: "0px", padding: "0px" }}>{/* {currentproduct?} */}</p>
-              <p style={{ margin: "0px", padding: "0px" }}>{currentproduct?.name}</p>
+              <p style={{ margin: "0px", padding: "0px" }}>{/* {product?} */}</p>
+              <p style={{ margin: "0px", padding: "0px" }}>{product?.name}</p>
               <div
                 className="   justify-content-start my-3"
                 style={{ textAlign: "left" }}
@@ -165,7 +145,7 @@ const Cartcol = ({ cart, updateTotalPrice, renderedIndex, load }) => {
                   <button
                     className="btn"
                     onClick={() => cartDB.Delete_cart_item(cart._id).then(e => {
-                      updateTotalPrice(-totals);
+            
                       load()
                     })}
                   >
@@ -191,14 +171,13 @@ const Cartcol = ({ cart, updateTotalPrice, renderedIndex, load }) => {
             style={{
               height: "465px",
             }}
-            onLoad={add}
-            src={Array.isArray(currentproduct?.imageSrc) && currentproduct.imageSrc.length > 0 ? currentproduct.imageSrc[0] : ""}
+            src={Array.isArray(product?.imageSrc) && product.imageSrc.length > 0 ? product.imageSrc[0] : ""}
           />
         </div>
       </div>
 
       <div>
-        <p>Sub Total Price: ${currentproduct?.price_after * cart?.quantity}</p>
+        <p>Sub Total Price: ${product?.price_after * cart?.quantity}</p>
       </div>
     </div>
   );
