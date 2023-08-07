@@ -125,3 +125,14 @@ module.exports.remove_one_quantity = async (req, res) => {
         res.status(401).json({ error: err.message })
     })
 }
+
+module.exports.Delete_by_product = async (req, res) => {
+    const product_id = req.params.id
+    const user= req.body.decoded.id
+    await Cart.deleteOne({user_id:user,product_id:product_id}).then(e => {
+        return res.status(200).json(e)
+    }).catch(err => {
+        console.log(err.message)
+        return res.status(401).json({ error: err.message })
+    })
+}

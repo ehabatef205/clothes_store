@@ -43,6 +43,8 @@ const ProfileInfo = ({ Uinfo = {
   const logout = () => {
     const cookie = new Cookies()
     cookie.remove('Auth')
+    cookie.remove('mycart')
+    cookie.remove('mywish')
     navigate('/ ')
   }
 

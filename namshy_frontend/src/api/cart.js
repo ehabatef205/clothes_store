@@ -24,3 +24,8 @@ export const decrease_item = async (_id) => {
     const token = await cookie.get('Auth')
     await axios.put(`${proxy}/minus/${_id}`, {}, { headers: { authorization: token } })
 }
+
+export const Delete_by_product= async (product_id) => {
+    const token = await cookie.get('Auth')
+    await axios.post(`${proxy}/${product_id}`, {}, { headers: { authorization: token } })
+}

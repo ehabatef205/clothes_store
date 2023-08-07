@@ -7,19 +7,24 @@ import "../components/section/slider.css";
 import Header from "../components/Navs/Header";
 import { types } from "./typesenum";
 import { useParams, useLocation } from 'react-router-dom';
+import { update } from "../api/personal_cookies";
 
 export default function Home() {
   const { id } = useParams();
   const prevIdRef = React.useRef(id);
-  const location = useLocation();
+  const [personal, setpersonal] = useState({})
   const [categories, setCategories] = useState([])
+  const update_p=async()=>{
+    var p=await update()
+    setpersonal(p)
+  }
   useEffect(() => {
     const getCategory = async () => {
       await prod_cat.all_product_category().then(e => {
         setCategories(e.response)
       })
     }
-    getCategory()
+    update_p()
   },[])
   useEffect(() => {
     if (prevIdRef.current !== id) {
@@ -28,6 +33,9 @@ export default function Home() {
     // Update the stored 'id' for the next comparison
     prevIdRef.current = id;
   }, [id]);
+  
+
+
   return (
     <div>
        <Header></Header>
@@ -47,7 +55,7 @@ export default function Home() {
           <div>
             <div className="" style={{ height: "fit-content" }}>
               <h1 style={{display:"flex",justifyContent:"center"}}>{(id?(categories?.find((obj) => obj._id ===id))?.name:"")||""}</h1>
-              {types?.map((type, index)=>(<Homecards  type_name={type}
+              {types?.map((type, index)=>(<Homecards  type_name={type} personal={personal} update_p={update_p}
               />))}          
             </div>
           </div>

@@ -8,18 +8,22 @@ import * as Cart from "../../api/cart";
 import * as Wish from "../../api/wish";
 import { Cookies } from "react-cookie";
 
-export function Product({ product, index }) {
-    const handlewButtonClick = (index) => {
-        setSelectedwCardIndex(index);
-    };
-    const [selectedwCardIndex, setSelectedwCardIndex] = useState(1);
 
+export function Product({ product, index ,personal,update_p}) {
+   
+    
     const [selectedProduct, setSelectedProduct] = useState(null);
+   
+    const navigate = useNavigate();
+    const [selectedCardIndex, setSelectedCardIndex] = useState(1);
+    const [selectedwCardIndex, setSelectedwCardIndex] = useState(1);
     const handleButtonClick = (index) => {
         setSelectedCardIndex(index);
     };
-    const navigate = useNavigate();
-    const [selectedCardIndex, setSelectedCardIndex] = useState(1);
+    const handlewButtonClick = (index) => {
+        setSelectedwCardIndex(index);
+    };
+
     const cookie = new Cookies();
 
     const handleImageClick = (product) => {
@@ -28,14 +32,16 @@ export function Product({ product, index }) {
     };
 
     const addtoBag = async (id) => {
+        console.log(personal)
         await Cart.add_cart(id, 1, cookie.get("Auth")).then((e) => {
-            console.log(e);
+            update_p()
         });
     };
     const addToFavorites = async (id) => {
-        console.log("add to favorites");
+        
+        console.log(personal);
         await Wish.add_cart(id, 1, cookie.get("Auth")).then((e) => {
-            console.log(e);
+            update_p()
         });
     };
 
@@ -71,7 +77,7 @@ export function Product({ product, index }) {
                                     width: "90%",
                                     height: "250px",
                                     margin: "auto",
-                                    "border-radius": "10px",
+                                    borderRadius: "10px",
                                 }}
                                 src={image}
                                 alt={""}
@@ -90,13 +96,15 @@ export function Product({ product, index }) {
                     <div>
                         <button
                             className="btn text-light   "
-                            style={{ backgroundColor: "#d99d2b", marginRight: "2px" }}
+                            style={{ backgroundColor:  "#d99d2b", marginRight: "2px",color:"red" }}
                             onClick={() => {
                                 addToFavorites(product._id);
                                 handlewButtonClick(index);
                             }}
-                        >
-                            <i className="bi bi-heart"></i>
+                        >{personal?.wish?.includes(product._id)?
+                        <i className="bi bi-heart-fill fs-5 text-danger"></i>
+                        :
+                            <i className="bi bi-heart fs-5"></i>}
                         </button>
 
                         <button
@@ -106,8 +114,8 @@ export function Product({ product, index }) {
                                 addtoBag(product._id);
                                 handleButtonClick(index);
                             }}
-                        >
-                            <i class="bi bi-plus-lg"></i>
+                        >   {personal?.cart?.includes(product._id)?<i class="bi bi-check-square-fill fs-5"></i>:
+                            <i class="bi bi-cart fs-5"></i>}
                         </button>
                     </div>
                 </div>

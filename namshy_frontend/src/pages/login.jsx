@@ -7,6 +7,7 @@ import * as user from '../api/user'
 import logoo from '../images/logoo.png'
 import { Cookies } from 'react-cookie'
 import { NavBar } from "../components/Navs/Nav1";
+import { loginfill } from "../api/personal_cookies";
 
 export default function Login() {
     const cookie = new Cookies()
@@ -32,7 +33,7 @@ export default function Login() {
             if (message === 'Login Successful!') {
                 setLoading(false);
                 cookie.set("Auth", "Bearer " + res.data.token);
-                console.log(res.data.token)
+                loginfill()
                 navigate('/', { replace: true });
             } else if (message === "Id or password is invalid") {
                 toast.warning(message, {

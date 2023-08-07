@@ -9,17 +9,37 @@ import { CartContext } from "./Shoppingcartcontext";
 import * as Cart from '../../api/cart'
 import * as Wish from '../../api/wish'
 import { Cookies } from 'react-cookie'
+import { update } from "../../api/personal_cookies";
 
 export function CardsSlider(props) {
   const [selectedCardIndex, setSelectedCardIndex] = useState(1);
+  const [personal, setpersonal] = useState({})
+    const [selectedwCardIndex, setSelectedwCardIndex] = useState(1);
+    const handleButtonClick = (index) => {
+        setSelectedCardIndex(index);
+    };
+    const handlewButtonClick = (index) => {
+        setSelectedwCardIndex(index);
+    };
+    const update_p=async()=>{
+      var p=await update()
+      setpersonal(p)
+    }
+
   const addToFavorites = async(id) => {
-    await Wish.add_cart(id, 1, cookie.get("Auth"))
+    await Wish.add_cart(id, 1, cookie.get("Auth")).then(e=>{update_p()})
+    
     
   };
-  const { addToCart } = useContext(CartContext);
-  const cookie = new Cookies()
+  const removefromFavorites = async(id) => {
+    await Wish.Delete_cart_item(id, 1, cookie.get("Auth")).then(e=>{update_p()})
+    
+    
+  };
 
-  const size = ["m", "l", "xl", "xxl"];
+  const cookie = new Cookies()
+  const [Sizet, setSizet] = useState('');
+
   const navigate = useNavigate();
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [products, setProducts] = useState([]);
@@ -28,10 +48,10 @@ export function CardsSlider(props) {
     const getProducts = async () => {
       await product.get_product_by_category(props.id).then((e) => {
         setProducts(e.response);
-        console.log(e.response)
       });
     };
     getProducts();
+    update_p()
   }, []);
 
   const handleImageClick = (product) => {
@@ -41,22 +61,32 @@ export function CardsSlider(props) {
 
   const addtoBag = async (id) => {
     await Cart.add_cart(id, 1, cookie.get("Auth")).then((e) => {
-      console.log(e)
+      update_p()
+      
     })
   }
 
   return (
     <div className="containe d-flex mx-1">
-      {products.map((product) => (
-        <div className="carda my-2" key={product._id}>
+      {products.map((product,index) => (
+        <div className="carda my-2"
+        style={{border:
+          selectedCardIndex === index
+              ? "1px solid #d99d2b"
+              : selectedwCardIndex === index
+                  ? "1px solid red"
+                  : "0.5px solid #C8D2D1"}}
+        key={product._id}>
           <div
+
             className="carousel-wrapper"
-            onClick={() => handleImageClick(product)}
+           
           >
             <Carousel controls={false}>
               {product.imageSrc.map((image, index) => (
                 <Carousel.Item key={index}>
                   <img
+                   onClick={() => handleImageClick(product)}
                     className="d-block w-100"
                     src={image}
                     alt={""}
@@ -69,10 +99,15 @@ export function CardsSlider(props) {
                   <div className="caption position-absolute bottom-0 w-100 p-3 ">
                     <p className="mb-0">This item is added to your cart</p>
                     <div className="d-flex justify-content-center align-content-center gap-1">
-                      {size.map((size, _) => (
-                        <button
+                      {Object.keys(product.sizes).map((size, _) => (
+                        <button 
+                          style={{zIndex:"9999",backgroundColor:size===Sizet? 
+                          "gray":"transparent",
+                          color:size===Sizet? 
+                          'white':"gray",}}
                           key={size}
                           className="btn btn-outline-secondary custom-style"
+                          onClick={() =>{setSizet(size)}}
                         >
                           {size}
                         </button>
@@ -84,15 +119,20 @@ export function CardsSlider(props) {
             </Carousel>
           </div>
           <div
+           
             className="card-body d-flex"
             style={{
               fontSize: "100%",
               padding: "0px",
               flexDirection: "flex-row",
-              "justify-content": "space-between",
+              justifyContent: "space-between",
+
             }}
           >
-            <div className=" d-flex flex-column align-items-start">
+            <div className=" d-flex flex-column align-items-start"
+            onClick={() => handleImageClick(product)}
+            style={{cursor:"pointer"}}
+            >
               <Card.Title className="mb-0">{product.name}</Card.Title>
               <Card.Text className="mb-0">Price: {product.price_before}</Card.Text>
               <Card.Text> {product.desc.descreption}</Card.Text>
@@ -105,17 +145,30 @@ export function CardsSlider(props) {
                 <button
                   className="btn text-light   "
                   style={{ backgroundColor: "#d99d2b", marginRight: "2px" }}
-                  onClick={() => addToFavorites(product._id)}
+                  onClick={() => {
+                    if(personal?.wish?.includes(product._id))
+                    {removefromFavorites(product._id)}
+                    else{
+                    addToFavorites(product._id)}
+                    handlewButtonClick(index);
+                  }}
                 >
-                  <i className="bi bi-heart"></i>
+                  {personal?.wish?.includes(product._id)?
+                        <i className="bi bi-heart-fill  text-danger"></i>
+                        :
+                            <i className="bi bi-heart "></i>}
                 </button>
 
                 <button
                   className="btn text-light  "
                   style={{ backgroundColor: "#d99d2b" }}
-                  onClick={() => addtoBag(product._id)}
+                  onClick={() => {
+                    addtoBag(product._id)
+                    handlewButtonClick(index);
+                  }}
                 >
-                  <i class="bi bi-plus-lg"></i>
+                  {personal?.cart?.includes(product._id)?<i class="bi bi-check-square-fill "></i>:
+                            <i class="bi bi-cart "></i>}
                 </button>
               </div>
             </span>

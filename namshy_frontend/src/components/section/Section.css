@@ -1,5 +1,6 @@
 .sectionone {
-  width: 90%;
+  direction: rtl;
+  width: 95%;
   /* padding: auto; */
   height: fit-content;
   position: relative;

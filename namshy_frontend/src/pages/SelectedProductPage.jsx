@@ -8,6 +8,7 @@ import * as Product from '../api/product'
 import * as Cart from '../api/cart'
 import * as Wish from '../api/wish'
 import { Cookies } from 'react-cookie'
+import { update } from "../api/personal_cookies";
 
 function SelectedProductPage({ products, handleClick }) {
   const [childHeight, setChildHeight] = useState(0);
@@ -15,6 +16,11 @@ function SelectedProductPage({ products, handleClick }) {
   const size = ["m", "l", "xl", "xxl"]
   const [Sizet, setSizet] = useState('m');
   const cookie = new Cookies()
+  const [personal, setpersonal] = useState({})
+  const update_p=async()=>{
+    var p=await update()
+    setpersonal(p)
+  }
 
   const { id } = useParams();
   useEffect(() => {
@@ -28,6 +34,7 @@ function SelectedProductPage({ products, handleClick }) {
     const child1 = document.getElementById("child1");
     const child1Height = child1.offsetHeight;
     setChildHeight(child1Height);
+    update_p()
   }, []);
 
 
@@ -35,12 +42,22 @@ function SelectedProductPage({ products, handleClick }) {
 
   const addtoBag = async () => {
     await Cart.add_cart(id, 1, cookie.get("Auth")).then((e) => {
-      console.log(e)
+      update_p()
+    })
+  }
+  const deletebag = async () => {
+    await Cart.Delete_by_product(id).then((e) => {
+      update_p()
     })
   }
   const addtowish = async () => {
     await Wish.add_cart(id, 1, cookie.get("Auth")).then((e) => {
-      console.log(e)
+      update_p()
+    })
+  }
+  const deletewish = async () => {
+    await Wish.Delete_by_product(id).then((e) => {
+      update_p()
     })
   }
 
@@ -225,20 +242,37 @@ function SelectedProductPage({ products, handleClick }) {
                 >
                   <span className=" mx-3" style={{ textAlign: "center", width: "45%" }}>
                     <button
+                      disabled={personal?.cart?.includes(selected._id)}
                       className="btn text-light my-3 h-75 w-100"
-                      onClick={() => addtoBag()}
+                      onClick={() => {
+                        
+                        /*if(personal?.cart?.includes(selected._id)){
+                          deletebag()
+                          
+                        }else{*/
+                          addtoBag()
+                      //  }
+                      }}
                       style={{ backgroundColor: "#d99d2b", fontSize: "1.2rem" }}
                     >
-                      Add To Bag
+                       {personal?.cart?.includes(selected._id)?(<i className="text-primary">Added to Bag{" "}</i>):(<i>Add to Bag{" "}</i>)}
                     </button>
                   </span>
 
 
                   <span style={{ textAlign: "center", width: "45%", fontSize: "1.2rem" }}>
                     <button 
-                    onClick={() => addtowish()}
+                    disabled={personal?.wish?.includes(selected._id)}
+                    onClick={() => {
+                      /*if(personal?.wish?.includes(selected._id)){
+                        deletewish()
+                      }else{*/
+                      addtowish()
+                    //}
+                  }}
                     className="btn bg-light my-3  text-dark h-75 w-100">
-                      Add to wish list{" "}
+                      {personal?.wish?.includes(selected._id)?(<i className="text-primary">Added to wish list{" "}</i>):(<i>Add to wish list{" "}</i>)}
+                      
                     </button>
                   </span>
 
@@ -299,32 +333,29 @@ function SelectedProductPage({ products, handleClick }) {
               </div>
               {/*  */}
               <div
-                className=" d-flex flex-wrap   "
+                className=" d-flex    "
                 style={{ width: "100%" }}
               >
-                <div className="d-flex w-25 ">
+                <div className="d-flex w-50  ">
                   <a
                     className="brand-link follow-brand__logo"
                     href="/adidas_originals/"
                     data-brand-name="adidas Originals"
                     data-brand-url="/adidas_originals/"
                   >
-                    <img
+                    <img style={{maxWidth:"300px"}}
                       src={selected?.desc?.brand?.logo}
                       data-nm-invalid-image-remover=""
                     />
                   </a>
                 </div>
-                <div className=" w-75">
-                  <div className=" m-3 w-75" style={{ textAlign: "left" }}>
+                <div className=" w-50">
+                  <div className=" m-3 " style={{ textAlign: "left" }}>
                     {selected?.desc?.brand?.name}
                   </div>
 
                 </div>
-                <div>
-                  Follow this brand to stay updated on exciting launches, new
-                  collections & more!
-                </div>
+                
               </div>
             </div>
           </div>

@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { backend_url } from '../config'
 import {Cookies} from 'react-cookie'
-const proxy = `${backend_url}/wish/`
+const proxy = `${backend_url}/wish`
 
 const cookie = new Cookies()
 
@@ -22,4 +22,8 @@ export const get_cart = async () => {
 export const Delete_cart_item = async (  _id) => {
     const token = await cookie.get('Auth')
     await axios.delete(`${proxy}/${_id}`, {  }, { headers: { authorization: token } })
+}
+export const Delete_by_product= async (product_id) => {
+    const token = await cookie.get('Auth')
+    await axios.post(`${proxy}/${product_id}`, {}, { headers: { authorization: token } })
 }

@@ -5,7 +5,6 @@ import FirstHeader from "../components/section/FirstHeader";
 import SecHeader from "../components/section/SecHeader";
 import Sider from "../components/section/Sider";
 import Header from "../components/Navs/Header";
-import * as prod_cat from "../api/product_category";
 import * as sub_cat from "../api/subcategory";
 
 export default function Page1() {

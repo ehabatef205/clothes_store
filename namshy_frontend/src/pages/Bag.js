@@ -1,5 +1,6 @@
 // import React, { useState, useEffect, useContext } from "react";
 import ThirdSlider from "../components/section/ThirdSlider";
+import { getpersonal } from "../api/personal_cookies";
 
 import Cartcol from "../components/section/Cartcol";
 import React, { useState, useEffect, useContext } from "react";
@@ -35,7 +36,6 @@ const Bag = () => {
     });
     const products=await carts(productArr)
     setCartItems(cartArr)
-    console.log(products)
     setProductItems(products)
     var total=0
     products.forEach((element,index)=>{

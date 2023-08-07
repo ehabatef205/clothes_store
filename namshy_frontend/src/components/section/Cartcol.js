@@ -1,7 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 
 import "./slider.css";
-import * as productfetch from "../../api/product"
 import * as wish from "../../api/wish"
 import * as cartDB from "../../api/cart"
 import { Cookies } from "react-cookie";
@@ -11,7 +10,7 @@ const Cartcol = ({ cart, load ,product }) => {
   
   const [active, setactive] = useState(true);
 
-  const [Sizet, setSizet] = useState('m');
+  const [Sizet, setSizet] = useState('');
 
   const [Colort, setColort] = useState('red');
   
@@ -26,7 +25,7 @@ const Cartcol = ({ cart, load ,product }) => {
 
   
 
-  const size = ["m", "l", "xl", "xxl"];
+  const size = Object.keys(product.sizes)
   const colors = ["red", 
     "black", 
     "brown", 

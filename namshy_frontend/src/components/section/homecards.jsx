@@ -6,7 +6,7 @@ import * as product from "../../api/product";
 import Product from "./Product";
 import './homecard.css'
 export default function Homecards(
-  {  type_name }
+  {  type_name,personal,update_p }
   ) {
   const category_id = window.location.pathname.split('/')[2];
   const [products, setProducts] = useState([]);
@@ -166,6 +166,8 @@ export default function Homecards(
               <Product
                 key={index}
                 product={product}
+                personal={personal}
+                update_p={update_p}
                 // index={index}
                 // products={products}
                 
