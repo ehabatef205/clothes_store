@@ -1,8 +1,24 @@
 import React from "react";
 import "./Section.css";
-import { NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import * as prod_cat from "../../api/product_category";
+
 import { colors, options, type, size } from "./prodlist";
 export default function Sider() {
+  const navigate=useNavigate()
+  const handleLinkClick = (href, name) => {
+    navigate(href, { state: { name: name } });
+  };
+
+  const [categories, setCategories] = React.useState([]);
+  React.useEffect(() => {
+    const getCategory = async () => {
+      await prod_cat.all_product_category().then((e) => {
+        setCategories(e.response);
+      });
+    };
+    getCategory();
+  }, []);
   return (
     <div>
       <div className="contianer  sider1  d-flex flex-wrap " style={{width:"100%"}}>
@@ -16,7 +32,7 @@ export default function Sider() {
             </p>
           </div>
 
-          {type.map((word, index) => (
+          {categories.map((category, index) => (
             <div className="change1 d-flex my-1" key={index}>
               <i
                 style={{ fontSize: "11px" }}
@@ -24,10 +40,12 @@ export default function Sider() {
               ></i>
               <a
                 className="link-opacity-75 text-black mx-2"
-                href={'/' + word}
-                style={{ textDecoration: "none" }}
+                style={{ textDecoration: "none" ,cursor:"pointer"}}
+                onClick={() =>
+                  handleLinkClick("/cat/" + category._id, category.name)
+                }
               >
-                {word}
+                {category.name}
               </a>
             </div>
           ))}

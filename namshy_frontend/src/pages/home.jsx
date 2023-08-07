@@ -51,7 +51,7 @@ export default function Home() {
           <Homeslider></Homeslider>
         </div>
 
-        <Container className="my-4  " style={{ justifyContent: "center" }}>
+        <Container className="my-4  " style={{ justifyContent: "center"}}>
           <div>
             <div className="" style={{ height: "fit-content" }}>
               <h1 style={{display:"flex",justifyContent:"center"}}>{(id?(categories?.find((obj) => obj._id ===id))?.name:"")||""}</h1>

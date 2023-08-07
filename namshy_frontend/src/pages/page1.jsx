@@ -42,7 +42,7 @@ export default function Page1() {
           <div className="d-flex flex-row w-100 ">
             <div
               className="d-none d-lg-block"
-              style={{ width: "20%", marginRight: "5%" }}
+              style={{ width: "20%", marginLeft: "5%" }}
             >
               <Sider />
             </div>

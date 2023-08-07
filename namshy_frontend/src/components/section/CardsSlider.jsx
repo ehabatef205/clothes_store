@@ -12,9 +12,9 @@ import { Cookies } from 'react-cookie'
 import { update } from "../../api/personal_cookies";
 
 export function CardsSlider(props) {
-  const [selectedCardIndex, setSelectedCardIndex] = useState(1);
+  const [selectedCardIndex, setSelectedCardIndex] = useState(-1);
   const [personal, setpersonal] = useState({})
-    const [selectedwCardIndex, setSelectedwCardIndex] = useState(1);
+    const [selectedwCardIndex, setSelectedwCardIndex] = useState(-1);
     const handleButtonClick = (index) => {
         setSelectedCardIndex(index);
     };
@@ -144,7 +144,7 @@ export function CardsSlider(props) {
               <div>
                 <button
                   className="btn text-light   "
-                  style={{ backgroundColor: "#d99d2b", marginRight: "2px" }}
+                  style={{ backgroundColor: "#d99d2b", marginLeft: "2px" }}
                   onClick={() => {
                     if(personal?.wish?.includes(product._id))
                     {removefromFavorites(product._id)}
@@ -161,7 +161,7 @@ export function CardsSlider(props) {
 
                 <button
                   className="btn text-light  "
-                  style={{ backgroundColor: "#d99d2b" }}
+                  style={{ backgroundColor: "#d99d2b", marginLeft: "2px" }}
                   onClick={() => {
                     addtoBag(product._id)
                     handlewButtonClick(index);

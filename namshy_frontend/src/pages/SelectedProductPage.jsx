@@ -13,7 +13,7 @@ import { update } from "../api/personal_cookies";
 function SelectedProductPage({ products, handleClick }) {
   const [childHeight, setChildHeight] = useState(0);
   const [selected, setSelected] = useState({});
-  const size = ["m", "l", "xl", "xxl"]
+
   const [Sizet, setSizet] = useState('m');
   const cookie = new Cookies()
   const [personal, setpersonal] = useState({})
@@ -207,7 +207,9 @@ function SelectedProductPage({ products, handleClick }) {
                     style={{ textAlign: "left" }}
                   >
                     {" "}
-                    {size.map((size, index) => (
+                    {
+                    selected.sizes?
+                    Object.keys(selected?.sizes).map((size, _) => (
                       <button
                       onClick={() =>{setSizet(size)}}
                         style={{
@@ -220,12 +222,12 @@ function SelectedProductPage({ products, handleClick }) {
                           color:size===Sizet? 
                           'white':"gray",
                         }}
-                        key={index}
+                        
                         className="btn  btn-outline-secondary "
                       >
                         {size}
                       </button>
-                    ))}
+                    )):<></>}
                   </div>
                 </div>
                 {/* <div className="  w-100" >productname</div> 
@@ -271,7 +273,7 @@ function SelectedProductPage({ products, handleClick }) {
                     //}
                   }}
                     className="btn bg-light my-3  text-dark h-75 w-100">
-                      {personal?.wish?.includes(selected._id)?(<i className="text-primary">Added to wish list{" "}</i>):(<i>Add to wish list{" "}</i>)}
+                      {personal?.wish?.includes(selected._id)?(<i className="text-danger">Added to wish list{" "}</i>):(<i>Add to wish list{" "}</i>)}
                       
                     </button>
                   </span>

@@ -53,7 +53,8 @@ export default function FirstHeader({sub}) {
               transform: "rotate(45deg)",
             }}
           >
-            <i className="bi bi-paperclip"></i>
+            <a style={{cursor:"pointer"}} href="https://google.com"
+            className="bi bi-paperclip"></a>
           </div>
 
           <div
@@ -65,7 +66,9 @@ export default function FirstHeader({sub}) {
               height: "50px",
             }}
           >
-            <i class="bi bi-facebook "></i>
+            <a class="bi bi-facebook " 
+            href="https://facebook.com"
+            style={{cursor:"pointer"}}></a>
           </div>
           <div
             className="bg-light  mx-4 p-3"
@@ -76,7 +79,8 @@ export default function FirstHeader({sub}) {
               height: "50px",
             }}
           >
-            <i className="bi bi-twitter "></i>
+            <a  href="https://twitter.com"
+            style={{cursor:"pointer"}} className="bi bi-twitter "></a>
           </div>
         </div>
       </header>
