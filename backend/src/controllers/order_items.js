@@ -69,21 +69,9 @@ const add_order_item = async (body, id,suppliers) => {
     return newOrder_item
 }
 
-module.exports.Read_order_item = async (req, res) => {
-    const _id = new mongoose.Types.ObjectId(req.params.id);
-    await Order_items.findById(_id).then(e => {
-        if(!e){
-            return res.status(404).json({error:"order item not found"})
-        }
-        return res.status(200).json(e)
-    }).catch(err => {
-        console.log(err.message)
-        return res.status(401).json({error:err.message})
-    })
-}
+
 
 module.exports.Read_order_items = async (req, res) => {
-
 
     await Order_items.find({returnrequest:'none'}).then(e =>{
         return res.status(200).json(e)
@@ -179,4 +167,52 @@ module.exports.returns= async (req, res) => {
         console.log(err.message)
         return res.status(401).json({error:err.message})
     })
+}
+
+module.exports.User_Admin_OView= async (req, res) => {
+    if(req.body.decoded.admin){
+    const id = req.body.id;
+    await Order_items.find({user_id:id,returnrequest:'none'}).then(response => {
+        return res.status(200).json(response)
+    }).catch(err => {
+        console.log(err.message)
+        return res.status(401).json({error:err.message})
+    })}
+
+    else{
+        return res.status(401).json({error:"Auth problem"})
+    }
+}
+module.exports.User_Admin_RView= async (req, res) => {
+    if(req.body.decoded.admin){
+    const id = req.body.id;
+    console.log(id)
+    await Order_items.find({user_id:id,returnrequest:{$ne:'none'}}).then(response => {
+        return res.status(200).json(response)
+    }).catch(err => {
+        console.log(err.message)
+        return res.status(401).json({error:err.message})
+    })}
+    else{
+        return res.status(401).json({error:"Auth problem"})
+    }
+}
+module.exports.stat = async (req, res) => {
+    try{
+    if(req.body.decoded.admin){
+    const all =await Order_items.count({})
+    const completed=await Order_items.count({status:"completed"})
+    const cancelled=await Order_items.count({status:"cancelled"})
+    const arr=[all,completed,cancelled]
+    console.log(arr)
+    return res.json({
+        response:arr
+    })
+    }
+}
+    catch(err){
+        console.log(err)
+        return res.json({msg:"err"})   
+    }
+
 }

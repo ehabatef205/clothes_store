@@ -172,7 +172,40 @@ const login = async(req, res, next) => {
         })
     }
 }
+const getall=async(req,res)=>{
+
+    try{
+        
+
+        
+        if(req.body.decoded.admin)
+        User.find().select('-password')
+            .then((response)=> {
+                res.json({
+                response
+                })
+            })
+            .catch(error => {
+                console.log(error);
+                res.json({
+        
+                message: 'An error Occured!'
+                })
+            })
+        else(
+            res.json({message: 'An error Occured!'})
+        )
+
+    }catch (error) {
+        res.json({
+            message: "Error"
+        })
+    }
+
+
+
+}
 
 module.exports = {
-    viewProfile, signUp, updateProfile, deleteProfile, login
+    viewProfile, signUp, updateProfile, deleteProfile, login,getall
 }
