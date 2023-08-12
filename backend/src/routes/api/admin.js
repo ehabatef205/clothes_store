@@ -7,6 +7,6 @@ const router = Router()
 router.post('/', Admincontroller.login)
 
 router.post('/new', Admincontroller.signUp)
-router.get('/checkauth',checkToken, Admincontroller.signUp)
+router.get('/checkauth',checkToken, Admincontroller.auth)
 
 module.exports = router
