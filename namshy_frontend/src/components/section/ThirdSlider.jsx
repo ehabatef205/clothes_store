@@ -93,7 +93,7 @@ export default function ThirdSlider({ id }) {
                             
                             onClick={() => addToCart(card.id)}
                         >
-                            <i class="bi bi-plus-lg"></i>
+                            <i className="bi bi-plus-lg"></i>
                         </button>
                     </div>
                     </Card.Body>
@@ -130,7 +130,7 @@ export default function ThirdSlider({ id }) {
                            
                             onClick={() => addToCart(card.id)}
                         >
-                            <i class="bi bi-plus-lg"></i>
+                            <i className="bi bi-plus-lg"></i>
                         </button>
                     </div>
                     </Card.Body>
@@ -167,7 +167,7 @@ export default function ThirdSlider({ id }) {
                             onClick={() => addToCart(card.id)}
                             
                         >
-                            <i class="bi bi-plus-lg"></i>
+                            <i className="bi bi-plus-lg"></i>
                         </button>
                     </div>
                     </Card.Body>

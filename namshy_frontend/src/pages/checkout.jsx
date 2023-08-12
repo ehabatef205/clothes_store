@@ -14,7 +14,7 @@ const Checkout = () => {
   const addProducts = async () => {
     allPrice = 0
     for (var i = 0; i < carts.length; i++) {
-      const product = { product_id: carts[i].product_id, quantity: carts[i].quantity }
+      const product = { product_id: carts[i].product_id, quantity: carts[i].quantity ,color:carts[i].color,size:carts[i].size}
       setProducts(products => [...products, product])
       await productsapi.get_product_by_id(carts[i].product_id).then(async (product1) => {
 
@@ -101,7 +101,7 @@ const Checkout = () => {
       onClick={() => { finalize() }}
       style={{ backgroundColor: "blue" }}
     >
-      finalize
+      Checkout
     </button>
 
 

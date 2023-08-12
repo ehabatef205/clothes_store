@@ -78,8 +78,30 @@ const signUp = async (req, res) => {
         })
     }
 }
+const auth = async (req, res) => {
+    try{
+        if(req.body.decoded.admin){
+            res.json({
+                auth:true
+            })
+        }
+        else{
+            res.json({
+                auth:false
+            })
+        }
+
+        
+          
+    }catch(error){
+        res.json({
+            auth:false
+        })
+    }
+}
+
 
 
 module.exports={
-    login,signUp
+    login,signUp,auth
 }

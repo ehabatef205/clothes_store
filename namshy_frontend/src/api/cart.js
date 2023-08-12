@@ -5,8 +5,8 @@ const proxy = `${backend_url}/cart/`
 
 const cookie = new Cookies()
 
-export const add_cart = async (product_id, quantity, token) => {
-    await axios.post(`${proxy}`, { product_id: product_id, quantity: quantity }, { headers: { authorization: token } })
+export const add_cart = async (product_id, quantity,color,size,clothing, token) => {
+    await axios.post(`${proxy}`, { product_id: product_id, quantity: quantity,color:color,size:size ,clothing:clothing}, { headers: { authorization: token } })
 }
 export const get_cart = async () => {
     const token = await cookie.get('Auth')

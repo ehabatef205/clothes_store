@@ -183,8 +183,9 @@ export function NavBar({ visible = true }) {
                 overflowY: "auto",
               }}
             >
-              {categories.map((category) => (
+              {categories.map((category,index) => (
                 <div
+                key={index}
                   href={"/cat/" + category.name}
                   style={{
                     ...linkStyle,

@@ -12,8 +12,16 @@ router.post('/myorders',checkToken,order_items_controller.User_Orders)
 router.post('/myreturns',checkToken,order_items_controller.User_returns)
 router.post('/returns',order_items_controller.returns)
 router.post('/requestreturn/:id',checkToken,order_items_controller.start_return)
-router.get('/:id', order_items_controller.Read_order_item)
 router.delete('/:id',order_items_controller.Delete_order_item)
+router.put('/',order_items_controller.Update_many)
 router.put('/:id',order_items_controller.Update_order_item)
+
+router.post('/userorders',checkToken,order_items_controller.User_Admin_OView)
+router.post('/userreturns',checkToken,order_items_controller.User_Admin_RView)
+
+router.get('/stat',checkToken,order_items_controller.stat)
+
+router.post('/filter',order_items_controller.filter)
+
 
 module.exports = router

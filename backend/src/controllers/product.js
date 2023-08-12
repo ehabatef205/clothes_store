@@ -219,7 +219,7 @@ module.exports.CreateProducts = async (req, res, next) => {
 
 
 module.exports.SearchByName = (req, res) => {
-    Product.find({ name: { $regex: '.*' + req.body.query + '.*' } }).limit(8)
+    Product.find({ name: { $regex: '.*' + req.body.query + '.*' , $options: 'i'} }).limit(8)
         .then(response => {
 
             res.json({
@@ -265,21 +265,23 @@ module.exports.uplodaImage = async (req, res, next) => {
     }
 
     const body = req.body
+    console.log(JSON.parse(body.colors))
     body.supplier = 'Wolf'
     body.imageSrc = images;
     const product = new Product({
         supplier: 'Wolf',
         category_id: body.category_id,
+        quantity:body.quantity,
         subCategory: body.subCategory,
         typeOfProduct: body.typeOfProduct,
         name: body.name,
-        quantity: body.quantity,
+        clothing:body.clothing,
         SKU: body.SKU,
         price_before: body.price_before,
         price_after: body.price_after,
         imageSrc: images,
+        colors:JSON.parse(body.colors),
         desc: {
-            color: body.color,
             type: body.type,
             brand: {
                 name: body.nameOfBrand,
@@ -287,13 +289,7 @@ module.exports.uplodaImage = async (req, res, next) => {
             },
             description: body.description,
         },
-        sizes: {
-            s: body.s,
-            m: body.m,
-            l: body.l,
-            xl: body.xl,
-            xxl: body.xxl
-        },
+        sizes: JSON.parse(body.sizes),
         view: true
     })
 

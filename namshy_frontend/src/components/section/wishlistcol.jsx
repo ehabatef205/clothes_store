@@ -1,4 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { CartContext } from "./Shoppingcartcontext";
 import "./slider.css";
 import * as productfetch from "../../api/product"
@@ -9,6 +10,7 @@ import * as wish from "../../api/wish"
 
 import { Cookies } from "react-cookie";
 const Wishlistcol = ({ product, renderedIndex, load }) => {
+  const navigate=useNavigate()
 
   const cookie = new Cookies();
   const addtoBag = async (id) => {
@@ -72,9 +74,9 @@ const Wishlistcol = ({ product, renderedIndex, load }) => {
             <div className=" my-1 text-secondary ">|</div>
             <div className="my-1">
               <button className="btn"
-                onClick={() => { addtoBag(currentproduct._id) }}>
+                onClick={() => { navigate(`/SelectedProductPage/${currentproduct._id}`) }}>
                 {" "}
-                <i className="bi bi-cart m-2">Add to cart</i>
+                <i className="bi bi-cart m-2">Visit Product</i>
 
               </button>
 

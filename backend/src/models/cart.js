@@ -10,7 +10,17 @@ const CartSchema = new Schema({
     },
     quantity: {
         type: Number,
+    },
+    size:{
+        type:String
+    },
+    color:{
+        type:String
+    },
+    clothing:{
+        type:Boolean
     }
+
 })
 
 CartSchema.statics.isThisCart = async function (product_id, user_id) {
