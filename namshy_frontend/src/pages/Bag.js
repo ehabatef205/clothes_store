@@ -34,6 +34,7 @@ const Bag = () => {
     cartArr.forEach(element => {
       productArr.push(element.product_id)
     });
+
     const products=await carts(productArr)
     setCartItems(cartArr)
     setProductItems(products)

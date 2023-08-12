@@ -4,6 +4,9 @@ const order_items_Schema = new Schema({
     user_id :{
         type:String,
     },
+    email:{
+        type:String
+    },
     products:[
         {
             product_id: {
@@ -21,7 +24,13 @@ const order_items_Schema = new Schema({
             SKU:{type:String},
             quantity: {
                 type: String
-            }
+            },
+            color: {
+                type: String
+            },
+            size: {
+                type: String
+            },
         }
     ],
     phone: {

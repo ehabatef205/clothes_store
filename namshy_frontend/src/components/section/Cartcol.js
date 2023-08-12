@@ -10,9 +10,7 @@ const Cartcol = ({ cart, load ,product }) => {
   
   const [active, setactive] = useState(true);
 
-  const [Sizet, setSizet] = useState('');
-
-  const [Colort, setColort] = useState('red');
+  const [index, setIndex] = useState(product.colors.indexOf(cart.color))
   
   const cookie = new Cookies();
   const addToFavorites = async (id) => {
@@ -22,14 +20,6 @@ const Cartcol = ({ cart, load ,product }) => {
     });
   };
 
-
-  
-
-  const size = Object.keys(product.sizes)
-  const colors = ["red", 
-    "black", 
-    "brown", 
-    "yellow",'green','purple'];
 
 
   return (
@@ -50,12 +40,16 @@ const Cartcol = ({ cart, load ,product }) => {
               <button
               
                 onClick={() =>{
-                  setactive(false)
-                  if(active)
-                   cartDB.increse_item(cart?._id).then(e => {
-                  load()
-                  setactive(true)
-                })}}/*.then(e=>{setproduct(e)})*/
+                  console.log( parseInt(product.sizes[cart.size][index]))
+                  if(cart.quantity !== parseInt(product.sizes[cart.size][index])){
+                    setactive(false)
+                    if(active)
+                     cartDB.increse_item(cart?._id).then(e => {
+                    load()
+                    setactive(true)
+                  })
+                  }
+                  }}/*.then(e=>{setproduct(e)})*/
                 className="btn m-1 btn-light"
               >
                 <i class="bi bi-plus-lg"></i>
@@ -72,12 +66,12 @@ const Cartcol = ({ cart, load ,product }) => {
                 onClick={() => {
                   if (cart.quantity !== 1)
                     setactive(false)
-                    if(active)
+                    if(active){
                     cartDB.decrease_item(
                       cart?._id).then((e) => {
                         load()
                         setactive(true)
-                      })
+                      })}
                 }} /*.then(e=>{setproduct(e)})*/
                 className=" btn m-1 btn-light"
               >
@@ -95,48 +89,44 @@ const Cartcol = ({ cart, load ,product }) => {
                 style={{ textAlign: "left" }}
               >
                 {" "}
-                {size.map((size, index) => (
+               
                   <button
                     style={{
                       zIndex: 3,
                       cursor: "pointer",
                       width: "70px",
                       borderRadius: "2px",
-                      backgroundColor:size===Sizet? 
-                      Colort:"transparent",
-                      color:size===Sizet? 
-                      'white':"gray",
+                      backgroundColor:
+                      "grey",
+                      color:
+                      'white'
                       
                     }}
-                    key={index}
+                    
                     className="btn  btn-outline-secondary "
-
-                    onClick={() =>{setSizet(size)}}
+                    
                   >
-                    {size}
+                    {cart.size}
                   </button>
-                ))}
+                
                 <div style={ {height:"30px"}}>{" \n"}</div>
                  
-                {colors.map((color, index) => (
+                
                   <button
                     style={{
                       zIndex: 3,
                       cursor: "pointer",
                       width: "70px",
                       borderRadius: "2px",
-                      backgroundColor:color,
-                      color:color,
+                      backgroundColor:cart.color,
+                      color:cart.color,
                       
                     }}
-                    key={index}
                     className="btn  btn-outline-secondary "
-
-                    onClick={() =>{setColort(color)}}
                   >
                     0
                   </button>
-                ))}
+                
               </div>
 
               <div className="d-flex">

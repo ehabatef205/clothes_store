@@ -14,21 +14,33 @@ module.exports.Create_order_item = async (req, res) => {
     const id = decoded.id;
 
     const body = req.body
+    
 
     let list = [];
     let suppliers=[]
    
 
     for (var i = 0; i < body.products.length; i++){
-        console.log(body.products[i].product_id);
+       
         await Product.findById(body.products[i].product_id).then(async (product) => {
+            var sizes=product.sizes
+            
+            var index=product.colors.indexOf(body.products[i].color)
+            sizes[body.products[i].size][index]
+            if(typeof(sizes[body.products[i].size][index])==="string"){
+                sizes[body.products[i].size][index]=parseInt( sizes[body.products[i].size][index])-body.products[i].quantity
+            }
+            else{
+                sizes[body.products[i].size][index]=sizes[body.products[i].size][index]-body.products[i].quantity
+            }
             body.products[i].image=product.imageSrc[0]
+            
             body.products[i].SKU=product.SKU
             body.products[i].name=product.name
             if(!suppliers.includes(product.supplier)){
                 suppliers.push(product.supplier)
             }
-            await Product.findByIdAndUpdate(body.products[i].product_id, {$set: {quantity: product.quantity - body.products[i].quantity}}).then(async (product1) => {        
+            await Product.findByIdAndUpdate(body.products[i].product_id, {$set: {sizes:sizes}}).then(async (product1) => {        
                 await Cart.findOneAndDelete({product_id: body.products[i].product_id, user_id:  id}).then(e => {
                     list.push("Done")
                 })
@@ -48,8 +60,10 @@ module.exports.Create_order_item = async (req, res) => {
 }
 
 const add_order_item = async (body, id,suppliers) => {
+    console.log(body.products)
     const newOrder_item = new Order_items({
         user_id: id,
+        email:req.body.decoded.email,
         products: body.products,
         phone: body.phone,
         country: body.country,
@@ -200,9 +214,9 @@ module.exports.User_Admin_RView= async (req, res) => {
 module.exports.stat = async (req, res) => {
     try{
     if(req.body.decoded.admin){
-    const all =await Order_items.count({})
-    const completed=await Order_items.count({status:"completed"})
-    const cancelled=await Order_items.count({status:"cancelled"})
+    const all =await Order_items.count({returnrequest:"none"})
+    const completed=await Order_items.count({status:"completed",returnrequest:"none"})
+    const cancelled=await Order_items.count({status:"cancelled",returnrequest:"none"})
     const arr=[all,completed,cancelled]
     console.log(arr)
     return res.json({
@@ -215,4 +229,15 @@ module.exports.stat = async (req, res) => {
         return res.json({msg:"err"})   
     }
 
+}
+
+module.exports.Update_many = async (req, res) => {
+    const ids = req.body.ids
+    const stat = req.body.status
+    await Order_items.updateMany({ _id: { $in: ids } },{status:stat},{new:true}).then(e => {
+        return res.status(200).json(e)
+    }).catch(err => {
+        console.log(err.message)
+        return res.status(401).json({error:err.message})
+    })
 }

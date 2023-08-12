@@ -10,6 +10,12 @@ const CartSchema = new Schema({
     },
     quantity: {
         type: Number,
+    },
+    size:{
+        type:String
+    },
+    color:{
+        type:String
     }
 })
 

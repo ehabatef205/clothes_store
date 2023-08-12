@@ -33,9 +33,7 @@ export function Product({ product, index ,personal,update_p}) {
 
     const addtoBag = async (id) => {
         console.log(personal)
-        await Cart.add_cart(id, 1, cookie.get("Auth")).then((e) => {
-            update_p()
-        });
+        navigate(`/SelectedProductPage/${product._id}`);
     };
     const addToFavorites = async (id) => {
         

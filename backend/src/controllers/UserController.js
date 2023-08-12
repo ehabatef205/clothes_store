@@ -205,7 +205,39 @@ const getall=async(req,res)=>{
 
 
 }
+const search=async(req,res)=>{
 
+    try{
+        
+        console.log(req.body)
+        
+        if(req.body.decoded.admin){
+        User.find({email: { $regex: '.*' + req.body.query + '.*', $options: 'i'  } }).select('-password')
+            .then((response)=> {
+                res.json({
+                response
+                })
+            })
+            .catch(error => {
+                console.log(error);
+                res.json({
+        
+                message: 'An error Occured!'
+                })
+            })}
+        else(
+            res.json({message: 'An error Occured!'})
+        )
+
+    }catch (error) {
+        res.json({
+            message: "Error 500"
+        })
+    }
+
+
+
+}
 module.exports = {
-    viewProfile, signUp, updateProfile, deleteProfile, login,getall
+    viewProfile, signUp, updateProfile, deleteProfile, login,getall,search
 }

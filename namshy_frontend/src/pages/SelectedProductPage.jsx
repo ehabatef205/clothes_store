@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+
+import { getAvailableColorsAndSizes } from "./color-size";
 import { useParams } from "react-router-dom";
 import { Container } from "react-bootstrap";
 import { Rating } from "@mui/material";
@@ -13,8 +15,11 @@ import { update } from "../api/personal_cookies";
 function SelectedProductPage({ products, handleClick }) {
   const [childHeight, setChildHeight] = useState(0);
   const [selected, setSelected] = useState({});
+  const [AVC, setAVC] = useState([]);
+  const [AVS, setAVS] = useState({});
 
-  const [Sizet, setSizet] = useState('m');
+  const [Sizet, setSizet] = useState('');
+  const [Colort, setColort] = useState('');
   const cookie = new Cookies()
   const [personal, setpersonal] = useState({})
   const update_p=async()=>{
@@ -27,6 +32,9 @@ function SelectedProductPage({ products, handleClick }) {
     const getById = async () => {
       await Product.get_product_by_id(id).then((e) => {
         setSelected(e)
+        const { availableColors, availableSizes } = getAvailableColorsAndSizes(e.colors, e.sizes);
+        setAVC(availableColors)
+        setAVS(availableSizes)
       })
     }
     getById()
@@ -41,7 +49,7 @@ function SelectedProductPage({ products, handleClick }) {
   const [value, setValue] = useState(0);
 
   const addtoBag = async () => {
-    await Cart.add_cart(id, 1, cookie.get("Auth")).then((e) => {
+    await Cart.add_cart(id, 1,Colort,Sizet, cookie.get("Auth")).then((e) => {
       update_p()
     })
   }
@@ -73,18 +81,18 @@ function SelectedProductPage({ products, handleClick }) {
       <div className=" m-3" style={{ textAlign: "center" }}>
         {" "}
         <nav aria-label="breadcrumb">
-          <ol class="breadcrumb m-0">
-            <li class="breadcrumb-item">
+          <ol className="breadcrumb m-0">
+            <li className="breadcrumb-item">
               <a href="#" style={{ color: "black", textDecoration: "none" }}>
                 Home
               </a>
             </li>
-            <li class="breadcrumb-item">
+            <li className="breadcrumb-item">
               <a href="#" style={{ color: "black", textDecoration: "none" }}>
                 woman
               </a>
             </li>
-            <li class="breadcrumb-item active" aria-current="page">
+            <li className="breadcrumb-item active" aria-current="page">
               clothings
             </li>
           </ol>
@@ -92,7 +100,7 @@ function SelectedProductPage({ products, handleClick }) {
       </div>
       <Container id="parent" className="d-flex flex-wrap" style={{ width: "100%" }}>
 
-        <div className="flex-wrap" style={{ display: "flex", "flex-direction ": "row", width: "100%", flexDirection: "row" }}>
+        <div className="flex-wrap" style={{ display: "flex", flexDirection: "row", width: "100%", flexDirection: "row" }}>
           <div
             id="child1"
             className="d-flex flex-wrap col-lg-6 col-sm-12  "
@@ -132,14 +140,15 @@ function SelectedProductPage({ products, handleClick }) {
                     {selected?.name}
                   </p>
                 </div>
-                {/* <div className=" w-100" >   </div> */}
+                
 
                 <div
                   className=" w-100  d-flex "
-                  style={{ fontSize: "18px" }}
+                  style={{ fontSize: "18px",flexDirection:"column" }}
                 >
+                  <del className=" mx-2 text-secondary">{selected?.price_before} </del>
                   {" "}
-                  <div className=" mx-2">{selected?.price_after} </div>
+                  <div className=" mx-2 text-body" style={{fontSize:"30px"}}>{selected?.price_after}$ </div>
                 </div>
               </div>
               {/*  */}
@@ -159,58 +168,40 @@ function SelectedProductPage({ products, handleClick }) {
                   </div>
                 </div>
                 <div className=" w-100   ">
-                  <div style={{ textAlign: "left" }}>
-                    <button
-                      style={{
-                        cursor: "pointer",
-                        borderRadius: "2px",
-                        fontSize: "17px",
-                      }}
-                      className="btn text-dark bg-light   my-2"
-                    >
-                      international
-                    </button>
-                    <button
-                      style={{
-                        cursor: "pointer",
-                        borderRadius: "2px",
-                        fontSize: "17px",
-                      }}
-                      className="btn text-dark bg-light   my-2"
-                    >
-                      US
-                    </button>
-                    <button
-                      style={{
-                        cursor: "pointer",
-                        borderRadius: "2px",
-                        fontSize: "17px",
-                      }}
-                      className="btn text-dark bg-light   my-2"
-                    >
-
-                      UK
-                    </button>
-                    <button
-                      style={{
-                        cursor: "pointer",
-                        borderRadius: "2px",
-                        fontSize: "17px",
-                      }}
-                      className="btn text-dark bg-light   my-2"
-                    >
-                      EU{" "}
-                    </button>
-                  </div>
+                  
                   <div
                     className="   justify-content-start "
                     style={{ textAlign: "left" }}
                   >
                     {" "}
                     {
-                    selected.sizes?
-                    Object.keys(selected?.sizes).map((size, _) => (
+                    selected.colors?
+                    AVC.map((color, index) => (
                       <button
+                      key={index}
+                      onClick={() =>{setColort(color)
+                      setSizet("")
+                      }}
+                        style={{
+                          zIndex: 3,
+                          cursor: "pointer",
+                          width: "70px",
+                          borderRadius: "2px",
+                          backgroundColor:color,
+                          color:color,
+                        }}
+                        
+                        className="btn  btn-outline-secondary "
+                      >
+                        000
+                      </button>
+                    )):<></>}
+                    <br/>
+                    {
+                    Colort!==""?
+                    AVS[Colort].map((size, index) => (
+                      <button
+                      key={index}
                       onClick={() =>{setSizet(size)}}
                         style={{
                           zIndex: 3,
@@ -220,7 +211,8 @@ function SelectedProductPage({ products, handleClick }) {
                           backgroundColor:size===Sizet? 
                           "gray":"transparent",
                           color:size===Sizet? 
-                          'white':"gray",
+                          Colort:"gray",
+                          borderColor:Colort,
                         }}
                         
                         className="btn  btn-outline-secondary "
@@ -236,7 +228,7 @@ function SelectedProductPage({ products, handleClick }) {
               {/*  */}
               <div
                 className=" d-flex  w-100   "
-                style={{ "flex-direction": "flex-row" }}
+                style={{ flexDirection: "flex-row" }}
 
               >
                 <div className=" d-flex w-100  "
@@ -244,7 +236,7 @@ function SelectedProductPage({ products, handleClick }) {
                 >
                   <span className=" mx-3" style={{ textAlign: "center", width: "45%" }}>
                     <button
-                      disabled={personal?.cart?.includes(selected._id)}
+                      disabled={personal?.cart?.includes(selected._id)||(Colort==='')||(Sizet==='')}
                       className="btn text-light my-3 h-75 w-100"
                       onClick={() => {
                         
@@ -339,9 +331,9 @@ function SelectedProductPage({ products, handleClick }) {
                 style={{ width: "100%" }}
               >
                 <div className="d-flex w-50  ">
-                  <a
+                  <div
                     className="brand-link follow-brand__logo"
-                    href="/adidas_originals/"
+                   
                     data-brand-name="adidas Originals"
                     data-brand-url="/adidas_originals/"
                   >
@@ -349,7 +341,7 @@ function SelectedProductPage({ products, handleClick }) {
                       src={selected?.desc?.brand?.logo}
                       data-nm-invalid-image-remover=""
                     />
-                  </a>
+                  </div>
                 </div>
                 <div className=" w-50">
                   <div className=" m-3 " style={{ textAlign: "left" }}>

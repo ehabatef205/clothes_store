@@ -4,10 +4,8 @@ const jwt = require('jsonwebtoken')
 require("dotenv").config();
 
 module.exports.Create_cart_item = async (req, res) => {
-    const usertoken = req.headers.authorization;
-    const token = usertoken.split(' ');
-    const decoded = jwt.verify(token[1], process.env.JWT_KEY);
-    const id = decoded.id;
+  
+    const id = req.body.decoded.id;
 
     const cart_item = req.body
 
@@ -26,11 +24,13 @@ module.exports.Create_cart_item = async (req, res) => {
     })
 }
 
-const add_cart_item = async ({ product_id, quantity }, id) => {
+const add_cart_item = async ({ product_id, quantity,size,color }, id) => {
     const newCart_item = new Cart({
         user_id: id,
         product_id,
-        quantity
+        quantity,
+        size,
+        color
     })
     await newCart_item.save()
     return newCart_item

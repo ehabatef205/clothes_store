@@ -219,7 +219,7 @@ module.exports.CreateProducts = async (req, res, next) => {
 
 
 module.exports.SearchByName = (req, res) => {
-    Product.find({ name: { $regex: '.*' + req.body.query + '.*' } }).limit(8)
+    Product.find({ name: { $regex: '.*' + req.body.query + '.*' , $options: 'i'} }).limit(8)
         .then(response => {
 
             res.json({
@@ -261,10 +261,11 @@ module.exports.uplodaImage = async (req, res, next) => {
     let images = [];
 
     for (var i = 1; i < req.files.length; i++) {
-        images.push(`http://5.183.9.124:5000/${req.files[i].path}`)
+        images.push(`http://localhost:5000/${req.files[i].path}`)
     }
 
     const body = req.body
+    console.log(JSON.parse(body.colors))
     body.supplier = 'Wolf'
     body.imageSrc = images;
     const product = new Product({
@@ -273,13 +274,13 @@ module.exports.uplodaImage = async (req, res, next) => {
         subCategory: body.subCategory,
         typeOfProduct: body.typeOfProduct,
         name: body.name,
-        quantity: body.quantity,
+
         SKU: body.SKU,
         price_before: body.price_before,
         price_after: body.price_after,
         imageSrc: images,
+        colors:JSON.parse(body.colors),
         desc: {
-            color: body.color,
             type: body.type,
             brand: {
                 name: body.nameOfBrand,
@@ -287,13 +288,7 @@ module.exports.uplodaImage = async (req, res, next) => {
             },
             description: body.description,
         },
-        sizes: {
-            s: body.s,
-            m: body.m,
-            l: body.l,
-            xl: body.xl,
-            xxl: body.xxl
-        },
+        sizes: JSON.parse(body.sizes),
         view: true
     })
 

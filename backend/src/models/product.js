@@ -18,10 +18,6 @@ const Productschema = new Schema({
         type: String,
         required: true
     },
-    quantity: {
-        type: Number,
-        default: 0
-    },
     SKU: {
         type: String,
         required: true,
@@ -42,7 +38,6 @@ const Productschema = new Schema({
     desc: {
         type: Object,
         default: {
-            color: 'white',
             type: 'cotton',
             brand: {
                 name: 'nike',
@@ -51,14 +46,15 @@ const Productschema = new Schema({
             description: 'high quality cloth.'
         }
     },
+    colors:[String],
     sizes: {
         type: Object,
         default: {
-            s: 0,
-            m: 0,
-            l: 0,
-            xl: 0,
-            xxl: 0
+            S: [0],
+            M: [0],
+            L: [0],
+            XL: [0],
+            XXL: [0]
         }
     },
     view: {

@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 
 import "./slider.css";
+import { getAvailableColorsAndSizes } from "../../pages/color-size.js";
 import Carousel from "react-bootstrap/Carousel";
 import { Card } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
@@ -14,6 +15,8 @@ import { update } from "../../api/personal_cookies";
 export function CardsSlider(props) {
   const [selectedCardIndex, setSelectedCardIndex] = useState(-1);
   const [personal, setpersonal] = useState({})
+  const [colors, setcolors] = useState([])
+  const [sizes, setsizez] = useState([])
     const [selectedwCardIndex, setSelectedwCardIndex] = useState(-1);
     const handleButtonClick = (index) => {
         setSelectedCardIndex(index);
@@ -60,10 +63,7 @@ export function CardsSlider(props) {
   };
 
   const addtoBag = async (id) => {
-    await Cart.add_cart(id, 1, cookie.get("Auth")).then((e) => {
-      update_p()
-      
-    })
+    navigate(`/SelectedProductPage/${id}`);
   }
 
   return (
@@ -78,7 +78,7 @@ export function CardsSlider(props) {
                   : "0.5px solid #C8D2D1"}}
         key={product._id}>
           <div
-
+            onClick={() => handleImageClick(product)}
             className="carousel-wrapper"
            
           >
@@ -96,24 +96,7 @@ export function CardsSlider(props) {
                       height: "465px",
                     }}
                   />
-                  <div className="caption position-absolute bottom-0 w-100 p-3 ">
-                    <p className="mb-0">This item is added to your cart</p>
-                    <div className="d-flex justify-content-center align-content-center gap-1">
-                      {Object.keys(product.sizes).map((size, _) => (
-                        <button 
-                          style={{zIndex:"9999",backgroundColor:size===Sizet? 
-                          "gray":"transparent",
-                          color:size===Sizet? 
-                          'white':"gray",}}
-                          key={size}
-                          className="btn btn-outline-secondary custom-style"
-                          onClick={() =>{setSizet(size)}}
-                        >
-                          {size}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
+                  
                 </Carousel.Item>
               ))}
             </Carousel>
