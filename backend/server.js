@@ -4,7 +4,7 @@ const port = 5000;
 const mongoose = require("mongoose");
 const router = require("./src/routes/index");
 const cors = require("cors");
-
+const path = require('path');
 app.use(express.json());
 
 const connectDB = async () => {
@@ -27,6 +27,7 @@ app.use(cors(corsOptions));
 app.use(express.json({ limit: "50mb" }));
 
 app.use(router);
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 connectDB().then(() => {
   app.listen(port, () => {
