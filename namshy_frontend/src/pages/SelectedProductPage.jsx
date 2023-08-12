@@ -26,12 +26,14 @@ function SelectedProductPage({ products, handleClick }) {
     var p=await update()
     setpersonal(p)
   }
-
+const[formattedDescription,setformattedDescription]=useState("")
   const { id } = useParams();
   useEffect(() => {
     const getById = async () => {
       await Product.get_product_by_id(id).then((e) => {
         setSelected(e)
+        const formated = e.desc.description.replace(/\n/g, "<br>");
+        setformattedDescription(formated)
         const { availableColors, availableSizes } = getAvailableColorsAndSizes(e.colors, e.sizes);
         setAVC(availableColors)
         setAVS(availableSizes)
@@ -169,7 +171,7 @@ function SelectedProductPage({ products, handleClick }) {
                 </div>
                 <div className=" w-100   ">
                   
-                  <div
+                  {selected?.clothing&&<div
                     className="   justify-content-start "
                     style={{ textAlign: "left" }}
                   >
@@ -220,7 +222,7 @@ function SelectedProductPage({ products, handleClick }) {
                         {size}
                       </button>
                     )):<></>}
-                  </div>
+                  </div>}
                 </div>
                 {/* <div className="  w-100" >productname</div> 
     <div className="w-100 " >prise/ old</div> */}
@@ -298,7 +300,7 @@ function SelectedProductPage({ products, handleClick }) {
                 <div
                   style={{ borderBottom: " 1px solid gray", textAlign: "left" }}
                 >
-                  Description :<br></br> {selected?.desc?.description}
+                  Description :<br></br> {formattedDescription}
                 </div>
               </div>
 

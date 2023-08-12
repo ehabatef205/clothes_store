@@ -274,7 +274,7 @@ module.exports.uplodaImage = async (req, res, next) => {
         subCategory: body.subCategory,
         typeOfProduct: body.typeOfProduct,
         name: body.name,
-
+        clothing:body.clothing,
         SKU: body.SKU,
         price_before: body.price_before,
         price_after: body.price_after,

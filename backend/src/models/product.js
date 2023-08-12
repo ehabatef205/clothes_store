@@ -60,6 +60,10 @@ const Productschema = new Schema({
     view: {
         type: Boolean
     }
+    ,
+    clothing: {
+        type: Boolean
+    }
 }, { timeseries: true })
 
 
