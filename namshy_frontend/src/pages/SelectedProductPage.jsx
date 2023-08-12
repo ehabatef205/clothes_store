@@ -32,7 +32,7 @@ const[formattedDescription,setformattedDescription]=useState("")
     const getById = async () => {
       await Product.get_product_by_id(id).then((e) => {
         setSelected(e)
-        const formated = e.desc.description.replace(/\n/g, "<br>");
+        const formated =JSON.parse( e.desc.description).replace(/\n/g, "<br>");
         setformattedDescription(formated)
         const { availableColors, availableSizes } = getAvailableColorsAndSizes(e.colors, e.sizes);
         setAVC(availableColors)
@@ -51,7 +51,7 @@ const[formattedDescription,setformattedDescription]=useState("")
   const [value, setValue] = useState(0);
 
   const addtoBag = async () => {
-    await Cart.add_cart(id, 1,Colort,Sizet, cookie.get("Auth")).then((e) => {
+    await Cart.add_cart(id, 1,Colort,Sizet,selected.clothing, cookie.get("Auth")).then((e) => {
       update_p()
     })
   }
@@ -158,7 +158,13 @@ const[formattedDescription,setformattedDescription]=useState("")
                 className=" d-flex flex-wrap  w-100   "
                 style={{ width: "100%", height: "170px" }}
               >
-                <div
+               
+                <div className=" w-100   ">
+                  
+                  
+                  {selected?.clothing&&<>
+                  
+                    <div
                   className="d-flex justify-content-between w-100"
                   style={{ height: "40px" }}
                 >
@@ -169,9 +175,8 @@ const[formattedDescription,setformattedDescription]=useState("")
                     show size chart
                   </div>
                 </div>
-                <div className=" w-100   ">
                   
-                  {selected?.clothing&&<div
+                  <div
                     className="   justify-content-start "
                     style={{ textAlign: "left" }}
                   >
@@ -222,7 +227,7 @@ const[formattedDescription,setformattedDescription]=useState("")
                         {size}
                       </button>
                     )):<></>}
-                  </div>}
+                  </div></>}
                 </div>
                 {/* <div className="  w-100" >productname</div> 
     <div className="w-100 " >prise/ old</div> */}
@@ -238,16 +243,12 @@ const[formattedDescription,setformattedDescription]=useState("")
                 >
                   <span className=" mx-3" style={{ textAlign: "center", width: "45%" }}>
                     <button
-                      disabled={personal?.cart?.includes(selected._id)||(Colort==='')||(Sizet==='')}
+                      disabled={personal?.cart?.includes(selected._id)||(selected.clothing?((Colort==='')||(Sizet==='')):selected.clothing)}
                       className="btn text-light my-3 h-75 w-100"
                       onClick={() => {
                         
-                        /*if(personal?.cart?.includes(selected._id)){
-                          deletebag()
-                          
-                        }else{*/
+
                           addtoBag()
-                      //  }
                       }}
                       style={{ backgroundColor: "#d99d2b", fontSize: "1.2rem" }}
                     >
@@ -300,7 +301,8 @@ const[formattedDescription,setformattedDescription]=useState("")
                 <div
                   style={{ borderBottom: " 1px solid gray", textAlign: "left" }}
                 >
-                  Description :<br></br> {formattedDescription}
+                  Description :<br></br> 
+                  <div dangerouslySetInnerHTML={{ __html: formattedDescription }} />
                 </div>
               </div>
 

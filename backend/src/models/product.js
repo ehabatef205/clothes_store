@@ -63,6 +63,9 @@ const Productschema = new Schema({
     ,
     clothing: {
         type: Boolean
+    },
+    quantity:{
+        type:Number
     }
 }, { timeseries: true })
 

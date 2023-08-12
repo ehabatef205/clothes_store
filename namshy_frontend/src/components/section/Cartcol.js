@@ -40,7 +40,7 @@ const Cartcol = ({ cart, load ,product }) => {
               <button
               
                 onClick={() =>{
-                  console.log( parseInt(product.sizes[cart.size][index]))
+                  if(product?.clothing){
                   if(cart.quantity !== parseInt(product.sizes[cart.size][index])){
                     setactive(false)
                     if(active)
@@ -48,6 +48,18 @@ const Cartcol = ({ cart, load ,product }) => {
                     load()
                     setactive(true)
                   })
+                  }}
+                  else{
+                    if(cart.quantity !== parseInt(product.quantity)){
+                      setactive(false)
+                      if(active)
+                       cartDB.increse_item(cart?._id).then(e => {
+                      load()
+                      setactive(true)
+                    })
+                    }
+                    
+
                   }
                   }}/*.then(e=>{setproduct(e)})*/
                 className="btn m-1 btn-light"
@@ -84,7 +96,7 @@ const Cartcol = ({ cart, load ,product }) => {
             <div className="m-3 ">
               <p style={{ margin: "0px", padding: "0px" }}>{/* {product?} */}</p>
               <p style={{ margin: "0px", padding: "0px" }}>{product?.name}</p>
-              <div
+              {cart?.clothing?(<div
                 className="   justify-content-start my-3"
                 style={{ textAlign: "left" }}
               >
@@ -127,7 +139,7 @@ const Cartcol = ({ cart, load ,product }) => {
                     0
                   </button>
                 
-              </div>
+              </div>):<></>}
 
               <div className="d-flex">
                 <div className="m-2 ">

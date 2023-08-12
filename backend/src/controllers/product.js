@@ -271,6 +271,7 @@ module.exports.uplodaImage = async (req, res, next) => {
     const product = new Product({
         supplier: 'Wolf',
         category_id: body.category_id,
+        quantity:body.quantity,
         subCategory: body.subCategory,
         typeOfProduct: body.typeOfProduct,
         name: body.name,
