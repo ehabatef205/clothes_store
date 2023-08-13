@@ -33,6 +33,9 @@ export const get_product_by_type = async (_id, type) => {
 export const searchProduct=async(query)=>{
     return (await axios.post(`${proxy}/search/`,{query}))
 }
+export const searchpage=async(query)=>{
+    return await((await axios.post(`${proxy}/searchpage/`,{query})).data)
+}
 export const carts=async(ids)=>{
     return await((await axios.post(`${proxy}/cart/`,{products:ids})).data.response)
 }

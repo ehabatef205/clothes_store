@@ -43,6 +43,7 @@ router.put('/:id', product_controller.UpdateProduct)
 router.put('/view/:id', product_controller.UpdateViewProduct)
 router.delete('/:id', product_controller.DeleteProduct)
 router.post('/search',product_controller.SearchByName)
+router.post('/searchpage',product_controller.SearchByNameBulk)
 router.post('/cart',product_controller.cart)
 
 module.exports = router

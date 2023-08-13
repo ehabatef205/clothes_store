@@ -11,6 +11,7 @@ import SelectedProductPage from "./pages/SelectedProductPage";
 import Footer from "./components/Navs/footer";
 import Profile from "./pages/profile";
 import Wishlist from "./pages/Wishlist";
+import Page2 from "./pages/page2";
 
 // import CartItems from "./pages/CartItems";
 import ShoppinghcartProvider from './components/section/Shoppingcartcontext'
@@ -31,6 +32,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/cat/:id" element={<Home />} />
         <Route path="/cat/:id/:subid" element={<Page1 />} />
+        <Route path="/search/*" element={<Page2/>} />
         <Route path="/profile" element={<Profile path={0}/>} />
         <Route path="/returns" element={<Profile path={1}/>} />
         <Route path="/orders" element={<Profile path={2}/>} />

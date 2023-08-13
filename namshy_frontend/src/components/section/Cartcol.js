@@ -14,10 +14,11 @@ const Cartcol = ({ cart, load ,product }) => {
   
   const cookie = new Cookies();
   const addToFavorites = async (id) => {
-    console.log("add to favorites");
+   
     await wish.add_cart(id, 1, cookie.get("Auth")).then((e) => {
       console.log(e);
     });
+   
   };
 
 
@@ -96,7 +97,7 @@ const Cartcol = ({ cart, load ,product }) => {
             <div className="m-3 ">
               <p style={{ margin: "0px", padding: "0px" }}>{/* {product?} */}</p>
               <p style={{ margin: "0px", padding: "0px" }}>{product?.name}</p>
-              {cart?.clothing?(<div
+              {product?.clothing?(<div
                 className="   justify-content-start my-3"
                 style={{ textAlign: "left" }}
               >

@@ -52,7 +52,15 @@ export function NavBar({ visible = true }) {
         setCategories(e.response);
       });
     };
+
+    const setq = async () => {
+      if(window.location.pathname.split("/")[1]==="search"){
+        const q=window.location.pathname.split("/")[2]
+        setQuery(q)
+      }
+    };
     getCategory();
+    setq()
   }, []);
   React.useEffect(() => {
     if (mediaBlobUrl) {
@@ -66,6 +74,7 @@ export function NavBar({ visible = true }) {
   const [items, setItems] = useState([]);
   useEffect(() => {
     if (query === "") setItems([]);
+    else if((window.location.pathname.split("/")[1]==="search" &&window.location.pathname.split("/")[2]===query))setItems([]);
     else {
       searchProduct(query).then((e) => {
         setItems(e.data.response);
@@ -136,7 +145,14 @@ export function NavBar({ visible = true }) {
 
             <div style={container}>
               <div style={{ color: "#fff" }}>
-                <SearchOutlinedIcon style={{ color: "#000" }}  />
+                <SearchOutlinedIcon style={{ color: "#000" }} onClick={()=>{
+                  if(query!==""){
+                    var reloader=window.location.pathname.split("/")[1]==="search"
+                    navigate(`/search/${query}`)
+                    if(reloader)
+                    window.location.reload()
+                  }
+                }} />
               </div>
               <button
                 style={{

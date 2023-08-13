@@ -6,16 +6,14 @@ import Carousel from "react-bootstrap/Carousel";
 import { Card } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import * as product from "../../api/product";
-import { CartContext } from "./Shoppingcartcontext";
-import * as Cart from '../../api/cart'
+
 import * as Wish from '../../api/wish'
 import { Cookies } from 'react-cookie'
 import { update } from "../../api/personal_cookies";
 
-export function CardsSlider(props) {
+export function SearchSlider(props) {
   const [selectedCardIndex, setSelectedCardIndex] = useState(-1);
   const [personal, setpersonal] = useState({})
-
     const [selectedwCardIndex, setSelectedwCardIndex] = useState(-1);
 
     const handlewButtonClick = (index) => {
@@ -38,7 +36,6 @@ export function CardsSlider(props) {
   };
 
   const cookie = new Cookies()
-  const [Sizet, setSizet] = useState('');
 
   const navigate = useNavigate();
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -46,7 +43,7 @@ export function CardsSlider(props) {
   useEffect(() => {
 
     const getProducts = async () => {
-      await product.get_product_by_category(props.id).then((e) => {
+      await product.searchpage(props.query).then((e) => {
         setProducts(e.response);
       });
     };

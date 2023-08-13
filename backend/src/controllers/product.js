@@ -232,6 +232,20 @@ module.exports.SearchByName = (req, res) => {
             })
         })
 }
+module.exports.SearchByNameBulk = (req, res) => {
+    Product.find({ name: { $regex: '.*' + req.body.query + '.*' , $options: 'i'} })
+        .then(response => {
+
+            res.json({
+                response
+            })
+        })
+        .catch(error => {
+            res.json({
+                message: 'An error Occured!'
+            })
+        })
+}
 
 module.exports.cart = (req, res) => {
     const ids= req.body.products

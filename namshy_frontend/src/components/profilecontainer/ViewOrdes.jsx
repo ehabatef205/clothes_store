@@ -62,11 +62,12 @@ export default function ViewOrders(props) {
                 <td>
                   <i>{props.order.phone}</i>
                 </td>
+                {props.order.status==="completed"?<td><button disabled={!(props.order.status==="completed") } onClick={handelreturn}>initiate return?</button></td>:<></>
+                } 
               </tr>
-                <tr >
+                
                     
-                <td><button disabled={!(props.order.status==="completed") } onClick={handelreturn}>initiate return?</button></td>
-                     </tr>
+                    
               <OrderProductList
                 products={props.order.products}
               ></OrderProductList>
