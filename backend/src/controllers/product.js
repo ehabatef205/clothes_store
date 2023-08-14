@@ -303,14 +303,14 @@ module.exports.uplodaImage = async (req, res, next) => {
   body.supplier = "Wolf";
   body.imageSrc = images;
   var vrprop = {};
-  if (body.clothing) {
+  /*if (body.clothing) {
     vrprop.gender = body.gender;
     vrprop.vrpos = body.vrpos;
     vrprop.garment_img_url = images[1];
     if (body.vrpos === "bottoms") {
       vrprop.vrpossec = body.vrpossec;
     }
-  }
+  }*/
   const product = new Product({
     supplier: "Wolf",
     category_id: body.category_id,
@@ -341,7 +341,7 @@ module.exports.uplodaImage = async (req, res, next) => {
     .save()
     .then(async (response) => {
         console.log(response.clothing)
-      if (response.clothing) {    
+     /* if (response.clothing) {    
           await MakeRequest(vrprop)
             .then(async (responseData) => {
               console.log("Response:", responseData);
@@ -357,7 +357,7 @@ module.exports.uplodaImage = async (req, res, next) => {
               console.error("Error:", error);
             });
         
-      }
+      }*/
       res.json({
         response,
       });

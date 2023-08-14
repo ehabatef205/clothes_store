@@ -37,7 +37,7 @@ function makeModel(requestBody) {
     req.end();
   });
 }
-
+/*
 module.exports = {
   MakeRequest: (vrprop) => {
     console.log(vrprop)
@@ -58,7 +58,7 @@ module.exports = {
     }
     return makeModel(requestBody); // Return the promise from makeModel
   }
-};
+};*/
 
 const getAuthenticationHeader=(public_key, secret_key)=> {
     var pbkdf2 = require('pbkdf2')
