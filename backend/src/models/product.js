@@ -66,7 +66,19 @@ const Productschema = new Schema({
     },
     quantity:{
         type:Number
-    }
+    },
+    gender: {
+        type: String,
+    },
+    vrpos: {
+        type: String,
+    },
+    vrpossec: {
+        type: String,
+    },
+    garment_id: {
+        type: String,
+    },
 }, { timeseries: true })
 
 
