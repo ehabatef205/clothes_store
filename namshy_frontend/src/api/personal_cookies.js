@@ -7,8 +7,8 @@ export const loginfill = async () => {
 
     const cartobjects=await get_cart()
     const wishobjects=await get_wish()
-    const cartproducts=cartobjects.map(a=>a.product_id)
-    const wishproducts=wishobjects.map(a=>a.product_id)
+    const cartproducts=cartobjects?.map(a=>a.product_id)
+    const wishproducts=wishobjects?.map(a=>a.product_id)
 
     cookie.set("mycart", cartproducts );
     cookie.set("mywish", wishproducts );

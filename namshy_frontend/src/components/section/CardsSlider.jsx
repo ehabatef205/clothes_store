@@ -43,13 +43,12 @@ export function CardsSlider(props) {
   const navigate = useNavigate();
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [products, setProducts] = useState([]);
+  const getProducts = async () => {
+    await product.get_product_by_category(props.id).then((e) => {
+      setProducts(e.response);
+    });
+  };
   useEffect(() => {
-
-    const getProducts = async () => {
-      await product.get_product_by_category(props.id).then((e) => {
-        setProducts(e.response);
-      });
-    };
     getProducts();
     update_p()
   }, []);
@@ -63,9 +62,38 @@ export function CardsSlider(props) {
     navigate(`/SelectedProductPage/${id}`);
   }
 
+
+
+  const filter = async () => {
+    var filter = {};
+  
+    if (props.priceactive || props.coloractive||props.dateactive) {
+      if (props.priceactive) {
+        filter.prices = props.pricefilter;
+      }
+  
+      if (props.coloractive) {
+        filter.colors = props.colorfilter;
+      }
+      if (props.dateactive) {
+        filter.creationDate = props.datefilter;
+      }
+  
+      await product.get_product_filter(props.id, filter).then((e) => {
+        setProducts(e.response);
+      });
+    } else {
+      getProducts();
+    }
+  };
+  
+  useEffect(() => {
+    filter();
+  }, [props.priceactive, props.coloractive, props.pricefilter, props.colorfilter,props.dateactive,props.datefilter]);
+
   return (
     <div className="containe d-flex mx-1">
-      {products.map((product,index) => (
+      {products?.map((product,index) => (
         <div className="carda my-2"
         style={{border:
           selectedCardIndex === index
@@ -114,7 +142,7 @@ export function CardsSlider(props) {
             style={{cursor:"pointer"}}
             >
               <Card.Title className="mb-0">{product.name}</Card.Title>
-              <Card.Text className="mb-0">Price: {product.price_before}</Card.Text>
+              <Card.Text className="mb-0">Price: {product.price_after}</Card.Text>
               <Card.Text> {product.desc.descreption}</Card.Text>
             </div>
             <span

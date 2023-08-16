@@ -50,10 +50,8 @@ module.exports.Read_cart_item = async (req, res) => {
 }
 
 module.exports.Read_cart_items = async (req, res) => {
-    const usertoken = req.headers.authorization;
-    const token = usertoken.split(' ');
-    const decoded = jwt.verify(token[1], process.env.JWT_KEY);
-    const id = decoded.id;
+
+    const id = req.body.decoded.id;
 
 
     await Wish.find({ user_id: id }).then(e => {

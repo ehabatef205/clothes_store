@@ -40,3 +40,6 @@ export const carts=async(ids)=>{
     return await((await axios.post(`${proxy}/cart/`,{products:ids})).data.response)
 }
 
+export const get_product_filter = async (_id,filter) => {
+    return (await (await axios.post(`${proxy}/category/${_id}`,{filter:filter})).data)
+}

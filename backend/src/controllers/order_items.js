@@ -308,7 +308,7 @@ module.exports.filter = async (req, res) => {
   var query = {returnrequest: "none" };
   if (queryObject.month !== undefined) {
     const [month, year] = queryObject.month.split("/");
-    const startDate = new Date(year, month - 1, 1); // Subtract 1 from month to get the correct index (0-11)
+    const startDate = new Date(year, month - 1, 1);
     const endDate = new Date(year, month, 0);
     query.createdAt= { $gte: startDate, $lte: endDate }
   }

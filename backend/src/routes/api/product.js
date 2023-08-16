@@ -34,6 +34,7 @@ router.post('/upload', upload.array('images'), product_controller.uplodaImage);
 router.get('/', product_controller.AllProducts)
 router.get('/:id', product_controller.getProduct)
 router.get('/category/:id', product_controller.getProductBySubCategory)
+router.post('/category/:id', product_controller.getProductBySubCategoryfilter)
 router.get('/category2/:id', product_controller.getProductBySubCategory2)
 router.post('/type/:id', product_controller.getProductByType)
 router.post('/excel', upload2.single('excel'), product_controller.getDataFromExcel)

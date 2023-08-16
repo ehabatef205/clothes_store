@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "../components/section/Section.css";
 import { CardsSlider } from "../components/section/CardsSlider";
 import FirstHeader from "../components/section/FirstHeader";
@@ -12,14 +12,39 @@ export default function Page1() {
   const [Subcategory, setSubCategory] = React.useState({});
   const main = window.location.pathname.split("/")[2];
   const sub = window.location.pathname.split("/")[3];
+  const getCategory = async () => {
+    await sub_cat.get_product_category_by_id(sub).then((e) => {
+      setSubCategory(e);
+    });
+  };
   useEffect(() => {
-    const getCategory = async () => {
-      await sub_cat.get_product_category_by_id(sub).then((e) => {
-        setSubCategory(e);
-      });
-    };
+   
     getCategory();
   }, []);
+  const[coloractive,setcoloractive]=useState(false)
+  const[priceactive,setpriceactive]=useState(false)
+  const[dateactive,setdateactive]=useState(false)
+  const[colorfilter,setColorFilter]=useState([])
+  const[datefilter,setdatefilter]=useState("")
+  const handleColorChange = (color) => {
+    console.log(color)
+    if (colorfilter.includes(color)) {
+      setColorFilter(colorfilter.filter(c => c !== color));
+    } else {
+      setColorFilter([...colorfilter, color]);
+    }
+  };
+  const[pricefilter,setpricefilter]=useState([])
+  const handlepriceChange = (price) => {
+    console.log(price)
+    if (pricefilter.includes(price)) {
+      setpricefilter(pricefilter.filter(c => c !== price));
+    } else {
+      setpricefilter([...pricefilter, price]);
+    }
+  };
+
+
   return (
     <div className="sub_cat ">
       <Header visible={false} />
@@ -44,7 +69,10 @@ export default function Page1() {
               className="d-none d-lg-block"
               style={{ width: "20%", marginLeft: "5%" }}
             >
-              <Sider />
+              <Sider handleColorChange={handleColorChange} colorfilter={colorfilter} pricefilter={pricefilter}handlepriceChange={handlepriceChange}
+              coloractive={coloractive} priceactive={priceactive} setcoloractive={setcoloractive} setpriceactive={setpriceactive}
+              datefilter={datefilter} dateactive={dateactive} setdatefilter={setdatefilter}setdateactive={setdateactive}
+              />
             </div>
             <div
               style={{ height: "100%", width: "75%" }}
@@ -54,7 +82,10 @@ export default function Page1() {
                 <SecHeader />
               </div>
               <div className=" cards w-100 ">
-                <CardsSlider id={sub}></CardsSlider>
+                <CardsSlider id={sub} 
+                
+                dateactive={dateactive} datefilter={datefilter}
+                colorfilter={colorfilter} pricefilter={pricefilter} coloractive={coloractive} priceactive={priceactive} > </CardsSlider>
               </div>
             </div>
           </div>

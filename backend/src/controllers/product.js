@@ -130,6 +130,64 @@ module.exports.getProductBySubCategory = async (req, res) => {
     });
 };
 
+module.exports.getProductBySubCategoryfilter = async (req, res) => {
+  const _id = req.params.id;
+  const q = { colors: [], prices: [], creationDate: null };
+
+  if (req.body.filter.colors !== undefined && req.body.filter.colors.length > 0) {
+    const arr = [];
+req.body.filter.colors.map((color) => {
+  const colorIndex = parseInt(color);
+  
+  arr.push({ [`sizes.S.${colorIndex}`]: { $gt: 0 } });
+  arr.push({ [`sizes.M.${colorIndex}`]: { $gt: 0 } });
+  arr.push({ [`sizes.L.${colorIndex}`]: { $gt: 0 } });
+  arr.push({ [`sizes.XL.${colorIndex}`]: { $gt: 0 } });
+  arr.push({ [`sizes.XXL.${colorIndex}`]: { $gt: 0 } });
+});
+    q.colors = arr;
+  
+  }
+
+  if (req.body.filter.prices !== undefined && req.body.filter.prices.length > 0) {
+    q.prices = req.body.filter.prices;
+  }
+  if (req.body.filter.creationDate !== undefined) {
+    q.creationDate = req.body.filter.creationDate;
+  }
+  
+
+  const query = { subCategory: _id, view: true, $and: [] };
+
+  if (q.prices.length > 0) {
+    query.$and.push({ $or: q.prices });
+  }
+
+  if (q.colors.length > 0) {
+    query.$and.push({ $or: q.colors });
+  }
+  var currentDate = new Date();
+  if (q.creationDate !== null) {
+    var timer=7
+    if(q.creationDate==="month")
+    timer=30
+    query.$and.push({
+      createdAt: {
+        $gte: new Date(currentDate.getTime() - timer * 24 * 60 * 60 * 1000)
+      }
+    });
+  }
+
+  try {
+    const products = await Product.find(query);
+    
+    return res.json({ response: products });
+  } catch (err) {
+    return res.json({ message: err.message });
+  }
+};
+
+
 module.exports.getProductBySubCategory2 = async (req, res) => {
   let _id = req.params.id;
   await Product.find({ subCategory: _id })
@@ -303,14 +361,14 @@ module.exports.uplodaImage = async (req, res, next) => {
   body.supplier = "Wolf";
   body.imageSrc = images;
   var vrprop = {};
-  /*if (body.clothing) {
+  if (body.clothing) {
     vrprop.gender = body.gender;
     vrprop.vrpos = body.vrpos;
     vrprop.garment_img_url = images[1];
     if (body.vrpos === "bottoms") {
       vrprop.vrpossec = body.vrpossec;
     }
-  }*/
+  }
   const product = new Product({
     supplier: "Wolf",
     category_id: body.category_id,
@@ -341,7 +399,7 @@ module.exports.uplodaImage = async (req, res, next) => {
     .save()
     .then(async (response) => {
         console.log(response.clothing)
-     /* if (response.clothing) {    
+      /*if (response.clothing) {    
           await MakeRequest(vrprop)
             .then(async (responseData) => {
               console.log("Response:", responseData);
