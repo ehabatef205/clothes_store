@@ -36,6 +36,9 @@ export const searchProduct=async(query)=>{
 export const searchpage=async(query)=>{
     return await((await axios.post(`${proxy}/searchpage/`,{query})).data)
 }
+export const searchpagefilter=async(query,filter)=>{
+    return await((await axios.post(`${proxy}/searchpagefilter/`,{query:query,filter:filter})).data)
+}
 export const carts=async(ids)=>{
     return await((await axios.post(`${proxy}/cart/`,{products:ids})).data.response)
 }

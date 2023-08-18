@@ -7,7 +7,7 @@ import { Card } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import * as product from "../../api/product";
 
-import * as Wish from '../../api/wish'
+import * as Wish from '../../api/wish' 
 import { Cookies } from 'react-cookie'
 import { update } from "../../api/personal_cookies";
 
@@ -34,6 +34,11 @@ export function SearchSlider(props) {
     
     
   };
+  const getProducts = async () => {
+    await product.searchpage(props.query).then((e) => {
+      setProducts(e.response);
+    });
+  };
 
   const cookie = new Cookies()
 
@@ -42,11 +47,7 @@ export function SearchSlider(props) {
   const [products, setProducts] = useState([]);
   useEffect(() => {
 
-    const getProducts = async () => {
-      await product.searchpage(props.query).then((e) => {
-        setProducts(e.response);
-      });
-    };
+    
     getProducts();
     update_p()
   }, []);
@@ -59,10 +60,38 @@ export function SearchSlider(props) {
   const addtoBag = async (id) => {
     navigate(`/SelectedProductPage/${id}`);
   }
+  
+
+  const filter = async () => {
+    var filter = {};
+  
+    if (props.priceactive || props.coloractive||props.dateactive) {
+      if (props.priceactive) {
+        filter.prices = props.pricefilter;
+      }
+  
+      if (props.coloractive) {
+        filter.colors = props.colorfilter;
+      }
+      if (props.dateactive) {
+        filter.creationDate = props.datefilter;
+      }
+  
+      await product.searchpagefilter(props.query, filter).then((e) => {
+        setProducts(e.response);
+      });
+    } else {
+      getProducts();
+    }
+  };
+
+  useEffect(() => {
+    filter();
+  }, [props.priceactive, props.coloractive, props.pricefilter, props.colorfilter,props.dateactive,props.datefilter]);
 
   return (
     <div className="containe d-flex mx-1">
-      {products.map((product,index) => (
+      {products?.map((product,index) => (
         <div className="carda my-2"
         style={{border:
           selectedCardIndex === index

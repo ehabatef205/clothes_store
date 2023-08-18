@@ -187,6 +187,63 @@ req.body.filter.colors.map((color) => {
   }
 };
 
+module.exports.searchProductfilter = async (req, res) => {
+  const q = { colors: [], prices: [], creationDate: null };
+
+  if (req.body.filter.colors !== undefined && req.body.filter.colors.length > 0) {
+    const arr = [];
+req.body.filter.colors.map((color) => {
+  const colorIndex = parseInt(color);
+  
+  arr.push({ [`sizes.S.${colorIndex}`]: { $gt: 0 } });
+  arr.push({ [`sizes.M.${colorIndex}`]: { $gt: 0 } });
+  arr.push({ [`sizes.L.${colorIndex}`]: { $gt: 0 } });
+  arr.push({ [`sizes.XL.${colorIndex}`]: { $gt: 0 } });
+  arr.push({ [`sizes.XXL.${colorIndex}`]: { $gt: 0 } });
+});
+    q.colors = arr;
+  
+  }
+
+  if (req.body.filter.prices !== undefined && req.body.filter.prices.length > 0) {
+    q.prices = req.body.filter.prices;
+  }
+  if (req.body.filter.creationDate !== undefined) {
+    q.creationDate = req.body.filter.creationDate;
+  }
+  
+
+  const query = { 
+    name: { $regex: ".*" + req.body.query + ".*", $options: "i" }, view: true, $and: [] };
+
+  if (q.prices.length > 0) {
+    query.$and.push({ $or: q.prices });
+  }
+
+  if (q.colors.length > 0) {
+    query.$and.push({ $or: q.colors });
+  }
+  var currentDate = new Date();
+  if (q.creationDate !== null) {
+    var timer=7
+    if(q.creationDate==="month")
+    timer=30
+    query.$and.push({
+      createdAt: {
+        $gte: new Date(currentDate.getTime() - timer * 24 * 60 * 60 * 1000)
+      }
+    });
+  }
+  console.log(query)
+  try {
+    const products = await Product.find(query);
+    
+    return res.json({ response: products });
+  } catch (err) {
+    return res.json({ message: err.message });
+  }
+};
+
 
 module.exports.getProductBySubCategory2 = async (req, res) => {
   let _id = req.params.id;

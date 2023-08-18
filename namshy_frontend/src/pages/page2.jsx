@@ -20,6 +20,29 @@ export default function Page1() {
     };
     getCategory();
   }, []);
+  const[coloractive,setcoloractive]=React.useState(false)
+  const[priceactive,setpriceactive]=React.useState(false)
+  const[dateactive,setdateactive]=React.useState(false)
+  const[colorfilter,setColorFilter]=React.useState([])
+  const[datefilter,setdatefilter]=React.useState("")
+  const handleColorChange = (color) => {
+    console.log(color)
+    if (colorfilter.includes(color)) {
+      setColorFilter(colorfilter.filter(c => c !== color));
+    } else {
+      setColorFilter([...colorfilter, color]);
+    }
+  };
+  const[pricefilter,setpricefilter]=React.useState([])
+  const handlepriceChange = (price) => {
+    console.log(price)
+    if (pricefilter.includes(price)) {
+      setpricefilter(pricefilter.filter(c => c !== price));
+    } else {
+      setpricefilter([...pricefilter, price]);
+    }
+  };
+
   return (
     <div className="sub_cat ">
       <Header visible={false} />
@@ -44,7 +67,9 @@ export default function Page1() {
               className="d-none d-lg-block"
               style={{ width: "20%", marginLeft: "5%" }}
             >
-              <Sider />
+              <Sider   handleColorChange={handleColorChange} colorfilter={colorfilter} pricefilter={pricefilter}handlepriceChange={handlepriceChange}
+              coloractive={coloractive} priceactive={priceactive} setcoloractive={setcoloractive} setpriceactive={setpriceactive}
+              datefilter={datefilter} dateactive={dateactive} setdatefilter={setdatefilter}setdateactive={setdateactive} />
             </div>
             <div
               style={{ height: "100%", width: "75%" }}
@@ -54,7 +79,10 @@ export default function Page1() {
                 <SecHeader />
               </div>
               <div className=" cards w-100 ">
-                <SearchSlider query={query}></SearchSlider>
+                <SearchSlider query={query}
+                dateactive={dateactive} datefilter={datefilter}
+                colorfilter={colorfilter} pricefilter={pricefilter} coloractive={coloractive} priceactive={priceactive} > 
+                </SearchSlider>
               </div>
             </div>
           </div>
