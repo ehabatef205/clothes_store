@@ -4,7 +4,7 @@ const Cart = require("../models/cart.js");
 const mongoose = require("mongoose");
 const xlsx = require("xlsx");
 const multer = require("multer");
-const { MakeRequest } = require("./vrRoom.js");
+const { MakeRequest ,getmodels,requesttryon} = require("./vrRoom.js");
 
 module.exports.AllProducts = (req, res) => {
   Product.find()
@@ -462,7 +462,7 @@ module.exports.uplodaImage = async (req, res, next) => {
               console.log("Response:", responseData);
               if(responseData.success){
                 await Product.findOneAndUpdate({_id:response._id},{$set:{garment_id:responseData}},{new:true}).then(updatedproduct=>{
-                    res.json({
+                    return res.json({
                         response:updatedproduct,
                       });
                 })
@@ -482,4 +482,29 @@ module.exports.uplodaImage = async (req, res, next) => {
         message: error.message,
       });
     });
+};
+module.exports.models =async  (req, res) => {
+  await getmodels(req.body.gender).then(response=>{
+    res.json({default:JSON.parse(response).models[0]})
+  })
+  .catch((error) => {
+    res.json({
+      message: "An error Occured!",
+      error:error.message
+    });
+  });
+};
+
+
+module.exports.tryon =async  (req, res) => {
+  
+  await requesttryon(req.body.props).then(response=>{
+    res.json({tryon:JSON.parse(response)})
+  })
+  .catch((error) => {
+    res.json({
+      message: "An error Occured!",
+      error:error.message
+    });
+  });
 };

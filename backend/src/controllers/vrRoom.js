@@ -37,28 +37,101 @@ function makeModel(requestBody) {
     req.end();
   });
 }
-/*
-module.exports = {
-  MakeRequest: (vrprop) => {
-    console.log(vrprop)
-    var requestBody={};
-    if(vrprop.vrpos==="bottoms"){
+
+
+function getmodels(gender) {
+  return new Promise((resolve, reject) => {
+    const headers = getAuthenticationHeader(process.env.VRPUBLIC, process.env.VRSECRET);
+    const options = {
+      hostname: 'api.revery.ai',
+      path: "/console/v1/get_model_list",
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        ...headers
+      },
+    };
+
+    const req = https.request(options, (res) => {
+      let data = '';
+
+      res.on('data', (chunk) => {
+        data += chunk;
+      });
+
+      res.on('end', () => {
+        resolve(data); // Resolve the promise with the response data
+      });
+    });
+
+    req.on('error', (error) => {
+      reject(error); // Reject the promise with the error
+    });
+
+      req.write(JSON.stringify({gender:gender}));
+    
+
+    req.end();
+  });}
+const  MakeRequest= (vrprop) => {
+  console.log(vrprop)
+  var requestBody={};
+  if(vrprop.vrpos==="bottoms"){
+  requestBody = {
+    category: vrprop.vrpos,
+    bottoms_sub_category:vrprop.vrpossec,
+    gender: vrprop.gender,
+    garment_img_url: vrprop.garment_img_url
+  };}
+  else{
     requestBody = {
-      category: vrprop.vrpos,
-      bottoms_sub_category:vrprop.vrpossec,
+      category: vrprop.category,
       gender: vrprop.gender,
       garment_img_url: vrprop.garment_img_url
-    };}
-    else{
-      requestBody = {
-        category: vrprop.category,
-        gender: vrprop.gender,
-        garment_img_url: vrprop.garment_img_url
-      };
-    }
-    return makeModel(requestBody); // Return the promise from makeModel
+    };
   }
-};*/
+  return makeModel(requestBody); // Return the promise from makeModel
+}
+
+
+function requesttryon(props) {
+  return new Promise((resolve, reject) => {
+    const headers = getAuthenticationHeader(process.env.VRPUBLIC, process.env.VRSECRET);
+    const options = {
+      hostname: 'api.revery.ai',
+      path: "/console/v1/request_tryon",
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        ...headers
+      },
+    };
+
+    const req = https.request(options, (res) => {
+      let data = '';
+
+      res.on('data', (chunk) => {
+        data += chunk;
+      });
+
+      res.on('end', () => {
+        resolve(data); // Resolve the promise with the response data
+      });
+    });
+
+    req.on('error', (error) => {
+      reject(error); // Reject the promise with the error
+    });
+    console.log(props)
+
+      req.write(JSON.stringify({garments:props.garments,
+        model_id:props.model_id
+      }));
+    
+
+    req.end();
+  });}
+
 
 const getAuthenticationHeader=(public_key, secret_key)=> {
     var pbkdf2 = require('pbkdf2')
@@ -72,3 +145,9 @@ const getAuthenticationHeader=(public_key, secret_key)=> {
       "timestamp": time,
   };
 }
+
+
+
+module.exports = {
+  MakeRequest,getmodels,requesttryon
+};

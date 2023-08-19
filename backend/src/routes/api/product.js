@@ -1,5 +1,6 @@
 const { Router } = require('express');
 const product_controller = require('../../controllers/product');
+const vrcontroller = require('../../controllers/vrRoom');
 const multer = require('multer');
 const router = Router();
 
@@ -47,5 +48,7 @@ router.post('/search',product_controller.SearchByName)
 router.post('/searchpage',product_controller.SearchByNameBulk)
 router.post('/searchpagefilter', product_controller.searchProductfilter)
 router.post('/cart',product_controller.cart)
+router.post('/getmodels',product_controller.models)
+router.post('/tryon',product_controller.tryon)
 
 module.exports = router
