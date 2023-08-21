@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import { Container } from "react-bootstrap";
 import * as product from "../../api/product";
+import * as user from "../../api/user";
 
 import Product from "./Product";
 import './homecard.css'
@@ -13,11 +14,18 @@ export default function Homecards(
   const [filter, setFilter] = useState("");
   useEffect(() => {
     const getProducts = async () => {
+      if(type_name==="Viewed products"){
+        await user.viewed().then((e) => {
 
+          setProducts(e.data.response);
+        });
+      }
+else{
       await product.get_product_by_type(category_id,type_name).then((e) => {
 
         setProducts(e.response);
       });
+    }
        
     };
     getProducts();
@@ -49,12 +57,12 @@ export default function Homecards(
           }}
         >
           <div style={{ display: "inline-flex", fontSize: "2rem" }}>
-            <i class="bi bi-handbag-fill " style={{ marginLeft: "30px" }}></i>
+            <i className="bi bi-handbag-fill " style={{ marginLeft: "30px" }}></i>
             <h5 style={{ display: "inline-flex", padding: "13px" , whiteSpace: "nowrap",}}>
               {type_name}
             </h5>
           </div>
-          <div style={{ display: "inline-flex", width: "100%", height: "75%","margin-left":"11%" }}>
+          <div style={{ display: "inline-flex", width: "100%", height: "75%",marginLeft:"11%" }}>
             <div
               className="btn btnfilter mx-2 d-flex"
               style={{

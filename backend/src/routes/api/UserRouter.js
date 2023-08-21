@@ -7,12 +7,15 @@ const {
   deleteProfile,
   login,
   getall,
-  search
+  search,
+  view,viewed
 } = require("../../controllers/UserController");
 
 router.get("/view_profile", checkToken, viewProfile);
 router.get("/", checkToken, getall);
 router.post("/sign_up", signUp);
+router.post("/view",checkToken,view );
+router.get("/viewed",checkToken,viewed );
 router.post("/search",checkToken, search);
 router.post("/login", login);
 router.patch("/update_profile", checkToken, updateProfile);

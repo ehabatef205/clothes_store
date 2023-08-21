@@ -7,6 +7,7 @@ import { Rating } from "@mui/material";
 import Header from "../components/Navs/Header";
 import ThirdSlider from "../components/section/ThirdSlider";
 import * as Product from '../api/product'
+import * as user from '../api/user'
 import * as Cart from '../api/cart'
 import * as Wish from '../api/wish'
 import { Cookies } from 'react-cookie'
@@ -26,12 +27,17 @@ function SelectedProductPage({ products, handleClick }) {
     var p=await update()
     setpersonal(p)
   }
+  var viewcontroller=0
 const[formattedDescription,setformattedDescription]=useState("")
   const { id } = useParams();
   useEffect(() => {
     const getById = async () => {
       await Product.get_product_by_id(id).then((e) => {
         setSelected(e)
+        if(viewcontroller===0){
+          viewcontroller+=1
+          user.view(e._id)
+        }
         const formated =JSON.parse( e.desc.description).replace(/\n/g, "<br>");
         setformattedDescription(formated)
         const { availableColors, availableSizes } = getAvailableColorsAndSizes(e.colors, e.sizes);
@@ -40,6 +46,7 @@ const[formattedDescription,setformattedDescription]=useState("")
       })
     }
     getById()
+    
 
     const child1 = document.getElementById("child1");
     const child1Height = child1.offsetHeight;
@@ -252,7 +259,7 @@ const[formattedDescription,setformattedDescription]=useState("")
                       }}
                       style={{ backgroundColor: "#d99d2b", fontSize: "1.2rem" }}
                     >
-                       {personal?.cart?.includes(selected._id)?(<i className="text-primary">Added to Bag{" "}</i>):(<i>Add to Bag{" "}</i>)}
+                       {(personal?.cart?.includes(selected._id)&& cookie.get("Auth")!==undefined)?(<i className="text-primary">Added to Bag{" "}</i>):(<i>Add to Bag{" "}</i>)}
                     </button>
                   </span>
 

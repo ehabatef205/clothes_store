@@ -1,27 +1,25 @@
 import React, { useContext, useState, useEffect } from "react";
 
 import "./slider.css";
-import * as wish from "../../api/wish"
-import * as cartDB from "../../api/cart"
+import * as wish from "../../api/wish";
+import * as cartDB from "../../api/cart";
 import { Cookies } from "react-cookie";
 
-const Cartcol = ({ cart, load ,product }) => {
-
-  
+const Cartcol = ({ cart, load, product, personal, update_p }) => {
   const [active, setactive] = useState(true);
 
-  const [index, setIndex] = useState(product.colors.indexOf(cart.color))
-  
+  const [fav, setfav] = useState(false);
+
+  const [index, setIndex] = useState(product?.colors?.indexOf(cart.color) || 0);
+
   const cookie = new Cookies();
   const addToFavorites = async (id) => {
-   
-    await wish.add_cart(id, 1, cookie.get("Auth")).then((e) => {
-      console.log(e);
+    setfav(true);
+    await wish.add_cart(id, 1, cookie.get("Auth")).then(async (e) => {
+      await update_p();
+      setfav(false);
     });
-   
   };
-
-
 
   return (
     <div className="">
@@ -36,55 +34,58 @@ const Cartcol = ({ cart, load ,product }) => {
 
               <p>{product?.price_after}</p>
             </div>
-            <div className="h-50  " style={{ textAlign: "center" }}>
-
+            <div  style={{ textAlign: "center" ,display:"flex",flexDirection:"row"  }}>
               <button
-              
-                onClick={() =>{
-                  if(product?.clothing){
-                  if(cart.quantity !== parseInt(product.sizes[cart.size][index])){
-                    setactive(false)
-                    if(active)
-                     cartDB.increse_item(cart?._id).then(e => {
-                    load()
-                    setactive(true)
-                  })
-                  }}
-                  else{
-                    if(cart.quantity !== parseInt(product.quantity)){
-                      setactive(false)
-                      if(active)
-                       cartDB.increse_item(cart?._id).then(e => {
-                      load()
-                      setactive(true)
-                    })
+                onClick={async () => {
+                  if (product?.clothing) {
+                    console.log(cart)
+                    if (
+                      cart.quantity !==
+                      parseInt(product.sizes[cart.size][index])
+                    ) {
+                      setactive(false);
+                      if (active)
+                        cartDB.increse_item(cart?._id).then(async (e) => {
+                          await load();
+                          setactive(true);
+                        });
                     }
-                    
-
+                  } else {
+                    if (cart.quantity !== parseInt(product.quantity)) {
+                      setactive(false);
+                      if (active)
+                        cartDB.increse_item(cart?._id).then(async (e) => {
+                          await load();
+                          setactive(true);
+                        });
+                    }
                   }
-                  }}/*.then(e=>{setproduct(e)})*/
+                }} /*.then(e=>{setproduct(e)})*/
                 className="btn m-1 btn-light"
               >
                 <i class="bi bi-plus-lg"></i>
               </button>
 
-              <input
-                className="btn bg-light m-1"
-                style={{width:"50px"}}
-                value={cart.quantity}
-              />
-
+              {active ? (
+                <input
+                  className="btn bg-light m-1"
+                  style={{ width: "50px" }}
+                  value={cart.quantity}
+                />
+              ) : (
+                <div class="spinner-border text-secondary" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+              )}
               <button
-              
-                onClick={() => {
-                  if (cart.quantity !== 1)
-                    setactive(false)
-                    if(active){
-                    cartDB.decrease_item(
-                      cart?._id).then((e) => {
-                        load()
-                        setactive(true)
-                      })}
+                onClick={async () => {
+                  if (cart.quantity !== 1) setactive(false);
+                  if (active) {
+                    cartDB.decrease_item(cart?._id).then(async (e) => {
+                      await load();
+                      setactive(true);
+                    });
+                  }
                 }} /*.then(e=>{setproduct(e)})*/
                 className=" btn m-1 btn-light"
               >
@@ -95,61 +96,57 @@ const Cartcol = ({ cart, load ,product }) => {
 
           <div className="d-flex  flex-wrap " style={{ textAlign: "end" }}>
             <div className="m-3 ">
-              <p style={{ margin: "0px", padding: "0px" }}>{/* {product?} */}</p>
+              <p style={{ margin: "0px", padding: "0px" }}>
+                {/* {product?} */}
+              </p>
               <p style={{ margin: "0px", padding: "0px" }}>{product?.name}</p>
-              {product?.clothing?(<div
-                className="   justify-content-start my-3"
-                style={{ textAlign: "left" }}
-              >
-                {" "}
-               
+              {product?.clothing ? (
+                <div
+                  className="   justify-content-start my-3"
+                  style={{ textAlign: "left" }}
+                >
+                  {" "}
                   <button
                     style={{
                       zIndex: 3,
                       cursor: "pointer",
                       width: "70px",
                       borderRadius: "2px",
-                      backgroundColor:
-                      "grey",
-                      color:
-                      'white'
-                      
+                      backgroundColor: "grey",
+                      color: "white",
                     }}
-                    
                     className="btn  btn-outline-secondary "
-                    
                   >
                     {cart.size}
                   </button>
-                
-                <div style={ {height:"30px"}}>{" \n"}</div>
-                 
-                
+                  <div style={{ height: "30px" }}>{" \n"}</div>
                   <button
                     style={{
                       zIndex: 3,
                       cursor: "pointer",
                       width: "70px",
                       borderRadius: "2px",
-                      backgroundColor:cart.color,
-                      color:cart.color,
-                      
+                      backgroundColor: cart.color,
+                      color: cart.color,
                     }}
                     className="btn  btn-outline-secondary "
                   >
                     0
                   </button>
-                
-              </div>):<></>}
+                </div>
+              ) : (
+                <></>
+              )}
 
               <div className="d-flex">
                 <div className="m-2 ">
                   <button
                     className="btn"
-                    onClick={() => cartDB.Delete_cart_item(cart._id).then(e => {
-            
-                      load()
-                    })}
+                    onClick={() =>
+                      cartDB.Delete_cart_item(cart._id).then((e) => {
+                        load();
+                      })
+                    }
                   >
                     {" "}
                     <i class="bi bi-trash3">delete</i>
@@ -157,10 +154,29 @@ const Cartcol = ({ cart, load ,product }) => {
                 </div>
                 <div className=" m-2 text-secondary">|</div>
                 <div className="m-2 ">
-                  <button className="btn" onClick={() => { addToFavorites(cart.product_id) }}>
-                    {" "}
-                    <i className="bi bi-heart m-2">save later</i>
-                  </button>
+                  {fav ?(
+                    <div class="spinner-border text-danger" role="status">
+                      <span class="visually-hidden">Loading...</span>
+                    </div>
+                  ):
+                  (
+                    <button
+                      className="btn"
+                      onClick={() => {
+                        addToFavorites(product._id);
+                      }}
+                      disabled={personal?.wish?.includes(product._id)}
+                    >
+                      {" "}
+                      {personal?.wish?.includes(product._id) ? (
+                        <i className="bi bi-heart-fill m-2 text-danger">
+                          Saved
+                        </i>
+                      ) : (
+                        <i className="bi bi-heart m-2">save later</i>
+                      )}
+                    </button>
+                  )  }
                 </div>
               </div>
             </div>
@@ -173,7 +189,11 @@ const Cartcol = ({ cart, load ,product }) => {
             style={{
               height: "465px",
             }}
-            src={Array.isArray(product?.imageSrc) && product.imageSrc.length > 0 ? product.imageSrc[0] : ""}
+            src={
+              Array.isArray(product?.imageSrc) && product.imageSrc.length > 0
+                ? product.imageSrc[0]
+                : ""
+            }
           />
         </div>
       </div>

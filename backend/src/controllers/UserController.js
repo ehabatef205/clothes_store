@@ -1,4 +1,5 @@
 const User = require("../models/User")
+const product = require("../models/product")
 const bcrypt = require("bcrypt")
 const { hashSync, genSaltSync } = require("bcrypt");
 const jwt = require('jsonwebtoken')
@@ -234,10 +235,59 @@ const search=async(req,res)=>{
             message: "Error 500"
         })
     }
-
-
-
 }
+
+const view = async (req, res) => {
+    try {
+        const user = await User.findById(req.body.decoded.id);
+
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        const updatedViewed = [req.body.id, ...user.viewed.filter(id => id !== req.body.id)].slice(0, 8);
+
+        await User.findByIdAndUpdate(
+            req.body.decoded.id,
+            {
+                $set: { viewed: updatedViewed }
+            },
+            { new: true }
+        );
+
+        return res.status(200).json({ message: "Viewed array updated successfully" });
+    } catch (error) {
+        console.error('Error updating document:', error);
+        res.status(500).json({ message: "Error 500" });
+    }
+}
+const viewed = async (req, res) => {
+    try {
+        const user = await User.findById(req.body.decoded.id);
+
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+        else{
+            product.find({
+                _id: {
+                  $in: user.viewed,
+                },
+              })
+                .then((response) => {
+                  res.json({
+                    response,
+                  });
+                })
+
+        }
+        
+    } catch (error) {
+        console.error('Error updating document:', error);
+        res.status(200).json({ message: "Error 500" });
+    }
+}
+
 module.exports = {
-    viewProfile, signUp, updateProfile, deleteProfile, login,getall,search
+    viewProfile, signUp, updateProfile, deleteProfile, login,getall,search,view,viewed
 }

@@ -19,7 +19,10 @@ const userSchema = new Schema({
     },
     telephone: {
         type: String
-    }
+    },
+    viewed: [{
+        type: String
+      }]
 }, {timeseries: true})
 
 userSchema.statics.isThisEmailUse = async function (email) {

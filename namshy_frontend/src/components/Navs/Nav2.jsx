@@ -23,8 +23,8 @@ export function Nav2({ current_page }) {
       <div className="navtwo">
         <Container className="d-flex justify-content-evenly nav2 w-100">
           <Nav className="me-auto text-dark ">
-            {categories?.map((subcategory) => (
-              <Nav.Link className="text-dark  nav2hover " href={current_page + subcategory._id}>
+            {categories?.map((subcategory,index) => (
+              <Nav.Link key={index} className="text-dark  nav2hover " href={current_page + subcategory._id}>
                 {subcategory.name}
               </Nav.Link>
             ))}
