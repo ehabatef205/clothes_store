@@ -258,7 +258,7 @@ module.exports.getProductBySubCategory2 = async (req, res) => {
     });
 };
 
-module.exports.getDataFromExcel = async (req, res) => {
+const getDataFromExcel = async (req, res) => {
   if (!req.file) {
     return res.status(400).send("No file uploaded");
   }
@@ -414,11 +414,10 @@ module.exports.uplodaImage = async (req, res, next) => {
   }
 
   const body = req.body;
-  console.log(JSON.parse(body.colors));
   body.supplier = "Wolf";
   body.imageSrc = images;
-  var vrprop = {};
-  if (body.clothing) {
+  var vrprop = {}; 
+  if (body.dressing) {
     vrprop.gender = body.gender;
     vrprop.vrpos = body.vrpos;
     vrprop.garment_img_url = images[1];
@@ -426,20 +425,22 @@ module.exports.uplodaImage = async (req, res, next) => {
       vrprop.vrpossec = body.vrpossec;
     }
   }
+  body.quantity = JSON.parse(body.quantity)
   const product = new Product({
     supplier: "Wolf",
     category_id: body.category_id,
-    quantity: body.quantity,
     subCategory: body.subCategory,
     typeOfProduct: body.typeOfProduct,
+    first_visit: false,
     name: body.name,
-    clothing: body.clothing,
+    dressing: body.dressing,
     ...vrprop,
+    sizeable:body.sizeable,
+    colors:body.colors,
     SKU: body.SKU,
     price_before: body.price_before,
     price_after: body.price_after,
     imageSrc: images,
-    colors: JSON.parse(body.colors),
     desc: {
       type: body.type,
       brand: {
@@ -448,7 +449,7 @@ module.exports.uplodaImage = async (req, res, next) => {
       },
       description: body.description,
     },
-    sizes: JSON.parse(body.sizes),
+    quantity: JSON.parse(body.quantity),
     view: true,
   });
 

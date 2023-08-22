@@ -55,7 +55,7 @@ export default function Home() {
           <div>
             <div className="" style={{ height: "fit-content" }}>
               <h1 style={{display:"flex",justifyContent:"center"}}>{(id?(categories?.find((obj) => obj._id ===id))?.name:"")||""}</h1>
-              {types?.map((type, index)=>(<Homecards  type_name={type} personal={personal} update_p={update_p}
+              {types?.map((type, index)=>(<Homecards  key={index} type_name={type} personal={personal} update_p={update_p}
               />))}          
             </div>
           </div>

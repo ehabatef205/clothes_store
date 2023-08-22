@@ -15,8 +15,8 @@ export default function FirstHeader({sub}) {
           </div>
           {/* <div>
             <nav aria-label="breadcrumb">
-              <ol class="breadcrumb m-0">
-                <li class="breadcrumb-item">
+              <ol className="breadcrumb m-0">
+                <li className="breadcrumb-item">
                   <a
                     href="#"
                     style={{ color: "black", textDecoration: "none" }}
@@ -24,7 +24,7 @@ export default function FirstHeader({sub}) {
                     Home
                   </a>
                 </li>
-                <li class="breadcrumb-item">
+                <li className="breadcrumb-item">
                   <a
                     href="#"
                     style={{ color: "black", textDecoration: "none" }}
@@ -32,7 +32,7 @@ export default function FirstHeader({sub}) {
                     woman
                   </a>
                 </li>
-                <li class="breadcrumb-item active" aria-current="page">
+                <li className="breadcrumb-item active" aria-current="page">
                   clothings
                 </li>
               </ol>
@@ -66,7 +66,7 @@ export default function FirstHeader({sub}) {
               height: "50px",
             }}
           >
-            <a class="bi bi-facebook " 
+            <a className="bi bi-facebook " 
             href="https://facebook.com"
             style={{cursor:"pointer"}}></a>
           </div>

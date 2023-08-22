@@ -1,6 +1,6 @@
 // import React, { useState, useEffect, useContext } from "react";
 import ThirdSlider from "../components/section/ThirdSlider";
-import { getpersonal } from "../api/personal_cookies";
+import { update } from "../api/personal_cookies";
 
 import Cartcol from "../components/section/Cartcol";
 import React, { useState, useEffect, useContext } from "react";
@@ -21,7 +21,7 @@ const Bag = () => {
   const [cartItems, setCartItems] = useState([]);
   const [ProductItems, setProductItems] = useState([]);
   const [isCartEmpty, setIsCartEmpty] = useState(false);
- 
+  const [personal, setpersonal] = useState({})
   const navigate = useNavigate();
 
   const chekoutpage = () => {
@@ -31,7 +31,7 @@ const Bag = () => {
   const load = async () => {
     const productArr= []
     const cartArr= await cart.get_cart()
-    cartArr.forEach(element => {
+    cartArr?.forEach(element => {
       productArr.push(element.product_id)
     });
 
@@ -39,20 +39,26 @@ const Bag = () => {
     setCartItems(cartArr)
     setProductItems(products)
     var total=0
-    products.forEach((element,index)=>{
+    products?.forEach((element,index)=>{
       total+=element.price_after*cartArr[index].quantity
     })
     setTotalPrice(total)
+    update_p()
+  }
+  const update_p=async()=>{
+    var p=await update()
+    setpersonal(p)
   }
 
   useEffect(() => {
     load()
+    
   }, []);
 
   useEffect(() => {
 
     if (
-      !cartItems.length
+      !cartItems?.length
       // || Object.values(cartItems).every((value) => value === 0)
     ) {
 
@@ -190,9 +196,10 @@ const Bag = () => {
                           <Cartcol
                             key={index}
                             cart={cart}
-
+                            personal={personal}
                             product={ProductItems[index]}
                             load={load}
+                            update_p={update_p}
                            
                           />
                         </div>

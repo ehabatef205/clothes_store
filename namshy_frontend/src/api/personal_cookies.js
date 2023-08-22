@@ -1,5 +1,4 @@
 import {Cookies} from 'react-cookie'
-import { carts } from './product';
 import { get_wish } from './wish';
 import { get_cart } from './cart';
 const cookie = new Cookies()

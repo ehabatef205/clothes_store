@@ -79,7 +79,7 @@ export default function Sider(props) {
           style={{ fontSize: "14px", paddingBottom: "25px" }}
         >
           <div className="change1  d-flex my-1  ">
-            <i style={{ fontSize: "11px" }} class="bi bi-caret-down-fill"></i>
+            <i style={{ fontSize: "11px" }} className="bi bi-caret-down-fill"></i>
             <a
               className="change1 text-black mx-2"
               href="#"
@@ -126,7 +126,7 @@ export default function Sider(props) {
           style={{ fontSize: "14px ", paddingBottom: "25px" }}
         >
           <div className="change1  d-flex my-1  ">
-            <i style={{ fontSize: "11px" }} class="bi bi-caret-down-fill"></i>
+            <i style={{ fontSize: "11px" }} className="bi bi-caret-down-fill"></i>
             <a
               className="change1 text-black mx-2"
               href="#"
@@ -187,7 +187,7 @@ export default function Sider(props) {
           style={{ fontSize: "14px", paddingBottom: "25px" }}
         >
           <div className="change1  d-flex my-1  ">
-            <i style={{ fontSize: "11px" }} class="bi bi-caret-down-fill"></i>
+            <i style={{ fontSize: "11px" }} className="bi bi-caret-down-fill"></i>
             <a
               className="change1 text-black mx-2"
               href="#"

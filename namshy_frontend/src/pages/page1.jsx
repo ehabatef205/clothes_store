@@ -78,7 +78,7 @@ export default function Page1() {
               style={{ height: "100%", width: "75%" }}
               className="w-100 w-lg-auto"
             >
-              <div className="w-100  " style={{ "max-height": "10%" }}>
+              <div className="w-100  " style={{ "maxHeight": "10%" }}>
                 <SecHeader />
               </div>
               <div className=" cards w-100 ">

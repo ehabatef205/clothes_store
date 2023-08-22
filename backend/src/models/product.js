@@ -14,6 +14,9 @@ const Productschema = new Schema({
     typeOfProduct: {
         type: String,
     },
+    first_visit: {
+        type: Boolean,
+    },
     name: {
         type: String,
         required: true
@@ -46,26 +49,22 @@ const Productschema = new Schema({
             description: 'high quality cloth.'
         }
     },
-    colors:[String],
-    sizes: {
-        type: Object,
-        default: {
-            S: [0],
-            M: [0],
-            L: [0],
-            XL: [0],
-            XXL: [0]
-        }
-    },
     view: {
         type: Boolean
     }
     ,
-    clothing: {
+    sizeable:{
         type: Boolean
     },
+    colors:{
+        type: Boolean
+    }
+    ,
     quantity:{
-        type:Number
+        type:Object
+    },
+    dressing: {
+        type: Boolean
     },
     gender: {
         type: String,

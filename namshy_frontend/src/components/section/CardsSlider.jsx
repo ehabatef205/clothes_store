@@ -1,13 +1,11 @@
 import React, { useState, useContext, useEffect } from "react";
 
 import "./slider.css";
-import { getAvailableColorsAndSizes } from "../../pages/color-size.js";
+
 import Carousel from "react-bootstrap/Carousel";
 import { Card } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import * as product from "../../api/product";
-import { CartContext } from "./Shoppingcartcontext";
-import * as Cart from '../../api/cart'
 import * as Wish from '../../api/wish'
 import { Cookies } from 'react-cookie'
 import { update } from "../../api/personal_cookies";
@@ -147,7 +145,7 @@ export function CardsSlider(props) {
             </div>
             <span
               className="  h-75 "
-              style={{ textAlign: "center", " margin-top": "10%" }}
+              style={{ textAlign: "center", marginTop: "10%" }}
             >
               <div>
                 <button
@@ -175,8 +173,8 @@ export function CardsSlider(props) {
                     handlewButtonClick(index);
                   }}
                 >
-                  {personal?.cart?.includes(product._id)?<i class="bi bi-check-square-fill "></i>:
-                            <i class="bi bi-cart "></i>}
+                  {personal?.cart?.includes(product._id)?<i className="bi bi-check-square-fill "></i>:
+                            <i className="bi bi-cart "></i>}
                 </button>
               </div>
             </span>
