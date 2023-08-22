@@ -425,7 +425,7 @@ module.exports.uplodaImage = async (req, res, next) => {
       vrprop.vrpossec = body.vrpossec;
     }
   }
-  body.quantity = JSON.parse(body.quantity)
+  console.log(JSON.parse(body.quantity))
   const product = new Product({
     supplier: "Wolf",
     category_id: body.category_id,
@@ -449,6 +449,8 @@ module.exports.uplodaImage = async (req, res, next) => {
       },
       description: body.description,
     },
+    sizeable:body.sizeable,
+    colors:body.colors,
     quantity: JSON.parse(body.quantity),
     view: true,
   });
@@ -456,7 +458,7 @@ module.exports.uplodaImage = async (req, res, next) => {
   await product
     .save()
     .then(async (response) => {
-        console.log(response.clothing)
+        console.log(response.dressing)
       /*if (response.clothing) {    
           await MakeRequest(vrprop)
             .then(async (responseData) => {
