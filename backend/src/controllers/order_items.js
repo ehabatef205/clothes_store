@@ -312,11 +312,13 @@ module.exports.filter = async (req, res) => {
     const endDate = new Date(year, month, 0);
     query.createdAt= { $gte: startDate, $lte: endDate }
   }
-  if(queryObject.month !== undefined){
+  if(queryObject.status !== undefined){
     query.status= queryObject.status
   }
+  console.log(query)
   await Order_items.find(query)
     .then((e) => {
+      console.log(e)
       return res.status(200).json(e);
     })
     .catch((err) => {

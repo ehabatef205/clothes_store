@@ -14,6 +14,9 @@ const Productschema = new Schema({
     typeOfProduct: {
         type: String,
     },
+    first_visit: {
+        type: Boolean,
+    },
     name: {
         type: String,
         required: true

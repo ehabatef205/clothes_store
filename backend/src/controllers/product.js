@@ -425,13 +425,13 @@ module.exports.uplodaImage = async (req, res, next) => {
       vrprop.vrpossec = body.vrpossec;
     }
   }
-  if(body.sizeable||body.colors)
   body.quantity = JSON.parse(body.quantity)
   const product = new Product({
     supplier: "Wolf",
     category_id: body.category_id,
     subCategory: body.subCategory,
     typeOfProduct: body.typeOfProduct,
+    first_visit: false,
     name: body.name,
     dressing: body.dressing,
     ...vrprop,
@@ -449,7 +449,7 @@ module.exports.uplodaImage = async (req, res, next) => {
       },
       description: body.description,
     },
-    quantity: body.quantity,
+    quantity: JSON.parse(body.quantity),
     view: true,
   });
 
