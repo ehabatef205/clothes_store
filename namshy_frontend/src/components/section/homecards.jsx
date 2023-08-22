@@ -161,7 +161,7 @@ else{
         </div>
         
         <div className="d-flex justify-content-around flex-wrap">
-        {products.length > 0 ? (
+        {products?.length > 0 ? (
           products
             .filter((product) => {
               if (filter === "") {
