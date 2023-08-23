@@ -1,8 +1,7 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect ,useRef} from "react";
 import Carousel from "react-bootstrap/Carousel";
 import { Card } from "react-bootstrap";
 import "./homecard.css";
-
 import { useNavigate } from "react-router-dom";
 import * as Cart from "../../api/cart";
 import * as Wish from "../../api/wish";
@@ -23,10 +22,11 @@ export function Product({ product, index, personal, update_p }) {
 
   const cookie = new Cookies();
 
-  const handleImageClick = (product) => {
-    setSelectedProduct(product);
-    navigate(`/SelectedProductPage/${product._id}`);
-  };
+    const handleImageClick = (product) => {
+        setSelectedProduct(product);
+        window.scrollTo(0,0)
+        navigate(`/SelectedProductPage/${product._id}`);
+    };
 
   const addtoBag = async (id) => {
     navigate(`/SelectedProductPage/${product._id}`);
@@ -38,6 +38,24 @@ export function Product({ product, index, personal, update_p }) {
   };
 
   //   console.log("card",product)
+  const paragrapghstyle={
+    WebkitLineClamp:1,
+    WebkitBoxOrient:'vertical',
+    overflow:'hidden',
+    display:'-webkit-box',
+    
+  }
+  const [isOpen,setIsOpen]=useState(false);
+  const [showReadMoreButton , setshowReadMoreButton ]=useState(false)
+  const ref=useRef(null)
+  useEffect (()=>{
+    if(ref.current){
+      setshowReadMoreButton (
+        ref.current.scrollHeight !== ref.current.clientHeight
+  
+      )
+    }
+  },[])
   return (
     <div>
       <div
@@ -105,7 +123,7 @@ export function Product({ product, index, personal, update_p }) {
               )}
             </button>
 
-            <button
+            {/* <button
               className="btn text-light  "
               style={{ backgroundColor: "#d99d2b" }}
               onClick={() => {
@@ -119,7 +137,16 @@ export function Product({ product, index, personal, update_p }) {
               ) : (
                 <i className="bi bi-cart fs-5"></i>
               )}
-            </button>
+            </button> */}
+            <button
+                            className="btn text-light  "
+                            style={{ backgroundColor: "#d99d2b" }}
+                            onClick={() => {
+                                handleImageClick(product)
+                            }}
+                        >  
+                            <i class="bi bi-eye fs-5"></i>
+                        </button>
           </div>
         </div>
       </div>

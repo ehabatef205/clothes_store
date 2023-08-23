@@ -105,7 +105,7 @@ function Profile({path}) {
             </div>
           </div>
         </a>
-      
+{/*       
         
         <a href="/cards/">
           <div className="navmember">
@@ -125,7 +125,7 @@ function Profile({path}) {
               />
             </div>
           </div>
-        </a>
+        </a> */}
         
       </nav>
       <div className="Container">

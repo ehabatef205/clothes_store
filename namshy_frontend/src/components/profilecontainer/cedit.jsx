@@ -22,7 +22,7 @@ const Credit = () => {
           <div className="alert-banner">
             <div className="alert-banner-content">
               اعتبارًا من 1 فبراير 2023 ، يمكنك فقط دفع ما يصل إلى 15٪ من إجمالي
-              قيمة طلبك باستخدام نمشي كاش
+              قيمة طلبك باستخدام الذئب كاش
             </div>
             <div className="alert-banner-cta">تم</div>
           </div>
@@ -37,7 +37,7 @@ const Credit = () => {
                 <div className="w-100">
                   <div className="wallet-item-content">
                     <div className="wallet-item-content-main">
-                      <div className="item-title">رصيد نمشي</div>
+                      <div className="item-title">رصيد الذئب</div>
                       <div className="ctooltip">
                         <img
                           className="info-icon"
@@ -80,7 +80,7 @@ const Credit = () => {
                 <div className="w-100">
                   <div className="wallet-item-content">
                     <div className="wallet-item-content-main">
-                      <div className="item-title">نمشي كاش</div>
+                      <div className="item-title">الذئب كاش</div>
                       <div className="ctooltip">
                         <img
                           className="info-icon"
@@ -130,7 +130,7 @@ const Credit = () => {
                           هل لديك بطاقة هدية؟
                         </div>
                         <p className="giftcard-box-desc">
-                          قم بإضافتها في محفظة نمشي لدفع طلبياتك
+                          قم بإضافتها في محفظة الذئب لدفع طلبياتك
                         </p>
                       </div>
                       <span className="giftcard-box-link link">
@@ -149,10 +149,10 @@ const Credit = () => {
               <div className="nm-tabs-title active">الكل</div>
             </div>
             <div className="nm-tab disabled">
-              <div className="nm-tabs-title">رصيد نمشي</div>
+              <div className="nm-tabs-title">رصيد الذئب</div>
             </div>
             <div className="nm-tab disabled">
-              <div className="nm-tabs-title">نمشي كاش</div>
+              <div className="nm-tabs-title">الذئب كاش</div>
             </div>
           </div>
           <div className="emptylist-box">

@@ -70,7 +70,7 @@ span {
 }
 .cards {
   padding: 0px !important;
-  /* width: 988px; */
+  /* width: 1000px; */
   /* height: 500px; */
   /* background-color: blue; */
   position: relative;
@@ -86,4 +86,39 @@ span {
 .change2:hover input,
 .change2:hover span {
   text-decoration: underline;
+}
+
+
+@media (min-width:1201px)  {
+  .filterrep{
+    display:none;
+      }
+   .filter{
+display: block;
+
+  }
+  .cardsec{
+    width: 80%;
+     
+       }
+}
+
+@media (min-width:0px) and (max-width: 1200px) {
+  .filterrep{
+    height: fit-content ;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    /* w-100  d-flex justify-content-center  */
+display: block;
+  }
+  .filter{
+    display:none;
+  }
+  .cardsec{
+    width: 100%;
+       }
+}
+:root {
+  --offcanvas-horizontal-width: 250px;
 }

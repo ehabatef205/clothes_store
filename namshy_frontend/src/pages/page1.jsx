@@ -6,6 +6,8 @@ import SecHeader from "../components/section/SecHeader";
 import Sider from "../components/section/Sider";
 import Header from "../components/Navs/Header";
 import * as sub_cat from "../api/subcategory";
+import FilterRep from "../components/section/FilterRep";
+
 
 export default function Page1() {
   const [category, setCategory] = React.useState({});
@@ -66,7 +68,7 @@ export default function Page1() {
 
           <div className="d-flex flex-row w-100 ">
             <div
-              className="d-none d-lg-block"
+             className="filter"
               style={{ width: "20%", marginLeft: "5%" }}
             >
               <Sider handleColorChange={handleColorChange} colorfilter={colorfilter} pricefilter={pricefilter}handlepriceChange={handlepriceChange}
@@ -78,9 +80,18 @@ export default function Page1() {
               style={{ height: "100%", width: "75%" }}
               className="w-100 w-lg-auto"
             >
-              <div className="w-100  " style={{ "maxHeight": "10%" }}>
+              {/* <div className="w-100  " style={{ "max-height": "10%" }}>
                 <SecHeader />
-              </div>
+              </div> */}
+               <div  className=" filterrep " >
+            <button
+             data-bs-toggle="offcanvas"
+             data-bs-target="#filter"
+             aria-controls="offcanvasRight"
+            className="w-50 btn btn-outline-secondary my-3 "
+            >filter <i  className=" mx-2 bi bi-filter-square "></i>
+            </button>
+          </div>
               <div className=" cards w-100 ">
                 <CardsSlider id={sub} 
                 
@@ -91,6 +102,9 @@ export default function Page1() {
           </div>
         </div>
       </div>
+      <FilterRep  handleColorChange={handleColorChange} colorfilter={colorfilter} pricefilter={pricefilter}handlepriceChange={handlepriceChange}
+              coloractive={coloractive} priceactive={priceactive} setcoloractive={setcoloractive} setpriceactive={setpriceactive}
+              datefilter={datefilter} dateactive={dateactive} setdatefilter={setdatefilter}setdateactive={setdateactive} > </FilterRep>
     </div>
   );
 }

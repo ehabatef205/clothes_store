@@ -1,11 +1,12 @@
-import React, { useContext } from 'react';
+import React, { useContext ,useState, useEffect,useRef} from 'react';
+
+
 import Card from "react-bootstrap/Card";
-import { useState } from "react";
+
 import Container from "react-bootstrap/Container";
 import { CartContext} from './Shoppingcartcontext'
 import { useNavigate } from "react-router-dom";
 import * as product from '../../api/product'
-import useMediaQuery from "@material-ui/core/useMediaQuery";
 export default function ThirdSlider({ id }) {
   const navigate = useNavigate();
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -55,7 +56,39 @@ export default function ThirdSlider({ id }) {
       price:500,
     },
   ];
-  const isSmallScreen = useMediaQuery("(max-width: 768px)");
+  const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth <= 768);
+  const paragrapghstyle={
+    WebkitLineClamp:1,
+    WebkitBoxOrient:'vertical',
+    overflow:'hidden',
+    display:'-webkit-box',
+    margin:"2px"
+    
+  }
+  const [isOpen,setIsOpen]=useState(false);
+  const [showReadMoreButton , setshowReadMoreButton ]=useState(false)
+  const ref=useRef(null)
+  useEffect (()=>{
+    if(ref.current){
+      setshowReadMoreButton (
+        ref.current.scrollHeight !== ref.current.clientHeight
+  
+      )
+    }
+  },[])
+  useEffect(() => {
+    const handleResize = () => {
+      setIsSmallScreen(window.innerWidth <= 768);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+  console.log("size",isSmallScreen)
+
   return (
     <Container
       className="  d-flex justify-content-center "
@@ -73,22 +106,24 @@ export default function ThirdSlider({ id }) {
                     key={index}
                   >
                     <Card.Img variant="top" src={card.src} onClick={() => handleImageClick(product)}/>
-                    <Card.Body className="d-flex justify-content-between">
-                      <div className="col-6">
-                      <Card.Title>Card {index + 1} Title</Card.Title>
-                      <Card.Text>{card.text}</Card.Text>
+                    <Card.Body className="d-flex justify-content-center  " style={{padding:"0px"}}>
+                      <div className="col-5 col-lg-6  "style={{fontSize:"1rem"}}>
+                      <Card.Text style={ isOpen? null: paragrapghstyle} ref={ref}> <b >Card {index + 1} Title </b></Card.Text>
+                      <Card.Text style={ isOpen? null: paragrapghstyle} ref={ref}>{card.price}$</Card.Text>
                       </div>
-                         <div className="col-6">
+                         <div className="col-7 col-lg-6   d-flex justify-content-around ">
                         <button
-                            className="btn text-light   "
-                            style={{ backgroundColor: "#d99d2b", marginRight: "2px" }}
+                            className="btn text-light  my-3 "
+                            style={{ backgroundColor: "#d99d2b"
+                            // , marginRight: "4px"
+                           }}
                             onClick={() => addToFavorites()}
                         >
                             <i className="bi bi-heart"></i>
                         </button>
 
                         <button
-                            className="btn text-light  "
+                            className="btn text-light my-3 "
                             style={{ backgroundColor: "#d99d2b" }}
                             
                             onClick={() => addToCart(card.id)}
@@ -110,24 +145,26 @@ export default function ThirdSlider({ id }) {
                     key={index}
                   >
                     <Card.Img variant="top" src={card.src}onClick={() => handleImageClick(product)} />
-                    <Card.Body className="d-flex justify-content-between">
-                      <div className="col-6">
-                      <Card.Title>Card {index + 1} Title</Card.Title>
-                      <Card.Text>{card.text}</Card.Text>
+                    <Card.Body className="d-flex justify-content-center  " style={{padding:"0px"}}>
+                      <div className="col-5 col-lg-6  "style={{fontSize:"1rem"}}>
+                      <Card.Text style={ isOpen? null: paragrapghstyle} ref={ref}> <b >Card {index + 1} Title </b></Card.Text>
+                      <Card.Text style={ isOpen? null: paragrapghstyle} ref={ref}>{card.price}$</Card.Text>
                       </div>
-                         <div className="col-6">
+                         <div className="col-7 col-lg-6   d-flex justify-content-around ">
                         <button
-                            className="btn text-light   "
-                            style={{ backgroundColor: "#d99d2b", marginRight: "2px" }}
+                            className="btn text-light  my-3 "
+                            style={{ backgroundColor: "#d99d2b"
+                            // , marginRight: "4px"
+                           }}
                             onClick={() => addToFavorites()}
                         >
                             <i className="bi bi-heart"></i>
                         </button>
 
                         <button
-                            className="btn text-light  "
+                            className="btn text-light my-3 "
                             style={{ backgroundColor: "#d99d2b" }}
-                           
+                            
                             onClick={() => addToCart(card.id)}
                         >
                             <i className="bi bi-plus-lg"></i>
@@ -147,25 +184,27 @@ export default function ThirdSlider({ id }) {
                     key={index}
                   >
                     <Card.Img variant="top" src={card.src} onClick={() => handleImageClick(product)} />
-                    <Card.Body className="d-flex justify-content-between">
-                      <div className="col-6">
-                      <Card.Title>Card {index + 1} Title</Card.Title>
-                      <Card.Text>{card.text}</Card.Text>
+                    <Card.Body className="d-flex justify-content-center  " style={{padding:"0px"}}>
+                      <div className="col-5 col-lg-6  "style={{fontSize:"1rem"}}>
+                      <Card.Text style={ isOpen? null: paragrapghstyle} ref={ref}> <b >Card {index + 1} Title </b></Card.Text>
+                      <Card.Text style={ isOpen? null: paragrapghstyle} ref={ref}>{card.price}$</Card.Text>
                       </div>
-                         <div className="col-6">
+                         <div className="col-7 col-lg-6   d-flex justify-content-around ">
                         <button
-                            className="btn text-light   "
-                            style={{ backgroundColor: "#d99d2b" ,marginRight: "2px"}}
+                            className="btn text-light  my-3 "
+                            style={{ backgroundColor: "#d99d2b"
+                            // , marginRight: "4px"
+                           }}
                             onClick={() => addToFavorites()}
                         >
                             <i className="bi bi-heart"></i>
                         </button>
 
                         <button
-                            className="btn text-light  "
+                            className="btn text-light my-3 "
                             style={{ backgroundColor: "#d99d2b" }}
-                            onClick={() => addToCart(card.id)}
                             
+                            onClick={() => addToCart(card.id)}
                         >
                             <i className="bi bi-plus-lg"></i>
                         </button>
@@ -178,14 +217,14 @@ export default function ThirdSlider({ id }) {
           </div>
           <button
             className="carousel-control-prev"
-            style={{ left: "-180px" , height:"fit-content", top:"165px"}}
+            style={{  height:"fit-content", top:"165px"}}
             type="button"
             data-bs-target={`#${id}`}
             data-bs-slide="prev"
           >
             <span
               className="carousel-control-prev-icon  text-bg-dark"
-              style={{ right: "-81px" }}
+              // style={{ right: "-81px" }}
               aria-hidden="true"
             ></span>
             <span className="visually-hidden">Previous</span>
@@ -193,7 +232,7 @@ export default function ThirdSlider({ id }) {
           <button
             className="carousel-control-next"
             type="button"
-            style={{ right: "-100px", height:"fit-content", top:"165px" }}
+            style={{ height:"fit-content", top:"165px" }}
             data-bs-target={`#${id}`}
             data-bs-slide="next"
           >

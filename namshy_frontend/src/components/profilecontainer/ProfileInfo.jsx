@@ -127,15 +127,15 @@ const ProfileInfo = ({ Uinfo = {
             </button>
           </div>
 
-          <div>
+          {/* <div>
             <div className="MySizesCard" >
               <div className="AccountCard Card">
-                <div className="AccountCard__title">
+              <div className="AccountCard__title">
                   <strong>My sizes</strong>
                   <button className="Button Button--account ">
                     <img src={editicon} />
                   </button>
-                </div>
+                </div> 
                 <div className="AccountCard__children">
                   <div className="MySizeCard__content">
                     <div className="MySizeCard__item">
@@ -152,9 +152,9 @@ const ProfileInfo = ({ Uinfo = {
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> 
             </div>
-          </div>
+          </div>*/}
         </div>
       </div>
       <div className="settingsButtonBar">

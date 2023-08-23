@@ -84,6 +84,7 @@ export function NavBar({ visible = true }) {
 
   const handleLinkClick = (href, name) => {
     navigate(href, { state: { name: name } });
+    window.scrollTo(0,0)
   };
   const profileElements=["profile","orders","returns"]
 
@@ -114,43 +115,51 @@ export function NavBar({ visible = true }) {
               justifyContent: "space-between",
             }}
           >
-            <a style={{ paddingLeft: "2%" }} href={"/profile"}>
-              <AccountCircleOutlinedIcon style={{ 
+            <a style={{ paddingLeft: "2%",textDecoration:"none"  }} href={"/profile"}>
+              <i style={{ 
                 
                     color:
-                        profileElements.includes(window.location.pathname.split("/")[1]) ? "#d99d2b" : "white", }}  className="navhover navclick"/>
+                        profileElements.includes(window.location.pathname.split("/")[1]) ? "#d99d2b" : "white",fontSize: "1.5rem" }}  className="navhover navclick bi bi-person-circle"/>
             </a>
             <a
-              style={{ paddingLeft: "2%" }}
+              style={{ paddingLeft: "2%",textDecoration:"none" }}
               href="/bag"
             >
-              <ShoppingBagOutlinedIcon style={{ 
-
-                    color:
-                        window.location.pathname.split("/")[1] ==='bag' ? "#d99d2b" : "white", }}  className="navhover navclick"/>
-            </a>
+              <i style={{ color:
+                        window.location.pathname.split("/")[1] ==='bag' ? "#d99d2b" : "white", fontSize: "1.5rem"  }}
+                          className="navhover navclick bi bi-handbag">
+                             <b style={{borderRadius:"50px", width:"fit-content",fontSize:"1rem",position:"relative",right:"15px" ,bottom:"20px"}} 
+                             className=" bg-success-subtle ">
+                              <span className='mx-2 text-dark'>
+                                    2</span></b></i>  </a>
             <a
               onClick={() => {
                 if (cookie.get("Auth") != null) {
                   navigate("/favorites");
+                  window.scrollTo(0,0)
                 }
               }}
-              style={{ paddingLeft: "2%",cursor:"pointer" }}
+              style={{ paddingLeft: "2%",cursor:"pointer",textDecoration:"none" }}
             >
-              <FavoriteBorderOutlinedIcon style={{ 
-                
-                    color:
-                        window.location.pathname.split("/")[1] ==='favorites' ? "#d99d2b" : "white", }}  className="navhover navclick"/>
+              <i  style={{  color:window.location.pathname.split("/")[1] ==='favorites' ? "#d99d2b" : "white",fontSize: "1.5rem"  }} 
+               className="navhover navclick bi bi-heart">
+                <b style={{borderRadius:"50px", width:"fit-content",fontSize:"1rem",position:"relative",right:"15px" ,bottom:"20px"}} 
+                             className=" bg-danger-subtle ">
+                              <span className='mx-2 text-dark'>
+                                    2</span></b>
+               </i>
             </a>
 
             <div style={container}>
               <div style={{ color: "#fff" }}>
-                <SearchOutlinedIcon style={{ color: "#000" }} onClick={()=>{
+                <SearchOutlinedIcon className="search-icon"style={{ color: "#000" }} onClick={()=>{
                   if(query!==""){
                     var reloader=window.location.pathname.split("/")[1]==="search"
                     navigate(`/search/${query}`)
+                    
                     if(reloader)
                     window.location.reload()
+                  
                   }
                 }} />
               </div>

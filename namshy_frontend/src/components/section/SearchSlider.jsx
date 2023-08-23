@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect ,useRef } from "react";
 
 import "./slider.css";
 import { getAvailableColorsAndSizes } from "../../pages/color-size.js";
@@ -88,11 +88,28 @@ export function SearchSlider(props) {
   useEffect(() => {
     filter();
   }, [props.priceactive, props.coloractive, props.pricefilter, props.colorfilter,props.dateactive,props.datefilter]);
-
+  const paragrapghstyle={
+    WebkitLineClamp:1,
+    WebkitBoxOrient:'vertical',
+    overflow:'hidden',
+    display:'-webkit-box',
+    
+  }
+  const [isOpen,setIsOpen]=useState(false);
+  const [showReadMoreButton , setshowReadMoreButton ]=useState(false)
+  const ref=useRef(null)
+  useEffect (()=>{
+    if(ref.current){
+      setshowReadMoreButton (
+        ref.current.scrollHeight !== ref.current.clientHeight
+  
+      )
+    }
+  },[])
   return (
     <div className="containe d-flex mx-1">
       {products?.map((product,index) => (
-        <div className="carda my-2"
+        <div className="carda my-2 col-12 col-lg-3 mx-2  col-md-2"
         style={{border:
           selectedCardIndex === index
               ? "1px solid #d99d2b"
@@ -103,11 +120,11 @@ export function SearchSlider(props) {
           <div
             onClick={() => handleImageClick(product)}
             className="carousel-wrapper"
-           
+            style={{cursor:"pointer"}}
           >
             <Carousel controls={false}>
               {product.imageSrc.map((image, index) => (
-                <Carousel.Item key={index}>
+                <Carousel.Item key={index}   interval={3000} >
                   <img
                    onClick={() => handleImageClick(product)}
                     className="d-block w-100"
@@ -115,8 +132,8 @@ export function SearchSlider(props) {
                     alt={""}
                     style={{
                       width: "100%",
-                      height: "250px",
-                      height: "465px",
+                      
+                      height: "400px",
                     }}
                   />
                   
@@ -135,17 +152,33 @@ export function SearchSlider(props) {
 
             }}
           >
-            <div className=" d-flex flex-column align-items-start"
+            <div className=" d-flex flex-column align-items-start col-8 "
             onClick={() => handleImageClick(product)}
-            style={{cursor:"pointer"}}
+            style={{cursor:"pointer" ,padding:"10px"}}
             >
-              <Card.Title className="mb-0">{product.name}</Card.Title>
-              <Card.Text className="mb-0">Price: {product.price_before}</Card.Text>
-              <Card.Text> {product.desc.descreption}</Card.Text>
-            </div>
+              <Card.Title className="mb-0" style={ isOpen? null: paragrapghstyle} ref={ref}>{product.name}</Card.Title>
+              {/* <Card.Text className="mb-0"> {product.price_before}$  <del className=" mx-2 text-danger">{product?.price_before}$ </del> </Card.Text> */}
+             
+              <Card.Text className="mb-0">
+  {product.price_before !== product.price_after ? (
+    <>
+      {product.price_before}$ <del className="mx-2 text-danger">{product.price_before}$</del>
+    </>
+  ) : (
+    <>
+      {product.price_after}$
+    </>
+  )}
+</Card.Text>
+
+             
+ 
+  
+</div>
+           
             <span
-              className="  h-75 "
-              style={{ textAlign: "center", " margin-top": "10%" }}
+              className="  h-75 col-4 "
+              style={{ textAlign: "center", " margin-top": "10%" ,paddingTop:"10px"}}
             >
               <div>
                 <button
@@ -165,7 +198,7 @@ export function SearchSlider(props) {
                             <i className="bi bi-heart "></i>}
                 </button>
 
-                <button
+                {/* <button
                   className="btn text-light  "
                   style={{ backgroundColor: "#d99d2b", marginLeft: "2px" }}
                   onClick={() => {
@@ -175,6 +208,15 @@ export function SearchSlider(props) {
                 >
                   {personal?.cart?.includes(product._id)?<i class="bi bi-check-square-fill "></i>:
                             <i class="bi bi-cart "></i>}
+                </button> */}
+                 <button
+                  className="btn text-light  "
+                  style={{ backgroundColor: "#d99d2b", marginLeft: "2px" }}
+                  onClick={() => {
+                    handlewButtonClick(index);
+                    handleImageClick(product)
+                  }}
+                ><i class="bi bi-eye "></i>
                 </button>
               </div>
             </span>

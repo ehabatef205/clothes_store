@@ -34,9 +34,11 @@
   
   }
  
-  .carda{
-    height: 50%;
-    width: 30%;
+  .carda{ 
+    /* background-color: red; */
+    height: 30rem;
+    /* width: 300px; */
+    width: 33%;
     min-width: 300px;
     border: #d99d2b 1px;
   }
@@ -49,7 +51,7 @@
   }
 .FavoriteBorderOutlinedIcon{
 position: absolute;
-margin: 10px;
+padding: 10px;
 right: 5px;
 width: 25px;
 height: 25px;
@@ -87,15 +89,18 @@ border-radius: 50%;
 .carousel-wrapper {
   border: #d99d2b 1px;
   position: relative;
- height: 465px;
+ height: 400px;
   /* max-height: 466px; */
     width:100%;
    
    
 }
 .card-body{
-  max-height: 70px;
-  margin-top: 5px;
+  max-height: 80px;
+  padding: 7px;
+  width:100%;
+  margin-top: 15px;
+  padding-bottom: 13px;
   font-size: 1.2rem;
 }
 

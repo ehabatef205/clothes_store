@@ -51,7 +51,7 @@ export default function Sider(props) {
         >
           <div className="change1 d-flex my-1 mx-1">
             <p style={{ fontSize: "15px" }}>
-              <b>header</b>
+              <b>Catigories</b>
             </p>
           </div>
 
@@ -229,7 +229,7 @@ export default function Sider(props) {
           </div>
         </div>
 
-        <div
+        {/* <div
           className="border-bottom border-2 border-secondary w-100 col-12"
           style={{ fontSize: "14px", paddingBottom: "25px" }}
         >
@@ -280,7 +280,7 @@ export default function Sider(props) {
               obcaecati ipsum? perspiciatis corporis!
             </p>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

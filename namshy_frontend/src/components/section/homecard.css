@@ -28,3 +28,51 @@
         margin: 0%;
           display: inline-flex;
       }
+      
+      
+
+      @media (max-width: 478px) {
+        .home-Carousel{
+          height: 450px;
+          width: 400px;
+           justify-content:center 
+           ;border-radius:50px
+           ;margin:'auto'
+        }
+        .home-Carousel-item{
+      height: 450px;
+       width: 400px;
+       border-radius:50px 
+
+        }
+        .home-Carousel-img{
+         height: 450px;
+          width: 400px;
+          border-radius:50px
+
+        }
+      }
+      
+       
+        @media (min-width: 480px)  {
+          .home-Carousel{
+            height: 450px;
+            width: 1200px;
+             justify-content:center 
+             ;border-radius:50px
+             ;margin:'auto'
+          }
+          .home-Carousel-item{
+        height: 450px;
+         width: 1200px;
+         border-radius:50px 
+  
+          }
+          .home-Carousel-img{
+           height: 450px;
+            width: 1200px;
+            border-radius:50px
+  
+          }
+        }
+        

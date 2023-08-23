@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-
-import { getAvailableColorsAndSizes } from "./color-size";
+// import { getAvailableColorsAndSizes } from "./color-size";
 import { useParams } from "react-router-dom";
 import { Container } from "react-bootstrap";
 import { Rating } from "@mui/material";
@@ -12,9 +11,14 @@ import * as Cart from '../api/cart'
 import * as Wish from '../api/wish'
 import { Cookies } from 'react-cookie'
 import { update } from "../api/personal_cookies";
+import './selected.css'
+import Carousel from "react-bootstrap/Carousel";
+
 
 function SelectedProductPage({ products, handleClick }) {
   const [childHeight, setChildHeight] = useState(0);
+  const size=['ssssjjjjjjjjjjjjjjssss','ss','3434','3434','3','fffffff','ssssjjjjjjjjjjjjjjssss','ss','3434','3']
+  const color=['danger','light','dark','success','info']
   const [selected, setSelected] = useState({});
   const [AVC, setAVC] = useState([]);
   const [AVS, setAVS] = useState({});
@@ -31,6 +35,9 @@ function SelectedProductPage({ products, handleClick }) {
 const[formattedDescription,setformattedDescription]=useState("")
   const { id } = useParams();
   useEffect(() => {
+  //   const child1 = document.getElementById("child1");
+  // const child1Height = child1.offsetHeight;
+  // setChildHeight(child1Height);
     const getById = async () => {
       await Product.get_product_by_id(id).then((e) => {
         setSelected(e)
@@ -75,7 +82,10 @@ const[formattedDescription,setformattedDescription]=useState("")
       update_p()
     })
   }
-
+  const [Showrate, setShowrate] = useState(true);
+  const handleRateClick = () => {
+    setShowrate(false)
+  };
   return (
     <div>
       <Header visible={false} ></Header>
@@ -84,7 +94,7 @@ const[formattedDescription,setformattedDescription]=useState("")
         style={{ position: "relative", top: "70px" }}
       >
       </div>
-
+{/* /////////////// */}
       <div className=" m-3" style={{ textAlign: "center" }}>
         {" "}
         <nav aria-label="breadcrumb">
@@ -105,63 +115,100 @@ const[formattedDescription,setformattedDescription]=useState("")
           </ol>
         </nav>
       </div>
-      <Container id="parent" className="d-flex flex-wrap" style={{ width: "100%" }}>
+      {/* ////////////////////// */}
+      <Container id="parent" className="d-flex flex-wrap "
+       style={{ width: "100%" }}
+    
+       >
 
-        <div className="flex-wrap" style={{ display: "flex", flexDirection: "row", width: "100%", flexDirection: "row" }}>
+        <div className="flex-wrap " style={{ display: "flex", flexDirection: "row", width: "100%", height: "fit-content"}}>
+        <div className="repname col-12">
+            <p
+                    className="col-12"
+                    style={{ textAlign: "left", fontSize: "1.5rem" }}
+                  >
+                    {selected?.name}
+                  </p>
+            </div>
+            <div
+              // id="child1"
+              className="imgesrep col-12 "
+           
+            >
+             <Carousel controls={false}>
+             {selected?.imageSrc?.map((image, index) => (
+                <Carousel.Item key={index}>
+                  <img
+                    className="d-block view-img "
+                    style={{
+                      objectFit: "contained",
+                    }}
+                    src={image}
+                  />
+                </Carousel.Item>
+              ))}
+            </Carousel>
+            </div>
           <div
-            id="child1"
-            className="d-flex flex-wrap col-lg-6 col-sm-12  "
-            style={{ padding: "0px", justifyContent: "space-between" }}
+            // id="child1"
+            className=" col-6  imges"
           >
 
             {selected?.imageSrc?.map((image, index) => (
               <img
                 key={index}
-                style={{ width: "50%", height: "50%" }}
-                className="d-block   "
+                style={{ width: "320px", height: "400px" }}
+                className="d-block my-1  "
                 src={image}
                 alt={""}
               />
             ))}
           </div>
           <div
-            id="child2"
+            // id="child2"
             className=" d-flex flex-wrap col-lg-6 col-sm-12 "
             style={{
-
-              padding: "15px"
+              overflow: "auto",
+              padding: "15px",
+              
+              height:"fit-content"
             }}
           >
-            <div className=" d-flex flex-wrap  ">
+            <div className=" d-flex flex-wrap  col-12    "
+             style={{
+             
+              height: "fit-content",
+            }}>
               <div
                 className=" d-flex flex-wrap   w-100  "
               >
-                <div className="   d-flex justify-content-between w-100 ">
-                  <div>
-                    <p >{selected?.name}</p>
-                  </div>
+               
+                <div className="  w-100  name">
+                  <pre className="w-100  " ><b className="w-100  "  style={{whiteSpace: "normal", textAlign: "left", fontSize: "25px", }}>
+                    {selected?.name}
+                  </b></pre>
                   
                 </div>
-                <div className="  w-100">
-                  <p style={{ textAlign: "left", fontSize: "25px" }}>
-                    {selected?.name}
-                  </p>
-                </div>
                 
+                <div className="d-flex w-100 flex-wrap justify-content-between" style={{ fontSize: "1.2rem" }}>
 
                 <div
-                  className=" w-100  d-flex "
+                  className="  d-flex "
                   style={{ fontSize: "18px",flexDirection:"column" }}
                 >
-                  <del className=" mx-2 text-secondary">{selected?.price_before} </del>
+                  <del className=" mx-2 text-danger">{selected?.price_before}$ </del>
                   {" "}
                   <div className=" mx-2 text-body" style={{fontSize:"30px"}}>{selected?.price_after}$ </div>
                 </div>
+                <div style={{ borderRadius: "50px", width: "fit-content", height: "fit-content" }} className=" bg-danger-subtle col-3  d-flex justify-content-center">
+                    <b className="my-3 mx-4" >{(((selected?.price_before- selected?.price_after) * 100) / selected?.price_before).toFixed(1)}%</b></div>
+            
+                </div> 
               </div>
               {/*  */}
               <div
                 className=" d-flex flex-wrap  w-100   "
-                style={{ width: "100%", height: "170px" }}
+                style={{ width: "100%", height: "fit-content" }}
               >
                
                 <div className=" w-100   ">
@@ -170,22 +217,66 @@ const[formattedDescription,setformattedDescription]=useState("")
                   {((selected?.sizeable)||(selected?.colors))&&<>
                   
                     <div
-                  className="d-flex justify-content-between w-100"
+                  className="d-flex  w-100 "
                   style={{ height: "40px" }}
                 >
-                  <div>
-                    <b style={{ fontSize: "25px" }}>size</b>
+                  <div className=" ">
+                   <b style={{ fontSize: "25px" }}>size</b>
                   </div>
-                  <div style={{ fontSize: "15px" }} className="text-dark">
-                    show size chart
-                  </div>
+                   
                 </div>
-                  
-                  <div
-                    className="   justify-content-start "
-                    style={{ textAlign: "left" }}
+              
+                   <div
+                    className="   justify-content-start  "
+                    style={{ textAlign: "left" ,height:"fit-content" }}
+                  >
+                    <div
+                    className=" my-1  justify-content-start  "
+                    style={{ textAlign: "left"
+                     ,height:"fit-content"
+                    }}
                   >
                     {" "}
+                    {size.map((size, index) => (
+                      <button 
+                        style={{
+                          zIndex: 3,
+                          cursor: "pointer",
+                          minWidth: "60px",
+                          maxWidth:"fit-content",
+                          borderRadius: "2px",
+                        }}
+                        key={index}
+                        className="btn  btn-outline-secondary m-2"
+                      >
+                        {size}
+                      </button>
+                    ))}
+                  </div> <div
+                    className=" my-2  justify-content-start  "
+                    style={{ textAlign: "left"
+                     ,height:"fit-content"
+                    }}
+                  >
+                    {" "}
+                    {color.map((color, index) => (
+                      <i 
+                        style={{
+                         
+                          cursor: "pointer",
+                        
+                        }}
+                        key={index}
+                        className={`my-3 mx-1 bi bi-circle-fill text-${color}`}
+
+                       
+                      >
+                        
+                      </i>
+                    ))}
+                  </div>
+                  </div>
+                    {/* 
                     {
                     (selected.colors||selected.sizeable)?
                     Object.keys(Avilable).map((v, index) => (
@@ -234,7 +325,8 @@ const[formattedDescription,setformattedDescription]=useState("")
                         0
                       </button>
                     )):<></>}
-                  </div></>}
+                  </div> </>}
+                  */}
                 </div>
                 {/* <div className="  w-100" >productname</div> 
     <div className="w-100 " >prise/ old</div> */}
@@ -348,7 +440,7 @@ const[formattedDescription,setformattedDescription]=useState("")
                     data-brand-name="adidas Originals"
                     data-brand-url="/adidas_originals/"
                   >
-                    <img style={{maxWidth:"300px"}}
+                    <img style={{width:"200px",height:"130px"}}
                       src={selected?.desc?.brand?.logo}
                       data-nm-invalid-image-remover=""
                     />
@@ -364,52 +456,49 @@ const[formattedDescription,setformattedDescription]=useState("")
               </div>
             </div>
           </div>
+          {/* //////////////////////////////////// */}
         </div>
       </Container>
       <Container className="justify-content-center " style={{ width: "100%" }}>
-        <section
-          className=" d-flex flex-wrap justify-content-between  my-5 "
-          style={{
+      {Showrate && ( 
+         <section
+         className=" d-flex flex-wrap justify-content-between  my-5 "
+         style={{
 
-            width: "100%",
-            padding: "10px",
-            border: "1px solid gray",
-          }}
-        >
-          <div className="col-lg-4 col-7  ">
-            <p className="m-1 mx-3">Do you own or have used the product?</p>
-            <p className="m-1 mx-3">Tell your opinion by assigning a rating</p>
-          </div>
-          <div className=" col-lg-4  col-5 d-flex justify-content-around">
-            <Rating
-              className="m-4"
-              name="simple-controlled"
-              value={value}
-              onChange={(event, newValue) => {
-                setValue(newValue);
-              }}
-            />
-          </div>
-          <div className=" col-lg-4 col-12 d-flex justify-content-around ">
+           width: "100%",
+           padding: "10px",
+           border: "1px solid gray",
+         }}
+       >
+         <div className="col-lg-4 col-7  ">
+           <p className="m-1 mx-3">Do you own or have used the product?</p>
+           <p className="m-1 mx-3">Tell your opinion by assigning a rating</p>
+         </div>
+         <div className=" col-lg-4  col-5 d-flex justify-content-around">
+           <Rating
+             className="m-4"
+             name="simple-controlled"
+             value={value}
+             onChange={(event, newValue) => {
+               setValue(newValue);
+             }}
+           />
+         </div>
+         <div className=" col-lg-4 col-12 d-flex justify-content-around ">
 
-            <span className="btn my-3 btn-outline-warning w-50 ">
-              Rate this product{" "}
-            </span>
-          </div>
-        </section>
+           <span className="btn my-3 btn-outline-warning w-50 " role="button" onClick={handleRateClick}>
+             Rate this product{" "}
+           </span>
+         </div>
+       </section>
+      )}
+       
 
-        <section className=" my-5 h-25   " style={{ width: "100%" }}>
-          <div className=" w-100 my-3  " style={{ textAlign: "left" }}>
-            <p>Frequently Bought Together</p>
-          </div>
-          <div>
-            <ThirdSlider id="first"></ThirdSlider>
-          </div>
-        </section>
+      
 
         <section className=" my-5 h-25 " style={{ width: "100%" }}>
           <div className=" w-100 my-3  " style={{ textAlign: "left" }}>
-            <p>Similar Products</p>
+            <h3>Similar Products</h3>
           </div>
           <div>
             <ThirdSlider id="second"></ThirdSlider>

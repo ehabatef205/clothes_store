@@ -22,7 +22,10 @@
     color: white;
    
   }
-  
+  .search-icon:hover {
+    color: #d99d2b!important;
+    cursor: pointer;
+  }
   .navhover:hover {
     color: #d99d2b!important;
     cursor: pointer;
