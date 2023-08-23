@@ -10,7 +10,6 @@ const Cartcol = ({ cart, load, product, personal, update_p }) => {
 
   const [fav, setfav] = useState(false);
 
-  const [index, setIndex] = useState(product?.colors?.indexOf(cart.color) || 0);
 
   const cookie = new Cookies();
   const addToFavorites = async (id) => {
@@ -41,7 +40,7 @@ const Cartcol = ({ cart, load, product, personal, update_p }) => {
                     console.log(cart)
                     if (
                       cart.quantity !==
-                      parseInt(product.sizes[cart.size][index])
+                      parseInt(product.quantity[cart.size][cart.color])
                     ) {
                       setactive(false);
                       if (active)
@@ -165,10 +164,10 @@ const Cartcol = ({ cart, load, product, personal, update_p }) => {
                       onClick={() => {
                         addToFavorites(product._id);
                       }}
-                      disabled={personal?.wish?.includes(product._id)}
+                      disabled={personal?.wish?.includes(product?._id)}
                     >
                       {" "}
-                      {personal?.wish?.includes(product._id) ? (
+                      {personal?.wish?.includes(product?._id) ? (
                         <i className="bi bi-heart-fill m-2 text-danger">
                           Saved
                         </i>

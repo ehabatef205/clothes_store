@@ -1,11 +1,17 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
+import Carousel from "react-bootstrap/Carousel";
+import { Card } from "react-bootstrap";
 import { Container } from "react-bootstrap";
 import * as product from "../../api/product";
 import * as user from "../../api/user";
+import Supers from "./supers";
+
+import * as superddeals from "../../api/superdeals";
 
 import Product from "./Product";
 import './homecard.css'
+
 export default function Homecards(
   {  type_name,personal,update_p }
   ) {
@@ -16,17 +22,20 @@ export default function Homecards(
     const getProducts = async () => {
       if(type_name==="Viewed products"){
         await user.viewed().then((e) => {
-
           setProducts(e.data.response);
         });
       }
+      else if(type_name==="Super deals"){
+        await superddeals.getall().then((e) => {
+          setProducts(e.data.response)
+        });
+      }
 else{
-      await product.get_product_by_type(category_id,type_name).then((e) => {
+  await product.get_product_by_type(category_id,type_name).then((e) => {
 
-        setProducts(e.response);
-      });
+    setProducts(e.response);
+  });
     }
-       
     };
     getProducts();
     
@@ -171,15 +180,21 @@ else{
               }
             })
             .map((product, index) => (
-              <Product
+              type_name==="Super deals"?(<Supers
                 key={index}
                 product={product}
                 personal={personal}
                 update_p={update_p}
-                // index={index}
-                // products={products}
                 
-              />
+              />)
+            :
+              (<Product
+                key={index}
+                product={product}
+                personal={personal}
+                update_p={update_p}
+                
+              />)
             ))
         ) : (
           <p>No products available.</p>

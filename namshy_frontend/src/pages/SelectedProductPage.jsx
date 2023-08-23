@@ -202,80 +202,7 @@ const[formattedDescription,setformattedDescription]=useState("")
                 </div> 
               </div>
               {/*  */}
-              <div
-                className=" d-flex flex-wrap  w-100 bg-info   "
-                style={{ width: "100%", height: "fit-content" }}
-              >
-               
-                <div className=" w-100   ">
-                  
-                  
-                  {((selected?.sizeable)||(selected?.colors))&&<>
-                  
-                    <div
-                  className="d-flex  w-100 "
-                  style={{ height: "40px" }}
-                >
-                  <div className=" ">
-                   <b style={{ fontSize: "25px" }}>size</b>
-                  </div>
-                   
-                </div>
               
-                   <div
-                    className="   justify-content-start  "
-                    style={{ textAlign: "left" ,height:"fit-content" }}
-                  >
-                    <div
-                    className=" my-1  justify-content-start  "
-                    style={{ textAlign: "left"
-                     ,height:"fit-content"
-                    }}
-                  >
-                    {" "}
-                    {size.map((size, index) => (
-                      <button 
-                        style={{
-                          zIndex: 3,
-                          cursor: "pointer",
-                          minWidth: "60px",
-                          maxWidth:"fit-content",
-                          borderRadius: "2px",
-                        }}
-                        key={index}
-                        className="btn  btn-outline-secondary m-2"
-                      >
-                        {size}
-                      </button>
-                    ))}
-                  </div> <div
-                    className=" my-2  justify-content-start  "
-                    style={{ textAlign: "left"
-                     ,height:"fit-content"
-                    }}
-                  >
-                    {" "}
-                    {color.map((color, index) => (
-                      <i 
-                        style={{
-                         
-                          cursor: "pointer",
-                        
-                        }}
-                        key={index}
-                        className={`my-3 mx-1 bi bi-circle-fill text-${color}`}
-
-                       
-                      >
-                        
-                      </i>
-                    ))}
-                  </div>
-                  </div>
-                    
-                   </>}
-                </div>
-             </div>
              {/* ///////////////////////////////////////////////////// */}
 
 
@@ -284,91 +211,76 @@ const[formattedDescription,setformattedDescription]=useState("")
                 className=" d-flex flex-wrap  w-100   "
                 style={{ width: "100%", height: "fit-content" }}
               >
-               
-                <div className=" w-100   ">
+               {((selected?.sizeable)||(selected?.colors))&&<>
                   
-                  
-                
-                  
-                    <div
-                  className="d-flex  w-100 "
-                  style={{ height: "40px" }}
-                >
-                  <div className=" ">
-                   <b style={{ fontSize: "25px" }}>size</b>
-                  </div>
-                   
+                  <div
+                className="d-flex justify-content-between w-100"
+                style={{ height: "40px" }}
+              >
+                <div>
+                  <b style={{ fontSize: "25px" }}>size</b>
                 </div>
-              
-                   <div
-                    className="   justify-content-start  "
-                    style={{ textAlign: "left" ,height:"fit-content" }}
-                  >
-                    <div
-                    className=" my-1  justify-content-start  "
-                    style={{ textAlign: "left"
-                     ,height:"fit-content"
+                <div style={{ fontSize: "15px" }} className="text-dark">
+                  show size chart
+                </div>
+              </div>
+                
+                <div
+                  className="   justify-content-start "
+                  style={{ textAlign: "left" }}
+                >
+                  {" "}
+                  {
+                  (selected.colors||selected.sizeable)?
+                  Object.keys(Avilable).map((v, index) => (
+                    <button
+                    key={index}
+                    onClick={() =>{
+                      console.log(v)
+                      if(selected.sizeable)
+                      setSizet(v)
+                      else {
+                        setColort(v)
+                      }
                     }}
-                  >
-                    {" "}
-                    {size.map((size, index) => (
-                      <button 
-                        style={{
-                          zIndex: 3,
+                      style={{
+                        zIndex: 3,
                           cursor: "pointer",
                           minWidth: "60px",
                           maxWidth:"fit-content",
                           borderRadius: "2px",
-                        }}
-                        key={index}
-                        className="btn  btn-outline-secondary m-2"
-                      >
-                        {size}
-                      </button>
-                    ))}
-                  </div> <div
-                    className=" my-2  justify-content-start  "
-                    style={{ textAlign: "left"
-                     ,height:"fit-content"
-                    }}
-                  >
-                    {" "}
-                    {color.map((color, index) => (
-                      <i 
-                        style={{
-                         
-                          cursor: "pointer",
-                        
-                        }}
-                        key={index}
-                        className={`my-3 mx-1 bi bi-circle-fill text-${color}`}
-
-                       
-                      >
-                        
-                      </i>
-                    ))}
+                        backgroundColor:(selected.sizeable&&selected.colors)?"gray":'#'+v,
+                        color:(selected.sizeable&&selected.colors)?"white":'#'+v,
+                      }}
+                      
+                      className="btn  btn-outline-secondary "
+                    >
+                      {v}
+                    </button>
+                  )):<></>}
+                  <br/>
+                  {
+                  (Sizet!==""&&selected.sizeable&&selected.colors)?
+                  Object.keys(Avilable[Sizet]).map((color, index) => (
+                    <i
+                    key={index}
+                    onClick={() =>{setColort(color)}}
+                      style={{
+                        zIndex: 3,
+                        cursor: "pointer",
+                        color: "#"+ color
+                      }}
+                      
+                      className={`my-4 mx-2 bi bi-circle-fill`}
+                    >
+                      
+                    </i>
+                  )):<></>}
+                </div></>}
                   </div>
-              </div>
-              </div>
-                  </div>
-
-
-
-
-
-
-
-
-
-
-
 
              {/* ///////////////////////////////////////////////////// */}
 
-
-
-             
 
               <div
                 className=" d-flex  w-100   "

@@ -4,12 +4,12 @@ import Carousel from "react-bootstrap/Carousel";
 import { Card } from "react-bootstrap";
 import "./homecard.css";
 import { useNavigate } from "react-router-dom";
-
+import superimage from './super.jpg'
 import * as Wish from "../../api/wish";
 import { Cookies } from "react-cookie";
 
 
-export function Product({ product, index ,personal,update_p}) {
+export function Supers({ product, index ,personal,update_p}) {
    
     
     const [selectedProduct, setSelectedProduct] = useState(null);
@@ -17,12 +17,6 @@ export function Product({ product, index ,personal,update_p}) {
     const navigate = useNavigate();
     const [selectedCardIndex, setSelectedCardIndex] = useState(1);
     const [selectedwCardIndex, setSelectedwCardIndex] = useState(1);
-    const handleButtonClick = (index) => {
-        setSelectedCardIndex(index);
-    };
-    const handlewButtonClick = (index) => {
-        setSelectedwCardIndex(index);
-    };
 
     const cookie = new Cookies();
 
@@ -32,17 +26,7 @@ export function Product({ product, index ,personal,update_p}) {
         navigate(`/SelectedProductPage/${product._id}`);
     };
 
-    const addtoBag = async (id) => {
-        console.log(personal)
-        navigate(`/SelectedProductPage/${product._id}`);
-    };
-    const addToFavorites = async (id) => {
-        
-        console.log(personal);
-        await Wish.add_cart(id, 1, cookie.get("Auth")).then((e) => {
-            update_p()
-        });
-    };
+
 
     //   console.log("card",product)
     const paragrapghstyle={
@@ -86,7 +70,7 @@ export function Product({ product, index ,personal,update_p}) {
                         handleImageClick(product);
                     }}
                 >
-                    {product.imageSrc.map((image, index) => (
+
                         <Carousel.Item key={index}>
                             <img
                                 className="d-block  "
@@ -96,11 +80,11 @@ export function Product({ product, index ,personal,update_p}) {
                                     margin: "auto",
                                     borderRadius: "10px",
                                 }}
-                                src={image}
+                                src={superimage}
                                 alt={""}
                             />
                         </Carousel.Item>
-                    ))}
+                   
                 </Carousel>
                 <div
                     className="card-body my-2 d-flex   justify-content-between "
@@ -108,25 +92,13 @@ export function Product({ product, index ,personal,update_p}) {
                 >
                     <div className="d-flex flex-column align-items-start col-7 ">
                         <Card.Title className="mb-0" style={ isOpen? null: paragrapghstyle} ref={ref}>{product.name}</Card.Title>
-                        <Card.Text className="mb-0" style={ isOpen? null: paragrapghstyle} ref={ref}>Price: {product.price_after}</Card.Text>
+                        <Card.Text className="mb-0" style={ isOpen? null: paragrapghstyle} ref={ref}>Price: {product.price}</Card.Text>
                     </div>
                     <span
               className="col-5"
               style={{ textAlign: "center", " margin-top": "10%" ,paddingTop:"10px"}}
             >
                     <div className="justify-content-around d-flex" >
-                        <button
-                            className="btn text-light   "
-                            style={{ backgroundColor:  "#d99d2b",color:"red" }}
-                            onClick={() => {
-                                addToFavorites(product._id);
-                                handlewButtonClick(index);
-                            }}
-                        >{personal?.wish?.includes(product._id)?
-                        <i className="bi bi-heart-fill fs-5 text-danger"></i>
-                        :
-                            <i className="bi bi-heart fs-5"></i>}
-                        </button>
 
                          <button
                             className="btn text-light  "
@@ -145,4 +117,4 @@ export function Product({ product, index ,personal,update_p}) {
     );
 }
 
-export default Product;
+export default Supers;
