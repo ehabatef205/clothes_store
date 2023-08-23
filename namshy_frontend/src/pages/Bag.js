@@ -221,14 +221,6 @@ const Bag = () => {
             </div>
           )}
         </div>
-        <section className=" my-5 h-25 " style={{ width: "1300px" }}>
-          <div className=" w-100 my-3  " style={{ textAlign: "left" }}>
-            <h2>Similar Product </h2>
-          </div>
-          <div>
-            <ThirdSlider id="second"></ThirdSlider>
-          </div>
-        </section>{" "}
       </Container>
     </div>
   );

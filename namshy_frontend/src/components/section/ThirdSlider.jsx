@@ -1,93 +1,49 @@
-import React, { useContext ,useState, useEffect,useRef} from 'react';
-
-
+import React, { useContext, useState, useEffect, useRef } from 'react';
 import Card from "react-bootstrap/Card";
-
+import * as sub_cat from "../../api/subcategory";
 import Container from "react-bootstrap/Container";
-import { CartContext} from './Shoppingcartcontext'
+import { CartContext } from './Shoppingcartcontext'
+import { CardsSlider } from "../../components/section/CardsSlider";
 import { useNavigate } from "react-router-dom";
 import * as product from '../../api/product'
+import Carousel from "react-bootstrap/Carousel";
+
 export default function ThirdSlider({ id }) {
   const navigate = useNavigate();
   const [selectedProduct, setSelectedProduct] = useState(null);
-  const [selectedCardIndex, setSelectedCardIndex] = useState(1);
-  const addToFavorites = () => {
-      console.log("add to favorites")
-  }
- 
 
-  const { addToCart } = useContext(CartContext);
-
-  
-  const [index, setIndex] = useState(0);
-
-  const handleSelect = (selectedIndex) => {
-    setIndex(selectedIndex);
-  };
-  const handleImageClick = (product) => {
-    setSelectedProduct(product);
-    navigate(`/SelectedProductPage/${product._id}`);
-  };
-
-  const cardData = [
-    { id:1,
-      src: " https://images.pexels.com/photos/2850487/pexels-photo-2850487.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-      text: "Card 1 text",
-      price:500,
-    },
-    {id:2,
-      src: "https://images.pexels.com/photos/9218538/pexels-photo-9218538.jpeg?auto=compress&cs=tinysrgb&w=600",
-      text: "Card 2 text",
-      price:500,
-    },
-    {id:3,
-      src: "https://images.pexels.com/photos/2850487/pexels-photo-2850487.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-      text: "Card 3 text",
-      price:500,
-    },
-    {id:4,
-      src: " https://images.pexels.com/photos/2850487/pexels-photo-2850487.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-      text: "Card 1 text",
-      price:500,
-    },
-    {id:5,
-      src: "https://images.pexels.com/photos/9218538/pexels-photo-9218538.jpeg?auto=compress&cs=tinysrgb&w=600",
-      text: "Card 2 text",
-      price:500,
-    },
-  ];
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth <= 768);
-  const paragrapghstyle={
-    WebkitLineClamp:1,
-    WebkitBoxOrient:'vertical',
-    overflow:'hidden',
-    display:'-webkit-box',
-    margin:"2px"
-    
-  }
-  const [isOpen,setIsOpen]=useState(false);
-  const [showReadMoreButton , setshowReadMoreButton ]=useState(false)
-  const ref=useRef(null)
-  useEffect (()=>{
-    if(ref.current){
-      setshowReadMoreButton (
-        ref.current.scrollHeight !== ref.current.clientHeight
-  
-      )
-    }
-  },[])
+
+  const [category, setCategory] = React.useState({});
+  const [products, setProducts] = React.useState([]);
+
+  const getCategory = async () => {
+    console.log(id)
+    await product.get_product_by_category(id).then((e) => {
+      console.log(e.response)
+      setProducts(e.response.splice(0, 3))
+    });
+  };
   useEffect(() => {
-    const handleResize = () => {
-      setIsSmallScreen(window.innerWidth <= 768);
-    };
 
-    window.addEventListener('resize', handleResize);
+    getCategory();
+  }, [id]);
 
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
-  console.log("size",isSmallScreen)
+  const [coloractive, setcoloractive] = useState(false)
+  const [priceactive, setpriceactive] = useState(false)
+  const [dateactive, setdateactive] = useState(false)
+  const [colorfilter, setColorFilter] = useState([])
+  const [datefilter, setdatefilter] = useState("")
+  const handleColorChange = (color) => {
+    console.log(color)
+    if (colorfilter.includes(color)) {
+      setColorFilter(colorfilter.filter(c => c !== color));
+    } else {
+      setColorFilter([...colorfilter, color]);
+    }
+  };
+
+  const [pricefilter, setpricefilter] = useState([])
 
   return (
     <Container
@@ -96,152 +52,104 @@ export default function ThirdSlider({ id }) {
     >
       <div className=" w-100 sec  ">
         <div id={id} className="carousel slide w-100" data-bs-ride="carousel">
-          <div className="carousel-inner w-100 ">
-            <div className="carousel-item active w-100  ">
-              <div className="mo d-flex  w-100 ">
-              {cardData.slice(0, isSmallScreen ?  2: cardData.length).map((card, index) => (
-                  <Card
-                    className="mx-3 "
-                    style={{ width: "18rem" }}
-                    key={index}
-                  >
-                    <Card.Img variant="top" src={card.src} onClick={() => handleImageClick(product)}/>
-                    <Card.Body className="d-flex justify-content-center  " style={{padding:"0px"}}>
-                      <div className="col-5 col-lg-6  "style={{fontSize:"1rem"}}>
-                      <Card.Text style={ isOpen? null: paragrapghstyle} ref={ref}> <b >Card {index + 1} Title </b></Card.Text>
-                      <Card.Text style={ isOpen? null: paragrapghstyle} ref={ref}>{card.price}$</Card.Text>
-                      </div>
-                         <div className="col-7 col-lg-6   d-flex justify-content-around ">
-                        <button
-                            className="btn text-light  my-3 "
-                            style={{ backgroundColor: "#d99d2b"
-                            // , marginRight: "4px"
-                           }}
-                            onClick={() => addToFavorites()}
-                        >
-                            <i className="bi bi-heart"></i>
-                        </button>
+          <div className=" cards w-100 ">
+            {products.map((pro, index) => (
+              <div className="carda my-2 col-12 col-lg-3 mx-2  col-md-2" style={{ display: "inline-block" }}
+                key={pro._id}>
+                <div
+                  onClick={() => { }}
+                  className="carousel-wrapper"
+                  style={{ cursor: "pointer" }}
 
-                        <button
-                            className="btn text-light my-3 "
-                            style={{ backgroundColor: "#d99d2b" }}
-                            
-                            onClick={() => addToCart(card.id)}
-                        >
-                            <i className="bi bi-plus-lg"></i>
-                        </button>
-                    </div>
-                    </Card.Body>
-                  </Card>
-                ))}
-              </div>
-            </div>
-             <div className="carousel-item">
-              <div className="mo d-flex ">
-              {cardData.slice(0, isSmallScreen ?  2: cardData.length).map((card, index) => (
-                  <Card
-                    className="mx-3 "
-                    style={{ width: "18rem" }}
-                    key={index}
-                  >
-                    <Card.Img variant="top" src={card.src}onClick={() => handleImageClick(product)} />
-                    <Card.Body className="d-flex justify-content-center  " style={{padding:"0px"}}>
-                      <div className="col-5 col-lg-6  "style={{fontSize:"1rem"}}>
-                      <Card.Text style={ isOpen? null: paragrapghstyle} ref={ref}> <b >Card {index + 1} Title </b></Card.Text>
-                      <Card.Text style={ isOpen? null: paragrapghstyle} ref={ref}>{card.price}$</Card.Text>
-                      </div>
-                         <div className="col-7 col-lg-6   d-flex justify-content-around ">
-                        <button
-                            className="btn text-light  my-3 "
-                            style={{ backgroundColor: "#d99d2b"
-                            // , marginRight: "4px"
-                           }}
-                            onClick={() => addToFavorites()}
-                        >
-                            <i className="bi bi-heart"></i>
-                        </button>
+                >
+                  <Carousel controls={false}
+                    interval={3000} >
+                    {pro?.imageSrc.map((image, index) => (
+                      <Carousel.Item key={index}>
+                        <img
+                          onClick={() => { }}
+                          className="d-block w-100"
+                          src={image}
+                          alt={""}
+                          style={{
+                            width: "100%",
+                            // height: "250px",
+                            height: "400px",
 
-                        <button
-                            className="btn text-light my-3 "
-                            style={{ backgroundColor: "#d99d2b" }}
-                            
-                            onClick={() => addToCart(card.id)}
-                        >
-                            <i className="bi bi-plus-lg"></i>
-                        </button>
-                    </div>
-                    </Card.Body>
-                  </Card>
-                ))}
-              </div>
-            </div> 
-            <div className="carousel-item">
-              <div className="mo d-flex ">
-              {cardData.slice(0, isSmallScreen ?  2: cardData.length).map((card, index) => (
-                  <Card
-                    className="mx-3 "
-                    style={{ width: "18rem" }}
-                    key={index}
-                  >
-                    <Card.Img variant="top" src={card.src} onClick={() => handleImageClick(product)} />
-                    <Card.Body className="d-flex justify-content-center  " style={{padding:"0px"}}>
-                      <div className="col-5 col-lg-6  "style={{fontSize:"1rem"}}>
-                      <Card.Text style={ isOpen? null: paragrapghstyle} ref={ref}> <b >Card {index + 1} Title </b></Card.Text>
-                      <Card.Text style={ isOpen? null: paragrapghstyle} ref={ref}>{card.price}$</Card.Text>
-                      </div>
-                         <div className="col-7 col-lg-6   d-flex justify-content-around ">
-                        <button
-                            className="btn text-light  my-3 "
-                            style={{ backgroundColor: "#d99d2b"
-                            // , marginRight: "4px"
-                           }}
-                            onClick={() => addToFavorites()}
-                        >
-                            <i className="bi bi-heart"></i>
-                        </button>
+                          }}
+                        />
 
-                        <button
-                            className="btn text-light my-3 "
-                            style={{ backgroundColor: "#d99d2b" }}
-                            
-                            onClick={() => addToCart(card.id)}
-                        >
-                            <i className="bi bi-plus-lg"></i>
-                        </button>
+                      </Carousel.Item>
+                    ))}
+                  </Carousel>
+                </div>
+                <div
+
+                  className="card-body d-flex "
+                  style={{
+                    fontSize: "100%",
+                    padding: "0px",
+                    flexDirection: "flex-row",
+                    justifyContent: "space-between",
+
+                  }}
+                >
+                  <div className=" d-flex flex-column align-items-start  col-8 "
+                    onClick={() => { }}
+                    style={{ cursor: "pointer", padding: "10px" }}
+                  >
+                    <Card.Title className="mb-0" style={{}} >{pro.name}</Card.Title>
+                    <Card.Text className="mb-0">
+                      {pro.price_before !== pro.price_after ? (
+                        <>
+                          {pro.price_after}$ <del className="mx-2 text-danger">{pro.price_before}$</del>
+                        </>
+                      ) : (
+                        <>
+                          {pro.price_after}$
+                        </>
+                      )}
+                    </Card.Text>
+                    {/* <Card.Text  style={ isOpen? null: paragrapghstyle} ref={ref}> {pro.desc.descreption}</Card.Text> */}
+                  </div>
+                  <span
+                    className="  h-75  col-4 "
+                    style={{ textAlign: "center", " margin-top": "10%", paddingTop: "10px" }}
+                  >
+                    <div>
+                      <button
+                        className="btn text-light   "
+                        style={{ backgroundColor: "#d99d2b", marginLeft: "2px" }}
+                        onClick={() => { }}
+                      >
+                        {
+                          <i className="bi bi-heart "></i>}
+                      </button>
+
+                      {/* <button
+                        className="btn text-light  "
+                        style={{ backgroundColor: "#d99d2b", marginLeft: "2px" }}
+                        onClick={() => {
+                          addtoBag(pro._id)
+                          handlewButtonClick(index);
+                        }}
+                      >
+                        {personal?.cart?.includes(pro._id)?<i class="bi bi-check-square-fill "></i>:
+                                  <i class="bi bi-cart "></i>}
+                      </button> */}
+                      <button
+                        className="btn text-light  "
+                        style={{ backgroundColor: "#d99d2b", marginLeft: "2px" }}
+                        onClick={() => {
+                        }}
+                      ><i class="bi bi-eye "></i>
+                      </button>
                     </div>
-                    </Card.Body>
-                  </Card>
-                ))}
+                  </span>
+                </div>
               </div>
-            </div>
+            ))}
           </div>
-          <button
-            className="carousel-control-prev"
-            style={{  height:"fit-content", top:"165px"}}
-            type="button"
-            data-bs-target={`#${id}`}
-            data-bs-slide="prev"
-          >
-            <span
-              className="carousel-control-prev-icon  text-bg-dark"
-              // style={{ right: "-81px" }}
-              aria-hidden="true"
-            ></span>
-            <span className="visually-hidden">Previous</span>
-          </button>
-          <button
-            className="carousel-control-next"
-            type="button"
-            style={{ height:"fit-content", top:"165px" }}
-            data-bs-target={`#${id}`}
-            data-bs-slide="next"
-          >
-            <span
-              className="carousel-control-next-icon text-bg-dark"
-              aria-hidden="true"
-            ></span>
-            <span className="visually-hidden">Next</span>
-          </button>
         </div>
       </div>
     </Container>

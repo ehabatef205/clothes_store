@@ -2,6 +2,8 @@ import { React, useState, useRef, useEffect } from "react";
 import { useLocation, useNavigate } from 'react-router-dom'
 import addOrder from "../api/addOrder"
 import * as productsapi from '../api/product'
+import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
+import { ToastContainer, toast } from 'react-toastify';
 
 const Checkout = () => {
   const navigate = useNavigate();
@@ -9,12 +11,14 @@ const Checkout = () => {
   const carts = location.state;
   const [products, setProducts] = useState([])
   const [priceProducts, setPriceProducts] = useState([])
+  const [payment, setPayment] = useState("الدفع عند الاستلام")
   var allPrice = 0
   var loop = 0
+
   const addProducts = async () => {
     allPrice = 0
     for (var i = 0; i < carts.length; i++) {
-      const product = { product_id: carts[i].product_id, quantity: carts[i].quantity ,color:carts[i].color,size:carts[i].size}
+      const product = { product_id: carts[i].product_id, quantity: carts[i].quantity, color: carts[i].color, size: carts[i].size }
       setProducts(products => [...products, product])
       await productsapi.get_product_by_id(carts[i].product_id).then(async (product1) => {
 
@@ -22,7 +26,7 @@ const Checkout = () => {
       })
     }
 
-    setPriceProducts(allPrice+50)
+    setPriceProducts(allPrice + 50)
 
   }
   useEffect(() => {
@@ -35,82 +39,210 @@ const Checkout = () => {
     console.log(products)
   }, [products])
 
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    phone: '',
+    address: '',
+    city: '',
+    country: '',
+    zipCode: ''
+  })
 
-  const phone = useRef(null);
-  const country = useRef(null);
-  const firstName = useRef(null);
-  const lastName = useRef(null);
-  const address = useRef(null);
-  const city = useRef(null);
-  const zipCode = useRef(null);
-
-  const finalize = async () => {
-    await addOrder(products, phone.current.value, country.current.value, firstName.current.value, lastName.current.value, address.current.value, city.current.value, zipCode.current.value, priceProducts).then(async res => {
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    await addOrder(products, formData?.firstName, formData?.country, formData?.firstName, formData?.lastName, formData?.address, formData?.city, formData?.zipCode, priceProducts).then(async res => {
       console.log(res.data)
       navigate("/orders", { replace: true })
     })
   }
 
-  return (<div style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
-    <input
-      ref={country}
-      style={inputText5}
-      placeholder="الدولة"
-      type="text"
-    />
-    <input
-      ref={phone}
-      style={inputText5}
-      placeholder="رقم الهاتف"
-      type="phone"
-    />
-    <input
-      ref={lastName}
-      style={inputText5}
-      placeholder="الاسم الاخير"
-      type="text"
-    />
-    <input
-      ref={firstName}
-      style={inputText5}
-      placeholder="الاسم الاول"
-      type="text"
-    />
-    <input
-      ref={address}
-      style={inputText5}
-      placeholder="العنوان بالتفصيل"
-      type="text"
-    />
-    <input
-      ref={city}
-      style={inputText5}
-      placeholder="المحافظة"
-      type="text"
-    />
-    <input
-      ref={zipCode}
-      style={inputText5}
-      placeholder="الرقم البريدي"
-      type="text"
-    />
-    <div style={divPrice}>السعر الكلي: ${priceProducts}</div>
+  const handleSelection = (e) => {
+    if (e.target.value === "ادفع الان") {
+      if (formData.firstName.trim() !== "" && formData?.lastName.trim() !== "" && formData?.phone.trim() !== "" && formData?.address.trim() !== "" && formData?.city.trim() !== "" && formData?.country.trim() !== "" && formData?.zipCode.trim() !== "") {
+        setPayment(e.target.value)
+      } else {
+        toast.warning("Please Fill all fields", {
+          position: toast.POSITION.TOP_RIGHT
+        })
+      }
+    } else {
+      setPayment(e.target.value)
+    }
+    console.log(e.target.value)
+  }
 
-    <button
-      className="btn text-light my-3 h-50 w-100"
-      onClick={() => { finalize() }}
+  const initialOptions = {
+    clientId: "AbHZZAi6Hm95o2PH8A8C0l8bNO9N4kAqrACsL44T2ziyvLe8BFHEpw5Z2Sau0Wbfozu7YzeNFcO10hyc",
+    currency: "USD",
+    intent: "capture",
+  };
+
+  const createOrder = (data) => {
+    // Order is created on the server and the order id is returned
+    return fetch("http://localhost:7011/my-server/create-paypal-order", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      // use the "body" param to optionally pass additional order information
+      // like product skus and quantities
+      body: JSON.stringify({
+        products: {
+          cost: priceProducts,
+        },
+      }),
+    })
+      .then((response) => response.json())
+      .then((order) => order.id);
+  };
+
+  const onApprove = (data) => {
+    // Order is captured on the server and the response is returned to the browser
+    return fetch("http://localhost:7011/my-server/capture-paypal-order", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        orderID: data.orderID
+      })
+    })
+      .then((response) => response.json()).then(async (order) => {
+        if (order.status === "COMPLETED") {
+          await addOrder(products, formData?.firstName, formData?.country, formData?.firstName, formData?.lastName, formData?.address, formData?.city, formData?.zipCode, priceProducts).then(async res => {
+            console.log(res.data)
+            navigate("/orders", { replace: true })
+          })
+          navigate(-1)
+        }
+      });
+  };
+
+  return (<form className="w-100" onSubmit={handleSubmit}><div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
+    <input
+      style={inputText5}
+      type="text"
+      name="firstName"
+      placeholder='الاسم الاول'
+      autoComplete='off'
+      onChange={(e) =>
+        setFormData({
+          ...formData,
+          firstName: e.target.value,
+        })
+      }
+      required
+    />
+    <input
+      style={inputText5}
+      type="text"
+      name="lastName"
+      placeholder='الاسم الاخير'
+      autoComplete='off'
+      onChange={(e) =>
+        setFormData({
+          ...formData,
+          lastName: e.target.value,
+        })
+      }
+      required
+    />
+    <input
+      style={inputText5}
+      type="text"
+      name="phone"
+      placeholder='رقم الهاتف'
+      autoComplete='off'
+      onChange={(e) =>
+        setFormData({
+          ...formData,
+          phone: e.target.value,
+        })
+      }
+      required
+    />
+    <input
+      style={inputText5}
+      type="text"
+      name="address"
+      placeholder='العنوان'
+      autoComplete='off'
+      onChange={(e) =>
+        setFormData({
+          ...formData,
+          address: e.target.value,
+        })
+      } required />
+    <input
+      style={inputText5}
+      type="text"
+      name="city"
+      placeholder='المدينة'
+      autoComplete='off'
+      onChange={(e) =>
+        setFormData({
+          ...formData,
+          city: e.target.value,
+        })
+      } required />
+    <input
+      style={inputText5}
+      type="text"
+      name="country"
+      placeholder='الدولة'
+      autoComplete='off'
+      onChange={(e) =>
+        setFormData({
+          ...formData,
+          country: e.target.value,
+        })
+      }
+      required
+    />
+    <input
+      style={inputText5}
+      type="number"
+      name="zipCode"
+      placeholder='الرمز البريدي'
+      autoComplete='off'
+      onChange={(e) =>
+        setFormData({
+          ...formData,
+          zipCode: e.target.value,
+        })
+      } required />
+    <div style={divPrice}>السعر الكلي: ${priceProducts}</div>
+    <div style={divPrice}>
+      <label style={{ padding: "10px" }}>
+        <input type="radio" value="ادفع الان" checked={payment === "ادفع الان"} onChange={handleSelection} />
+        ادفع الان
+      </label>
+      <label style={{ padding: "10px" }}>
+        <input type="radio" value="الدفع عند الاستلام" checked={payment === "الدفع عند الاستلام"} onChange={handleSelection} />
+        الدفع عند الاستلام
+      </label>
+    </div>
+    {payment === "ادفع الان" ? <PayPalScriptProvider options={initialOptions}>
+      <PayPalButtons
+        createOrder={(data, actions) => createOrder(data, actions)}
+        onApprove={(data, actions) => onApprove(data, actions)}
+      />
+    </PayPalScriptProvider> : <button
+      className="btn text-light my-3 h-50 w-50"
+      type="submit"
       style={{ backgroundColor: "blue" }}
     >
       Checkout
-    </button>
-
-
-  </div>)
+    </button>}
+    <ToastContainer />
+  </div ></form>)
 }
+
 const inputText5 = {
   border: "1px solid #000",
   borderRadius: "15px",
-  width: "calc(50% - 20px)",
+  width: "calc(50%)",
   padding: "10px",
   marginTop: "20px",
   textAlign: "right",
@@ -120,10 +252,10 @@ const inputText5 = {
 const divPrice = {
   borderRadius: "15px",
   width: "100%",
-  padding: "10px",
+  padding: "5px",
   marginTop: "20px",
   textAlign: "center",
-  margin: "10px",
+  margin: "5px",
 }
 
 export default Checkout;

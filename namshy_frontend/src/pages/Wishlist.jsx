@@ -2,7 +2,7 @@
 import ThirdSlider from "../components/section/ThirdSlider";
 
 import Wishlistcol from "../components/section/wishlistcol";
-import React, { useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 
 import { Container } from "react-bootstrap";
 import { useNavigate } from 'react-router-dom';
@@ -31,7 +31,7 @@ const Wishlist = () => {
   useEffect(() => {
 
     if (
-      !cartItems.length
+      !cartItems?.length
       // || Object.values(cartItems).every((value) => value === 0)
     ) {
 
@@ -46,7 +46,7 @@ const Wishlist = () => {
     <div>
       <Header></Header>
       <Container className="my-4  " style={{ justifyContent: "center" }}>
-        <div className="">
+        <div className="" style={{ minHeight: "500px" }}>
           {!isCartEmpty ? (
             <Empitywish />
           ) : (
@@ -54,7 +54,7 @@ const Wishlist = () => {
               <div className="d-flex justify-content-between">
 
                 <button
-                 onClick={()=>{navigate(-1)}}
+                  onClick={() => { navigate(-1) }}
                   className="btn "
                   style={{ color: "#d99d2b", border: "1px solid gray" }}
                 >
@@ -85,14 +85,6 @@ const Wishlist = () => {
             </div>
           )}
         </div>
-        <section className=" my-5 h-25 " style={{ width: "1300px" }}>
-          <div className=" w-100 my-3  " style={{ textAlign: "left" }}>
-            <h2>Similar Product </h2>
-          </div>
-          <div>
-            <ThirdSlider id="second"></ThirdSlider>
-          </div>
-        </section>{" "}
       </Container>
     </div>
   );

@@ -54,8 +54,8 @@ export function NavBar({ visible = true }) {
     };
 
     const setq = async () => {
-      if(window.location.pathname.split("/")[1]==="search"){
-        const q=window.location.pathname.split("/")[2]
+      if (window.location.pathname.split("/")[1] === "search") {
+        const q = window.location.pathname.split("/")[2]
         setQuery(q)
       }
     };
@@ -74,7 +74,7 @@ export function NavBar({ visible = true }) {
   const [items, setItems] = useState([]);
   useEffect(() => {
     if (query === "") setItems([]);
-    else if((window.location.pathname.split("/")[1]==="search" &&window.location.pathname.split("/")[2]===query))setItems([]);
+    else if ((window.location.pathname.split("/")[1] === "search" && window.location.pathname.split("/")[2] === query)) setItems([]);
     else {
       searchProduct(query).then((e) => {
         setItems(e.data.response);
@@ -84,9 +84,9 @@ export function NavBar({ visible = true }) {
 
   const handleLinkClick = (href, name) => {
     navigate(href, { state: { name: name } });
-    window.scrollTo(0,0)
+    window.scrollTo(0, 0)
   };
-  const profileElements=["profile","orders","returns"]
+  const profileElements = ["profile", "orders", "returns"]
 
   const linkStyle = {
     padding: "0.5rem 2.1rem",
@@ -115,51 +115,52 @@ export function NavBar({ visible = true }) {
               justifyContent: "space-between",
             }}
           >
-            <a style={{ paddingLeft: "2%",textDecoration:"none"  }} href={"/profile"}>
-              <i style={{ 
-                
-                    color:
-                        profileElements.includes(window.location.pathname.split("/")[1]) ? "#d99d2b" : "white",fontSize: "1.5rem" }}  className="navhover navclick bi bi-person-circle"/>
+            <a style={{ paddingLeft: "2%", textDecoration: "none" }} href={"/profile"}>
+              <i style={{
+
+                color:
+                  profileElements.includes(window.location.pathname.split("/")[1]) ? "#d99d2b" : "white", fontSize: "1.5rem"
+              }} className="navhover navclick bi bi-person-circle" />
             </a>
             <a
-              style={{ paddingLeft: "2%",textDecoration:"none" }}
+              style={{ paddingLeft: "2%", textDecoration: "none" }}
               href="/bag"
             >
-              <i style={{ color:
-                        window.location.pathname.split("/")[1] ==='bag' ? "#d99d2b" : "white", fontSize: "1.5rem"  }}
-                          className="navhover navclick bi bi-handbag">
-                             <b style={{borderRadius:"50px", width:"fit-content",fontSize:"1rem",position:"relative",right:"15px" ,bottom:"20px"}} 
-                             className=" bg-success-subtle ">
-                              <span className='mx-2 text-dark'>
-                                    2</span></b></i>  </a>
+              <i style={{
+                color:
+                  window.location.pathname.split("/")[1] === 'bag' ? "#d99d2b" : "white", fontSize: "1.5rem"
+              }}
+                className="navhover navclick bi bi-handbag">
+                <b style={{ borderRadius: "50px", width: "fit-content", fontSize: "1rem", position: "relative", right: "15px", bottom: "20px" }}
+                  className=" bg-success-subtle ">
+                  <span className='mx-2 text-dark'>
+                    2</span></b></i>  </a>
             <a
               onClick={() => {
-                if (cookie.get("Auth") != null) {
-                  navigate("/favorites");
-                  window.scrollTo(0,0)
-                }
+                navigate("/favorites");
+                window.scrollTo(0, 0)
               }}
-              style={{ paddingLeft: "2%",cursor:"pointer",textDecoration:"none" }}
+              style={{ paddingLeft: "2%", cursor: "pointer", textDecoration: "none" }}
             >
-              <i  style={{  color:window.location.pathname.split("/")[1] ==='favorites' ? "#d99d2b" : "white",fontSize: "1.5rem"  }} 
-               className="navhover navclick bi bi-heart">
-                <b style={{borderRadius:"50px", width:"fit-content",fontSize:"1rem",position:"relative",right:"15px" ,bottom:"20px"}} 
-                             className=" bg-danger-subtle ">
-                              <span className='mx-2 text-dark'>
-                                    2</span></b>
-               </i>
+              <i style={{ color: window.location.pathname.split("/")[1] === 'favorites' ? "#d99d2b" : "white", fontSize: "1.5rem" }}
+                className="navhover navclick bi bi-heart">
+                <b style={{ borderRadius: "50px", width: "fit-content", fontSize: "1rem", position: "relative", right: "15px", bottom: "20px" }}
+                  className=" bg-danger-subtle ">
+                  <span className='mx-2 text-dark'>
+                    2</span></b>
+              </i>
             </a>
 
             <div style={container}>
               <div style={{ color: "#fff" }}>
-                <SearchOutlinedIcon className="search-icon"style={{ color: "#000" }} onClick={()=>{
-                  if(query!==""){
-                    var reloader=window.location.pathname.split("/")[1]==="search"
+                <SearchOutlinedIcon className="search-icon" style={{ color: "#000" }} onClick={() => {
+                  if (query !== "") {
+                    var reloader = window.location.pathname.split("/")[1] === "search"
                     navigate(`/search/${query}`)
-                    
-                    if(reloader)
-                    window.location.reload()
-                  
+
+                    if (reloader)
+                      window.location.reload()
+
                   }
                 }} />
               </div>
@@ -208,9 +209,9 @@ export function NavBar({ visible = true }) {
                 overflowY: "auto",
               }}
             >
-              {categories.map((category,index) => (
+              {categories.map((category, index) => (
                 <div
-                key={index}
+                  key={index}
                   href={"/cat/" + category.name}
                   style={{
                     ...linkStyle,
@@ -238,7 +239,7 @@ export function NavBar({ visible = true }) {
               >
                 <img
                   src={logoo}
-                  style={{ height: "70px", width: "100px",cursor:"pointer" }}
+                  style={{ height: "70px", width: "100px", cursor: "pointer" }}
                 ></img>
               </div>
             </Navbar.Brand>
@@ -258,7 +259,7 @@ export function NavBar({ visible = true }) {
                 marginTop: "3px",
                 marginRight: "20%",
                 zIndex: 9999,
-                
+
               }}
             >
               {items?.map((item) => {

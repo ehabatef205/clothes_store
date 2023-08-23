@@ -103,7 +103,6 @@ module.exports.getProductByType = async (req, res) => {
   }
   await Product.find({
     category_id: _id,
-    typeOfProduct: req.body.typeOfProduct,
     view: true,
   })
     .limit(8)
@@ -510,4 +509,42 @@ module.exports.tryon =async  (req, res) => {
       error:error.message
     });
   });
+};
+
+module.exports.getProductByMainCategory = async (req, res) => {
+  let _id = req.params.id;
+  await Product.find({ category_id: _id })
+    .then((e) => {
+      return res.json({
+        response: e,
+      });
+    })
+    .catch((err) => {
+      return res.json({ message: err.message });
+    });
+};
+
+module.exports.getProductFirstVisit = async (req, res) => {
+  let _id = req.params.id;
+  await Product.find({ category_id: _id, first_visit: true })
+    .then((e) => {
+      return res.json({
+        response: e,
+      });
+    })
+    .catch((err) => {
+      return res.json({ message: err.message });
+    });
+};
+
+module.exports.UpdateFirstVisitProduct = async (req, res) => {
+  const body = req.body;
+  let _id = new mongoose.Types.ObjectId(req.params.id);
+  await Product.findOneAndUpdate({ _id: _id }, { $set: body }, { new: true })
+    .then((e) => {
+      return res.status(200).json(e);
+    })
+    .catch((err) => {
+      return res.json({ message: "Error" });
+    });
 };

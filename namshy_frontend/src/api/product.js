@@ -26,23 +26,27 @@ export const get_product_by_category = async (_id) => {
     return (await (await axios.get(`${proxy}/category/${_id}`)).data)
 }
 
-export const get_product_by_type = async (_id, type) => {
-    return (await (await axios.post(`${proxy}/type/${_id}`, { typeOfProduct: type })).data)
+export const get_product_of_category = async (_id) => {
+    return (await (await axios.get(`${proxy}/all_of_category/${_id}`)).data)
 }
 
-export const searchProduct=async(query)=>{
-    return (await axios.post(`${proxy}/search/`,{query}))
+export const searchProduct = async (query) => {
+    return (await axios.post(`${proxy}/search/`, { query }))
 }
-export const searchpage=async(query)=>{
-    return await((await axios.post(`${proxy}/searchpage/`,{query})).data)
+export const searchpage = async (query) => {
+    return await ((await axios.post(`${proxy}/searchpage/`, { query })).data)
 }
-export const searchpagefilter=async(query,filter)=>{
-    return await((await axios.post(`${proxy}/searchpagefilter/`,{query:query,filter:filter})).data)
+export const searchpagefilter = async (query, filter) => {
+    return await ((await axios.post(`${proxy}/searchpagefilter/`, { query: query, filter: filter })).data)
 }
-export const carts=async(ids)=>{
-    return await((await axios.post(`${proxy}/cart/`,{products:ids})).data.response)
+export const carts = async (ids) => {
+    return await ((await axios.post(`${proxy}/cart/`, { products: ids })).data.response)
 }
 
-export const get_product_filter = async (_id,filter) => {
-    return (await (await axios.post(`${proxy}/category/${_id}`,{filter:filter})).data)
+export const get_product_filter = async (_id, filter) => {
+    return (await (await axios.post(`${proxy}/category/${_id}`, { filter: filter })).data)
+}
+
+export const get_product_first_visit = async (_id) => {
+    return (await (await axios.get(`${proxy}/first_visit/${_id}`)).data)
 }
