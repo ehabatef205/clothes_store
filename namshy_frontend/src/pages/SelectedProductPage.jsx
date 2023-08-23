@@ -18,7 +18,7 @@ function SelectedProductPage({ products, handleClick }) {
   const [selected, setSelected] = useState({});
   const [AVC, setAVC] = useState([]);
   const [AVS, setAVS] = useState({});
-
+  const [Avilable, setAvilable] = useState({});
   const [Sizet, setSizet] = useState('');
   const [Colort, setColort] = useState('');
   const cookie = new Cookies()
@@ -40,14 +40,12 @@ const[formattedDescription,setformattedDescription]=useState("")
         }
         const formated =JSON.parse( e.desc.description).replace(/\n/g, "<br>");
         setformattedDescription(formated)
-        const { availableColors, availableSizes } = getAvailableColorsAndSizes(e.colors, e.sizes);
-        setAVC(availableColors)
-        setAVS(availableSizes)
+        const toreturn= getAvailableColorsAndSizes(e?.sizeable,e?.colors,e?.quantity);
+        console.log(toreturn)
+        setAvilable(toreturn)
       })
     }
     getById()
-    
-
     const child1 = document.getElementById("child1");
     const child1Height = child1.offsetHeight;
     setChildHeight(child1Height);
@@ -169,7 +167,7 @@ const[formattedDescription,setformattedDescription]=useState("")
                 <div className=" w-100   ">
                   
                   
-                  {selected?.clothing&&<>
+                  {((selected?.sizeable)||(selected?.colors))&&<>
                   
                     <div
                   className="d-flex justify-content-between w-100"
@@ -189,49 +187,51 @@ const[formattedDescription,setformattedDescription]=useState("")
                   >
                     {" "}
                     {
-                    selected.colors?
-                    AVC.map((color, index) => (
+                    (selected.colors||selected.sizeable)?
+                    Object.keys(Avilable).map((v, index) => (
                       <button
                       key={index}
-                      onClick={() =>{setColort(color)
-                      setSizet("")
+                      onClick={() =>{
+                        console.log(v)
+                        if(selected.sizeable)
+                        setSizet(v)
+                        else {
+                          setColort(v)
+                        }
                       }}
                         style={{
                           zIndex: 3,
                           cursor: "pointer",
                           width: "70px",
                           borderRadius: "2px",
-                          backgroundColor:color,
-                          color:color,
+                          backgroundColor:(selected.sizeable&&selected.colors)?"gray":'#'+v,
+                          color:(selected.sizeable&&selected.colors)?"white":'#'+v,
                         }}
                         
                         className="btn  btn-outline-secondary "
                       >
-                        000
+                        {v}
                       </button>
                     )):<></>}
                     <br/>
                     {
-                    Colort!==""?
-                    AVS[Colort].map((size, index) => (
+                    (Sizet!==""&&selected.sizeable&&selected.colors)?
+                    Object.keys(Avilable[Sizet]).map((color, index) => (
                       <button
                       key={index}
-                      onClick={() =>{setSizet(size)}}
+                      onClick={() =>{setColort(color)}}
                         style={{
                           zIndex: 3,
                           cursor: "pointer",
                           width: "70px",
                           borderRadius: "2px",
-                          backgroundColor:size===Sizet? 
-                          "gray":"transparent",
-                          color:size===Sizet? 
-                          Colort:"gray",
-                          borderColor:Colort,
+                          backgroundColor:`#${color}` ,
+                          color:`#${color}`,
                         }}
                         
                         className="btn  btn-outline-secondary "
                       >
-                        {size}
+                        0
                       </button>
                     )):<></>}
                   </div></>}
@@ -250,7 +250,7 @@ const[formattedDescription,setformattedDescription]=useState("")
                 >
                   <span className=" mx-3" style={{ textAlign: "center", width: "45%" }}>
                     <button
-                      disabled={personal?.cart?.includes(selected._id)||(selected.clothing?((Colort==='')||(Sizet==='')):selected.clothing)}
+                      disabled={personal?.cart?.includes(selected._id)}
                       className="btn text-light my-3 h-75 w-100"
                       onClick={() => {
                         

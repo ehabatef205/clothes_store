@@ -459,7 +459,7 @@ module.exports.uplodaImage = async (req, res, next) => {
     .save()
     .then(async (response) => {
         console.log(response.dressing)
-      /*if (response.clothing) {    
+      /*if (response.dressing) {    
           await MakeRequest(vrprop)
             .then(async (responseData) => {
               console.log("Response:", responseData);
