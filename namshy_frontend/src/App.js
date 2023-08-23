@@ -1,5 +1,6 @@
 import React from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate, useLocation } from "react-router-dom";
+
 import Home from "./pages/home";
 import Bag from "./pages/Bag";
 import Page1 from "./pages/page1";
@@ -17,9 +18,17 @@ import Page2 from "./pages/page2";
 // import CartItems from "./pages/CartItems";
 import ShoppinghcartProvider from './components/section/Shoppingcartcontext'
 function App() {
-  
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  React.useEffect(() => {
+    // Redirect only when the current path is "/"
+    if (location.pathname === "/") {
+      navigate("/cat/64ad46be5e38ca8f15f8e52b"); 
+    }
+  }, [navigate, location]);
    return (
-    // <div className="App">
+    
   <ShoppinghcartProvider className="App">
 
 

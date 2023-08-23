@@ -1,7 +1,7 @@
 // import React, { useState, useEffect, useContext } from "react";
 import ThirdSlider from "../components/section/ThirdSlider";
 import { update } from "../api/personal_cookies";
-
+import PopUp from "../components/section/room/PopUp";
 import Cartcol from "../components/section/Cartcol";
 import React, { useState, useEffect, useContext } from "react";
 import { ToastContainer, toast } from 'react-toastify';
@@ -21,6 +21,7 @@ const Bag = () => {
   const [cartItems, setCartItems] = useState([]);
   const [ProductItems, setProductItems] = useState([]);
   const [isCartEmpty, setIsCartEmpty] = useState(false);
+  const [VRactive, setVRactive] = useState(false);
   const [personal, setpersonal] = useState({})
   const navigate = useNavigate();
 
@@ -80,16 +81,18 @@ const Bag = () => {
             <div className="" style={{ height: "fit-content" }}>
               <div className="d-flex justify-content-between">
                 <button
-                onClick={()=>{
+               /* onClick={()=>{
                   toast.warning("Waiting to activate Ai Virtual Room", {
                     position: toast.POSITION.TOP_LEFT
                 })
-                }}
+                }}*/
+                onClick={()=>{setVRactive(!VRactive)}}
                   className="btn text-light "
                   style={{ backgroundColor: "#d99d2b" }}
                 >
                   AI Virtual Room
                 </button>
+                {VRactive&&<PopUp></PopUp>}
                 <ToastContainer/>
                 <button
                 onClick={()=>{navigate(-1)}}
