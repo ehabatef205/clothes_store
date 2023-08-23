@@ -22,7 +22,7 @@ export function Supers({ product, index ,personal,update_p}) {
         console.log(product)
         setSelectedProduct(product);
         window.scrollTo(0,0)
-        navigate(`/super/${product._id}`,{state:product.products});
+        navigate(`/super/${product._id}`,{state:product});
     };
 
 
