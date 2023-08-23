@@ -17,6 +17,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Cookies } from "react-cookie";
 import { backend_url } from "../../config";
+import Nav2rep from "./Nav2rep";
 const proxy = `${backend_url}/external/speech`;
 
 export function NavBar({ visible = true }) {
@@ -88,25 +89,26 @@ export function NavBar({ visible = true }) {
   };
   const profileElements=["profile","orders","returns"]
 
-  const linkStyle = {
-    padding: "0.5rem 2.1rem",
-    borderRight: "1px solid white",
-  };
+
 
   const cookie = new Cookies();
 
   return (
-    <div>
-      <div
+    <div className="w-100 " style={{height:"100px"}}>
+      <div 
+      className=""
         style={{
-          height: "60px",
+          // height: "60px",
           width: "100%",
-          backgroundColor: "rgb(0, 0, 0)",
+          backgroundColor: "rgb(0, 0, 0)" ,
         }}
       >
-        <Container fluid className="px-0">
-          <Nav
-            className="me-auto hider"
+        <Container fluid className="px-0   "  style={{
+          
+          width: "100%"
+        }}>
+           <Nav
+            className="me-auto hider  d-flex flex-wrap"
             style={{
               display: "flex",
               flexWrap: "nowrap",
@@ -115,14 +117,19 @@ export function NavBar({ visible = true }) {
               justifyContent: "space-between",
             }}
           >
-            <a style={{ paddingLeft: "2%",textDecoration:"none"  }} href={"/profile"}>
+           <div className="d-flex justify-content-around padesrep  col-lg-2 col-8 ">
+            <a style={{ 
+              // paddingLeft: "2%",
+              textDecoration:"none"  }} href={"/profile"}>
               <i style={{ 
                 
                     color:
                         profileElements.includes(window.location.pathname.split("/")[1]) ? "#d99d2b" : "white",fontSize: "1.5rem" }}  className="navhover navclick bi bi-person-circle"/>
             </a>
             <a
-              style={{ paddingLeft: "2%",textDecoration:"none" }}
+              style={{
+                //  paddingLeft: "2%",
+                 textDecoration:"none" }}
               href="/bag"
             >
               <i style={{ color:
@@ -149,8 +156,22 @@ export function NavBar({ visible = true }) {
                                     2</span></b>
                </i>
             </a>
+            </div> 
 
-            <div style={container}>
+            <div className=" col-3  replogo"
+                onClick={() => {
+                  navigate("/", { replace: true });
+              
+               
+                }}
+              >
+                <img
+                  src={logoo}
+                  style={{ height: "70px", width: "100px",cursor:"pointer" }}
+                ></img>
+              </div>
+            
+            <div style={container} className="col-lg-4 searchrep padesrep col-10  my-1 ">
               <div style={{ color: "#fff" }}>
                 <SearchOutlinedIcon className="search-icon"style={{ color: "#000" }} onClick={()=>{
                   if(query!==""){
@@ -198,22 +219,18 @@ export function NavBar({ visible = true }) {
                 }}
               />
             </div>
-            {/* <div href={"#cart"} style={{marginLeft:'3%'}} onClick={() => setShow(false)}><ShoppingBagOutlinedIcon /></div>  */}
+ 
             <div
-              className="hell"
-              style={{
-                width: "50%",
-                display: "flex",
-                flexDirection: "row",
-                overflowY: "auto",
-              }}
+              className="col-lg-5 padesrep my-1 col-12 cate "
+           
             >
               {categories.map((category,index) => (
                 <div
                 key={index}
                   href={"/cat/" + category.name}
+                  
                   style={{
-                    ...linkStyle,
+                   
                     background:
                       currentpage === category._id ? "white" : "transparent",
                     color: currentpage === category._id ? "black" : "white",
@@ -221,27 +238,53 @@ export function NavBar({ visible = true }) {
                   onClick={() =>
                     handleLinkClick("/cat/" + category._id, category.name)
                   }
-                  className="navhover navclick"
+                  className="navhover navclick catigory"
+                >
+                  {category.name}
+                </div>
+              ))}
+            </div> 
+             <div
+              className="col-lg-5 padesrep my-1 col-12 repcat  "
+            
+            >
+              {categories.map((category,index) => (
+                <div
+                key={index}
+                  href={"/cat/" + category.name}
+                  
+                  style={{
+                   
+                    background:
+                      currentpage === category._id ? "white" : "transparent",
+                    color: currentpage === category._id ? "black" : "white",
+                  }}
+                  role="button"
+                  data-bs-toggle="offcanvas"
+                  data-bs-target="#subnav"
+                  aria-controls="offcanvasRight"
+                  onClick={() =>
+                    handleLinkClick("/cat/" + category._id, category.name)
+                  }
+                  className="navhover navclick catigory"
                 >
                   {category.name}
                 </div>
               ))}
             </div>
-            <Navbar.Brand>
-              <div
+           
+              <div className="col-lg-1 my-1 col-3  logo"
                 onClick={() => {
                   navigate("/", { replace: true });
                 }}
-                height={"100%"}
-                width={"90px"}
-                style={{ display: "flex", marginRight: "20px", color: "white" }}
+               
               >
                 <img
                   src={logoo}
                   style={{ height: "70px", width: "100px",cursor:"pointer" }}
                 ></img>
               </div>
-            </Navbar.Brand>
+            
           </Nav>
           <div
             style={{
@@ -289,6 +332,8 @@ export function NavBar({ visible = true }) {
         </Container>
       </div>
       {visible && <Nav2 current_page={currentpage + "/"}></Nav2>}
+    {visible && <Nav2rep current_page={currentpage + "/"}></Nav2rep>} 
+   
     </div>
   );
 }
@@ -296,7 +341,7 @@ const container = {
   display: "flex",
   backgroundColor: "white",
   paddingRight: "3%",
-  marginRight: "3%",
-  marginLeft: "3%",
+  // marginRight: "3%",
+  // marginLeft: "3%",
   borderRadius: 50,
 };

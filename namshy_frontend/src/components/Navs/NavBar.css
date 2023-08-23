@@ -12,11 +12,9 @@
   }
 
 .hider.a{
-    hover:pointer;
+    cursor: pointer;
 }
-.hell::-webkit-scrollbar {
-    display: none;
-  }
+
   .navhover {
     border-bottom: none;
     color: white;
@@ -32,6 +30,7 @@
     border-bottom:1px solid #d99d2b!important;
   }
   @media screen and (max-width: 767px) {
+  
     .navbar-container {
       height: 80px;
     }
@@ -62,6 +61,81 @@
   font-size: 18px;
   color: white;
   padding: 10px;
+}
+
+
+
+
+
+
+
+
+@media (min-width: 601px)  {
+  .replogo{
+    display: none;
+  }
+  .logo{
+    display: block;
+    height:100%;
+    width:90px;
+   display:flex;
+   
+      color: white 
+  }
+.catigory{
+  padding: 0.5rem 2.4rem !important;
+  border-right: 1px solid white!important;
+ 
+}
+.cate{
+  display: block;
+  display: flex;
+  flex-direction: row;
+  overflow-y: auto;
+  }
+  .repcat{
+    display: none;
+  
+  }
+}
+
+
+@media (max-width: 600px)  {
+  .padesrep{
+    margin-top: 15px!important;
+  }
+  .catigory{
+    padding: 0.5rem 1rem;
+    border-right: 1px solid white;
+  }
+.replogo{
+  display: block;
+  height: 40px;
+ 
+    right:0px;
+    position:absolute;
+    top:0px;
+   
+      color: white
+}
+
+.searchrep{
+  margin-left:30px ;
+}
+.logo{
+  display: none;
+}
+.cate{
+display: none;
+}
+.repcat{
+  display:block ;
+   
+  display: flex;
+  flex-direction: row;
+  overflow-y: auto;
+
+}
 }
 
 /* Style for the mobile menu toggle (hamburger icon) */

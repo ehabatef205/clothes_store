@@ -34,20 +34,20 @@
       @media (max-width: 478px) {
         .home-Carousel{
           height: 450px;
-          width: 400px;
+          width: 375px;
            justify-content:center 
            ;border-radius:50px
            ;margin:'auto'
         }
         .home-Carousel-item{
       height: 450px;
-       width: 400px;
+       width: 375px;
        border-radius:50px 
 
         }
         .home-Carousel-img{
          height: 450px;
-          width: 400px;
+          width: 375px;
           border-radius:50px
 
         }
