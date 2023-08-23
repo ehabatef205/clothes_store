@@ -292,7 +292,6 @@ function SelectedProductPage({ products, handleClick }) {
                 >
                   <span className=" mx-3" style={{ textAlign: "center", width: "45%" }}>
                     <button
-                      disabled={personal?.cart?.includes(selected._id)}
                       className="btn text-light my-3 h-75 w-100"
                       onClick={() => {
 
@@ -301,7 +300,7 @@ function SelectedProductPage({ products, handleClick }) {
                       }}
                       style={{ backgroundColor: "#d99d2b", fontSize: "1.2rem" }}
                     >
-                      {(personal?.cart?.includes(selected._id) && cookie.get("Auth") !== undefined) ? (<i className="text-primary">Added to Bag{" "}</i>) : (<i>Add to Bag{" "}</i>)}
+                      <i>Add to Bag{" "}</i>
                     </button>
                   </span>
 
