@@ -5,8 +5,7 @@ import { Card } from "react-bootstrap";
 import "./homecard.css";
 import { useNavigate } from "react-router-dom";
 import superimage from './super.jpg'
-import * as Wish from "../../api/wish";
-import { Cookies } from "react-cookie";
+
 
 
 export function Supers({ product, index ,personal,update_p}) {
@@ -18,12 +17,12 @@ export function Supers({ product, index ,personal,update_p}) {
     const [selectedCardIndex, setSelectedCardIndex] = useState(1);
     const [selectedwCardIndex, setSelectedwCardIndex] = useState(1);
 
-    const cookie = new Cookies();
 
     const handleImageClick = (product) => {
+        console.log(product)
         setSelectedProduct(product);
         window.scrollTo(0,0)
-        navigate(`/SelectedProductPage/${product._id}`);
+        navigate(`/super/${product._id}`,{state:product.products});
     };
 
 
@@ -40,10 +39,11 @@ export function Supers({ product, index ,personal,update_p}) {
       const [showReadMoreButton , setshowReadMoreButton ]=useState(false)
       const ref=useRef(null)
       useEffect (()=>{
+        console.log(product)
         if(ref.current){
+
           setshowReadMoreButton (
             ref.current.scrollHeight !== ref.current.clientHeight
-      
           )
         }
       },[])

@@ -9,7 +9,7 @@ import * as wish from "../../api/wish"
 
 
 import { Cookies } from "react-cookie";
-const Supercol = ({ product, renderedIndex, load }) => {
+const Wishlistcol = ({ product, renderedIndex, load }) => {
   const navigate=useNavigate()
 
   const cookie = new Cookies();
@@ -22,7 +22,7 @@ const Supercol = ({ product, renderedIndex, load }) => {
 
   const [currentproduct, setCurrentProduct] = useState({});
   useEffect(() => {
-    productfetch.get_product_by_id(product.product_id).then(e => {
+    productfetch.get_product_by_id(product).then(e => {
 
       setCurrentProduct(e)
     })
@@ -91,4 +91,4 @@ const Supercol = ({ product, renderedIndex, load }) => {
   );
 };
 
-export default Supercol;
+export default Wishlistcol;

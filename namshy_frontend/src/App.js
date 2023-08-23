@@ -5,6 +5,7 @@ import Bag from "./pages/Bag";
 import Page1 from "./pages/page1";
 import Login from "./pages/login";
 import Signup from "./pages/signup";
+import SuperPage from "./pages/superpage";
 import Checkout from "./pages/checkout";
 import { products } from "./components/section/prodlist";
 import SelectedProductPage from "./pages/SelectedProductPage";
@@ -33,6 +34,7 @@ function App() {
         <Route path="/cat/:id" element={<Home />} />
         <Route path="/cat/:id/:subid" element={<Page1 />} />
         <Route path="/search/*" element={<Page2/>} />
+        <Route path="/super/*" element={<SuperPage/>} />
         <Route path="/profile" element={<Profile path={0}/>} />
         <Route path="/returns" element={<Profile path={1}/>} />
         <Route path="/orders" element={<Profile path={2}/>} />
