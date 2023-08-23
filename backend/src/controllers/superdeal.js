@@ -18,7 +18,7 @@ module.exports.Alldeals = (req, res) => {
     const newsuper=new SuperDeal({
         name:body.name,
         products:body.products,
-        avilablethrough:body.date,
+        avilablethrough:body.avilablethrough,
         price:body.price,
         quantity:body.quantity
     }

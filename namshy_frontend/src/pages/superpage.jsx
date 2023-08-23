@@ -1,5 +1,4 @@
-// import React, { useState, useEffect, useContext } from "react";
-import ThirdSlider from "../components/section/ThirdSlider";
+
 
 import Supercol from "../components/section/supercol";
 import React, { useState, useEffect, useContext } from "react";
@@ -21,7 +20,8 @@ const SuperPage = () => {
   const [isCartEmpty, setIsCartEmpty] = useState(false);
   const load = () => {
     console.log(location.state)
-    setCartItems(location.state)
+    setCartItems(location.state.products)
+    
   }
   useEffect(() => {
     load()
@@ -46,7 +46,10 @@ const SuperPage = () => {
               </div>
 
               <div className="d-flex m-3  d-flex flex-wrap  ">
-
+              <h3>{location.state.name+"  "}</h3>
+              <br></br>
+              <h4 className="text-danger">{location.state.price}$</h4>
+              <div>valid to {location.state.avilablethrough}</div>
                 <div className="  col-12 ">
                   <div >
                     <div className="d-flex justify-content-around flex-wrap ">
@@ -68,7 +71,7 @@ const SuperPage = () => {
             </div>
           )
         </div>
-        <h3>{}</h3>
+        
       </Container>
     </div>
   );
