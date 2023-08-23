@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-// import { getAvailableColorsAndSizes } from "./color-size";
+import { getAvailableColorsAndSizes } from "./color-size";
 import { useParams } from "react-router-dom";
 import { Container } from "react-bootstrap";
 import { Rating } from "@mui/material";
@@ -35,9 +35,7 @@ function SelectedProductPage({ products, handleClick }) {
 const[formattedDescription,setformattedDescription]=useState("")
   const { id } = useParams();
   useEffect(() => {
-  //   const child1 = document.getElementById("child1");
-  // const child1Height = child1.offsetHeight;
-  // setChildHeight(child1Height);
+
     const getById = async () => {
       await Product.get_product_by_id(id).then((e) => {
         setSelected(e)
@@ -53,9 +51,7 @@ const[formattedDescription,setformattedDescription]=useState("")
       })
     }
     getById()
-    const child1 = document.getElementById("child1");
-    const child1Height = child1.offsetHeight;
-    setChildHeight(child1Height);
+   
     update_p()
   }, []);
 
@@ -207,7 +203,7 @@ const[formattedDescription,setformattedDescription]=useState("")
               </div>
               {/*  */}
               <div
-                className=" d-flex flex-wrap  w-100   "
+                className=" d-flex flex-wrap  w-100 bg-info   "
                 style={{ width: "100%", height: "fit-content" }}
               >
                
@@ -276,62 +272,104 @@ const[formattedDescription,setformattedDescription]=useState("")
                     ))}
                   </div>
                   </div>
-                    {/* 
-                    {
-                    (selected.colors||selected.sizeable)?
-                    Object.keys(Avilable).map((v, index) => (
-                      <button
-                      key={index}
-                      onClick={() =>{
-                        console.log(v)
-                        if(selected.sizeable)
-                        setSizet(v)
-                        else {
-                          setColort(v)
-                        }
-                      }}
-                        style={{
-                          zIndex: 3,
-                          cursor: "pointer",
-                          width: "70px",
-                          borderRadius: "2px",
-                          backgroundColor:(selected.sizeable&&selected.colors)?"gray":'#'+v,
-                          color:(selected.sizeable&&selected.colors)?"white":'#'+v,
-                        }}
-                        
-                        className="btn  btn-outline-secondary "
-                      >
-                        {v}
-                      </button>
-                    )):<></>}
-                    <br/>
-                    {
-                    (Sizet!==""&&selected.sizeable&&selected.colors)?
-                    Object.keys(Avilable[Sizet]).map((color, index) => (
-                      <button
-                      key={index}
-                      onClick={() =>{setColort(color)}}
-                        style={{
-                          zIndex: 3,
-                          cursor: "pointer",
-                          width: "70px",
-                          borderRadius: "2px",
-                          backgroundColor:`#${color}` ,
-                          color:`#${color}`,
-                        }}
-                        
-                        className="btn  btn-outline-secondary "
-                      >
-                        0
-                      </button>
-                    )):<></>}
-                  </div> </>}
-                  */}
+                    
+                   </>}
                 </div>
-                {/* <div className="  w-100" >productname</div> 
-    <div className="w-100 " >prise/ old</div> */}
+             </div>
+             {/* ///////////////////////////////////////////////////// */}
+
+
+
+             <div
+                className=" d-flex flex-wrap  w-100   "
+                style={{ width: "100%", height: "fit-content" }}
+              >
+               
+                <div className=" w-100   ">
+                  
+                  
+                
+                  
+                    <div
+                  className="d-flex  w-100 "
+                  style={{ height: "40px" }}
+                >
+                  <div className=" ">
+                   <b style={{ fontSize: "25px" }}>size</b>
+                  </div>
+                   
+                </div>
+              
+                   <div
+                    className="   justify-content-start  "
+                    style={{ textAlign: "left" ,height:"fit-content" }}
+                  >
+                    <div
+                    className=" my-1  justify-content-start  "
+                    style={{ textAlign: "left"
+                     ,height:"fit-content"
+                    }}
+                  >
+                    {" "}
+                    {size.map((size, index) => (
+                      <button 
+                        style={{
+                          zIndex: 3,
+                          cursor: "pointer",
+                          minWidth: "60px",
+                          maxWidth:"fit-content",
+                          borderRadius: "2px",
+                        }}
+                        key={index}
+                        className="btn  btn-outline-secondary m-2"
+                      >
+                        {size}
+                      </button>
+                    ))}
+                  </div> <div
+                    className=" my-2  justify-content-start  "
+                    style={{ textAlign: "left"
+                     ,height:"fit-content"
+                    }}
+                  >
+                    {" "}
+                    {color.map((color, index) => (
+                      <i 
+                        style={{
+                         
+                          cursor: "pointer",
+                        
+                        }}
+                        key={index}
+                        className={`my-3 mx-1 bi bi-circle-fill text-${color}`}
+
+                       
+                      >
+                        
+                      </i>
+                    ))}
+                  </div>
               </div>
-              {/*  */}
+              </div>
+                  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+             {/* ///////////////////////////////////////////////////// */}
+
+
+
+             
+
               <div
                 className=" d-flex  w-100   "
                 style={{ flexDirection: "flex-row" }}
