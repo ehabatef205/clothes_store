@@ -6,7 +6,7 @@ const proxy = `${backend_url}/wish`
 const cookie = new Cookies()
 
 export const add_wish = async (product_id,token) => {
-    await axios.post(`${proxy}`, { product_id: product_id }, { headers: { authorization: token } })
+    return await axios.post(`${proxy}`, { product_id: product_id }, { headers: { authorization: token } })
 }
 export const get_wish = async () => {
     const token = await cookie.get('Auth')
