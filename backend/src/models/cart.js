@@ -11,22 +11,22 @@ const CartSchema = new Schema({
     quantity: {
         type: Number,
     },
-    size:{
-        type:String
+    size: {
+        type: String
     },
-    color:{
-        type:String
+    color: {
+        type: String
     },
-    clothing:{
-        type:Boolean
+    clothing: {
+        type: Boolean
     }
 
 })
 
-CartSchema.statics.isThisCart = async function (product_id, user_id) {
+CartSchema.statics.isThisCart = async function (product_id, user_id, size, color) {
     if (!product_id) throw new Error('Invalid product_id')
     try {
-        const product = await this.findOne({ product_id: product_id, user_id: user_id })
+        const product = await this.findOne({ product_id: product_id, user_id: user_id, size: size, color: color })
         if (product) return false
 
         return true
