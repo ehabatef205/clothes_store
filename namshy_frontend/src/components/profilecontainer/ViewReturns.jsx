@@ -9,6 +9,7 @@ export default function ViewOrders(props) {
 
   const handleClick = () => {
     setOpen(!open);
+    // window.scrollTo(0,0)
   };
 
   return (

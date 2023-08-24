@@ -19,6 +19,7 @@ const Cartcol = ({ cart, load, product, personal, update_p }) => {
       await update_p();
       setfav(false);
     });
+    
   };
 
   return (

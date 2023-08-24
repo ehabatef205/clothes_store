@@ -203,6 +203,7 @@ export function NavBar({ visible = true }) {
               >
                 <KeyboardVoiceIcon className="icon" />
               </button>
+              <i className='bi bi-camera-fill search-icon'></i>
               <input
                 style={{
                   color: "#000",
@@ -331,7 +332,7 @@ export function NavBar({ visible = true }) {
           </div>
         </Container>
       </div>
-      {visible && <Nav2 current_page={currentpage + "/"}></Nav2>}
+      {visible && <Nav2  current_page={currentpage + "/"}></Nav2>}
     {visible && <Nav2rep current_page={currentpage + "/"}></Nav2rep>} 
    
     </div>

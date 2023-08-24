@@ -20,7 +20,7 @@ export function Nav2({ current_page }) {
 
   return (
     window.location.pathname === "/" ? <div></div> :
-      <div className="navtwo">
+      <div className="navtwo normal">
         <Container className="d-flex justify-content-evenly nav2 w-100">
           <Nav className="me-auto text-dark ">
             {categories?.map((subcategory,index) => (

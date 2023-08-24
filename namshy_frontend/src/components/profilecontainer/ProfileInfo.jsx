@@ -38,6 +38,7 @@ const ProfileInfo = ({ Uinfo = {
   const HandelUpdate = async () => {
     await user.update_profile({ first_name, last_name, telephone }).then(() => {
       window.location.reload(false);
+      window.scrollTo(0,0)
     })
   }
   const logout = () => {
@@ -46,6 +47,7 @@ const ProfileInfo = ({ Uinfo = {
     cookie.remove('mycart')
     cookie.remove('mywish')
     navigate('/ ')
+    window.scrollTo(0,0)
   }
 
   return (

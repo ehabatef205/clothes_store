@@ -9,6 +9,8 @@ export default function Sider(props) {
   const navigate = useNavigate();
   const handleLinkClick = (href, name) => {
     navigate(href, { state: { name: name } });
+    window.scrollTo(0,0)
+
   };
   const [Colorarr] = React.useState([
     "red",

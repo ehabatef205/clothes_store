@@ -71,6 +71,12 @@
 
 
 @media (min-width: 601px)  {
+  .normal{
+    display: block;
+  }
+  .rep{
+    display: none;
+  }
   .replogo{
     display: none;
   }
@@ -101,6 +107,12 @@
 
 
 @media (max-width: 600px)  {
+  .normal{
+display: none;
+  }
+  .rep{
+display: block;
+  }
   .padesrep{
     margin-top: 15px!important;
   }

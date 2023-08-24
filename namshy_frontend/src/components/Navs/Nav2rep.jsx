@@ -20,7 +20,7 @@ function Nav2rep({ current_page }) {
 
   return (
     <div
-      className="offcanvas offcanvas-start"
+      className="offcanvas offcanvas-start rep"
       tabIndex="-1"
       id="subnav"
       aria-labelledby="offcanvasExampleLabel"
@@ -38,17 +38,19 @@ function Nav2rep({ current_page }) {
       <div className="offcanvas-body">
        
      {window.location.pathname === "/" ? <div></div> :
-      <div className="navtwo">
-        <Container className="d-flex justify-content-evenly nav2 w-100">
+      <div className="navtwo d-flex justify-content-evenly nav2 w-100">
+      
           <Nav className="me-auto text-dark ">
             {categories?.map((subcategory,index) => (
-              <Nav.Link key={index} className="text-dark  nav2hover " href={current_page + subcategory._id}>
+              <Nav.Link key={index} className="text-dark  nav2hover "  href={current_page + subcategory._id}>
                 {subcategory.name}
+               
               </Nav.Link>
+             
             ))}
 
           </Nav>
-        </Container>
+    
       </div>}
       </div>
     </div>
