@@ -444,7 +444,7 @@ module.exports.uplodaImage = async (req, res, next) => {
       type: body.type,
       brand: {
         name: body.nameOfBrand,
-        logo: `http://localhost:5000/${req.files[0].path}`,
+        logo: `http://5.183.9.124:5000/${req.files[0].path}`,
       },
       description: body.description,
     },
