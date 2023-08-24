@@ -5,8 +5,8 @@ const proxy = `${backend_url}/cart/`
 
 const cookie = new Cookies()
 
-export const add_cart = async (product_id, quantity,color,size,clothing, token) => {
-    await axios.post(`${proxy}`, { product_id: product_id, quantity: quantity,color:color,size:size ,clothing:clothing}, { headers: { authorization: token } })
+export const add_cart = async (product_id, quantity, color, size, clothing, token) => {
+    return await axios.post(`${proxy}`, { product_id: product_id, quantity: quantity, color: color, size: size, clothing: clothing }, { headers: { authorization: token } })
 }
 export const get_cart = async () => {
     const token = await cookie.get('Auth')
@@ -25,7 +25,7 @@ export const decrease_item = async (_id) => {
     await axios.put(`${proxy}/minus/${_id}`, {}, { headers: { authorization: token } })
 }
 
-export const Delete_by_product= async (product_id) => {
+export const Delete_by_product = async (product_id) => {
     const token = await cookie.get('Auth')
     await axios.post(`${proxy}/${product_id}`, {}, { headers: { authorization: token } })
 }

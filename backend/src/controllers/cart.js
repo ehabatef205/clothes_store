@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken')
 require("dotenv").config();
 
 module.exports.Create_cart_item = async (req, res) => {
-  
+
     const id = req.body.decoded.id;
 
     const cart_item = req.body
@@ -17,14 +17,17 @@ module.exports.Create_cart_item = async (req, res) => {
     }
 
     await add_cart_item(cart_item, id).then(e => {
-        return res.status(200).json(e)
+        return res.status(200).json({
+            message: "Done add this product to cart",
+            response: e
+        })
     }).catch(err => {
         console.log('err', err)
         return res.status(401).json(err)
     })
 }
 
-const add_cart_item = async ({ product_id, quantity,size,color }, id) => {
+const add_cart_item = async ({ product_id, quantity, size, color }, id) => {
     const newCart_item = new Cart({
         user_id: id,
         product_id,
@@ -50,7 +53,7 @@ module.exports.Read_cart_item = async (req, res) => {
 }
 
 module.exports.Read_cart_items = async (req, res) => {
-    
+
     const id = req.body.decoded.id;
 
 
@@ -101,7 +104,7 @@ module.exports.add_one_quantity = async (req, res) => {
         }
     })
     await Cart.findByIdAndUpdate(_id, { $inc: { quantity: 1 } }, { new: true }).then(e => {
-       return res.status(200).json(e)
+        return res.status(200).json(e)
     }).catch(err => {
         console.log(err.message)
         return res.status(401).json({ error: err.message })
@@ -115,7 +118,7 @@ module.exports.remove_one_quantity = async (req, res) => {
             return res.status(404).json({ error: 'can\'t update cart not found!' })
         }
     })
-    await Cart.updateOne({_id:id,quantity:{$gt:1}} , { $inc: { quantity: -1 } }, { new: true }).then(e => {
+    await Cart.updateOne({ _id: id, quantity: { $gt: 1 } }, { $inc: { quantity: -1 } }, { new: true }).then(e => {
         res.status(200).json(e)
     }).catch(err => {
         console.log(err.message)
@@ -125,8 +128,8 @@ module.exports.remove_one_quantity = async (req, res) => {
 
 module.exports.Delete_by_product = async (req, res) => {
     const product_id = req.params.id
-    const user= req.body.decoded.id
-    await Cart.deleteOne({user_id:user,product_id:product_id}).then(e => {
+    const user = req.body.decoded.id
+    await Cart.deleteOne({ user_id: user, product_id: product_id }).then(e => {
         return res.status(200).json(e)
     }).catch(err => {
         console.log(err.message)

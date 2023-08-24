@@ -13,7 +13,7 @@ import { Cookies } from 'react-cookie'
 import { update } from "../api/personal_cookies";
 import './selected.css'
 import Carousel from "react-bootstrap/Carousel";
-
+import { ToastContainer, toast } from 'react-toastify';
 
 function SelectedProductPage({ products, handleClick }) {
   const [childHeight, setChildHeight] = useState(0);
@@ -59,7 +59,16 @@ function SelectedProductPage({ products, handleClick }) {
   const [value, setValue] = useState(0);
 
   const addtoBag = async () => {
-    await Cart.add_cart(id, 1, Colort, Sizet, selected.clothing, cookie.get("Auth")).then((e) => {
+    await Cart.add_cart(id, 1, Colort, Sizet, selected.clothing, cookie.get("Auth")).then(e => {
+      if (e.data.message === "This product is already in cart") {
+        toast.warning("This product is already in cart", {
+          position: toast.POSITION.TOP_LEFT
+        })
+      } else if (e.data.message === "Done add this product to cart") {
+        toast.success("Done add this product to cart", {
+          position: toast.POSITION.TOP_LEFT
+        })
+      }
       update_p()
     })
   }
@@ -454,6 +463,7 @@ function SelectedProductPage({ products, handleClick }) {
           </div>
         </section>
       </Container>
+      <ToastContainer />
     </div>
 
   );
