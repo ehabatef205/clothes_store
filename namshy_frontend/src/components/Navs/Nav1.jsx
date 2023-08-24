@@ -15,6 +15,7 @@ import * as prod_cat from "../../api/product_category";
 import { searchProduct } from "../../api/product";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { update } from "../../api/personal_cookies";
 import { Cookies } from "react-cookie";
 import { backend_url } from "../../config";
 const proxy = `${backend_url}/external/speech`;
@@ -46,6 +47,18 @@ export function NavBar({ visible = true }) {
         });
     };
   };
+
+  const [personal, setpersonal] = useState({})
+  const update_p = async () => {
+    if (cookie.get('Auth')) {
+      var p = await update()
+      console.log(p)
+      setpersonal(p)
+    } else {
+      setpersonal({ cart: [], wish: [] })
+    }
+  }
+
   React.useEffect(() => {
     const getCategory = async () => {
       await prod_cat.all_product_category().then((e) => {
@@ -61,6 +74,7 @@ export function NavBar({ visible = true }) {
     };
     getCategory();
     setq()
+    update_p()
   }, []);
   React.useEffect(() => {
     if (mediaBlobUrl) {
@@ -134,7 +148,7 @@ export function NavBar({ visible = true }) {
                 <b style={{ borderRadius: "50px", width: "fit-content", fontSize: "1rem", position: "relative", right: "15px", bottom: "20px" }}
                   className=" bg-success-subtle ">
                   <span className='mx-2 text-dark'>
-                    2</span></b></i>  </a>
+                    {personal?.cart?.length}</span></b></i>  </a>
             <a
               onClick={() => {
                 navigate("/favorites");
@@ -147,7 +161,7 @@ export function NavBar({ visible = true }) {
                 <b style={{ borderRadius: "50px", width: "fit-content", fontSize: "1rem", position: "relative", right: "15px", bottom: "20px" }}
                   className=" bg-danger-subtle ">
                   <span className='mx-2 text-dark'>
-                    2</span></b>
+                    {personal?.wish?.length}</span></b>
               </i>
             </a>
 
