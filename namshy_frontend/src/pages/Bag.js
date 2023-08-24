@@ -92,7 +92,7 @@ const Bag = () => {
                 >
                   AI Virtual Room
                 </button>
-                {VRactive&&<PopUp></PopUp>}
+                {VRactive&&<PopUp products={ProductItems} VRactive={VRactive}setVRactive={setVRactive}></PopUp>}
                 <ToastContainer/>
                 <button
                 onClick={()=>{navigate(-1)}}

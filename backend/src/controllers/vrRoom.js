@@ -85,7 +85,7 @@ const  MakeRequest= (vrprop) => {
   };}
   else{
     requestBody = {
-      category: vrprop.category,
+      category: vrprop.vrpos,
       gender: vrprop.gender,
       garment_img_url: vrprop.garment_img_url
     };
@@ -94,7 +94,7 @@ const  MakeRequest= (vrprop) => {
 }
 
 
-function requesttryon(props) {
+function requesttryon(garments) {
   return new Promise((resolve, reject) => {
     const headers = getAuthenticationHeader(process.env.VRPUBLIC, process.env.VRSECRET);
     const options = {
@@ -122,10 +122,9 @@ function requesttryon(props) {
     req.on('error', (error) => {
       reject(error); // Reject the promise with the error
     });
-    console.log(props)
-
-      req.write(JSON.stringify({garments:props.garments,
-        model_id:props.model_id
+    console.log(garments)
+      req.write(JSON.stringify({garments:garments,
+        model_id:"1697455153"
       }));
     
 

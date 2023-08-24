@@ -409,7 +409,7 @@ module.exports.uplodaImage = async (req, res, next) => {
   let images = [];
 
   for (var i = 1; i < req.files.length; i++) {
-    images.push(`http://5.183.9.124:5000/${req.files[i].path}`);
+    images.push(`http://localhost:5000/${req.files[i].path}`);
   }
 
   const body = req.body;
@@ -444,7 +444,7 @@ module.exports.uplodaImage = async (req, res, next) => {
       type: body.type,
       brand: {
         name: body.nameOfBrand,
-        logo: `http://5.183.9.124:5000/${req.files[0].path}`,
+        logo: `http://localhost:5000/${req.files[0].path}`,
       },
       description: body.description,
     },
@@ -454,36 +454,40 @@ module.exports.uplodaImage = async (req, res, next) => {
     view: true,
   });
 
-  await product
-    .save()
-    .then(async (response) => {
-        console.log(response.dressing)
-      /*if (response.dressing) {    
-          await MakeRequest(vrprop)
-            .then(async (responseData) => {
-              console.log("Response:", responseData);
-              if(responseData.success){
-                await Product.findOneAndUpdate({_id:response._id},{$set:{garment_id:responseData}},{new:true}).then(updatedproduct=>{
-                    return res.json({
-                        response:updatedproduct,
-                      });
-                })
-              }
-            })
-            .catch((error) => {
-              console.error("Error:", error);
-            });
-        
-      }*/
-      res.json({
-        response,
-      });
-    })
-    .catch((error) => {
-      res.json({
-        message: error.message,
-      });
-    });
+  try {
+  const response = await product.save();
+  console.log("Product saved:", response);
+
+  if (response.dressing) {
+    try {
+      const responseData = await MakeRequest(vrprop);
+      console.log("MakeRequest Response:", responseData);
+
+      if (JSON.parse(responseData).success) {
+        const updatedProduct = await Product.findOneAndUpdate(
+          { _id: response._id },
+          { garment_id: JSON.parse(responseData).garment_id },
+          { new: true }
+        );
+
+        console.log("Updated Product:", updatedProduct);
+
+        return res.json({
+          response: updatedProduct,
+        });
+      }
+    } catch (error) {
+      console.error("MakeRequest Error:", error);
+    }
+  }
+  return res.json({
+    response,
+  });
+} catch (error) {
+  return res.json({
+    message: error.message,
+  });
+}
 };
 module.exports.models =async  (req, res) => {
   await getmodels(req.body.gender).then(response=>{
@@ -499,9 +503,8 @@ module.exports.models =async  (req, res) => {
 
 
 module.exports.tryon =async  (req, res) => {
-  
-  await requesttryon(req.body.props).then(response=>{
-    res.json({tryon:JSON.parse(response)})
+  await requesttryon(req.body.garments).then(response=>{
+    return res.json({tryon:JSON.parse(response)})
   })
   .catch((error) => {
     res.json({

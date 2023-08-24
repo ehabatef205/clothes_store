@@ -60,18 +60,6 @@ const Wishlistcol = ({ product, renderedIndex, load }) => {
 
 
           <div className="d-flex justify-content-center  col-12" style={{ textAlign: "center" }}>
-            <div className="my-1 ">
-              <button
-                className="btn"
-                onClick={() => wish.Delete_cart_item(product._id).then(e => {
-                  load()
-                })}
-              >
-                {" "}
-                <i class="bi bi-trash3">Delete</i>
-              </button>
-            </div>
-            <div className=" my-1 text-secondary ">|</div>
             <div className="my-1">
               <button className="btn"
                 onClick={() => { navigate(`/SelectedProductPage/${currentproduct._id}`) }}>
