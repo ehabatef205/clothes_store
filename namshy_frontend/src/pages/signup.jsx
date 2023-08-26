@@ -6,7 +6,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { NavBar } from "../components/Navs/Nav1";
 
-export default function Signup() {
+export default function Signup({update_p, personal}) {
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
@@ -60,7 +60,7 @@ export default function Signup() {
 
   return (
     <div>
-       <NavBar visible={false}></NavBar>
+       <NavBar visible={false} update_p={update_p} personal={personal}></NavBar>
       <div className="signup" style={signup}>
         <div
           className=""

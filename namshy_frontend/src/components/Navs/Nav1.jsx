@@ -18,8 +18,9 @@ import axios from "axios";
 import { update } from "../../api/personal_cookies";
 import { Cookies } from "react-cookie";
 import { backend_url } from "../../config";
-const proxy = `${backend_url}/external/speech`;
 import { ToastContainer, toast } from 'react-toastify';
+const proxy = `${backend_url}/external/speech`;
+
 
 export function NavBar({ visible = true, update_p, personal }) {
   const [language] = React.useState("en-US");

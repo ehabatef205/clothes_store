@@ -9,7 +9,7 @@ import { Cookies } from 'react-cookie'
 import { NavBar } from "../components/Navs/Nav1";
 import { loginfill } from "../api/personal_cookies";
 
-export default function Login() {
+export default function Login({update_p,personal}) {
     const cookie = new Cookies()
 
     const navigate = useNavigate();
@@ -51,7 +51,7 @@ export default function Login() {
 
     return (
         <div>
-            <NavBar visible={false}></NavBar>
+            <NavBar visible={false} update_p={update_p} personal={personal}></NavBar>
             <div
                 className="login"
                 style={login}

@@ -16,7 +16,7 @@ import * as user from '../api/user'
 
 
 
-function Profile({path}) {
+function Profile({path,update_p, personal}) {
   const [subpages,setsubpages]=React.useState([
     (<ProfileInfo />),
     (<Returns/>),
@@ -39,7 +39,7 @@ function Profile({path}) {
 
   return (
     <div> 
-      <NavBar visible={false}></NavBar>
+      <NavBar visible={false}update_p={update_p} personal={personal}></NavBar>
     <div className="wrapper">
       <nav className="navigation">
         <a href="/profile/">

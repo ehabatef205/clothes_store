@@ -11,7 +11,7 @@ import Header from "../components/Navs/Header";
 
 
 
-const SuperPage = () => {
+const SuperPage = ({update_p,personal}) => {
 
   const navigate = useNavigate();
 
@@ -29,7 +29,7 @@ const SuperPage = () => {
 
   return (
     <div>
-      <Header></Header>
+      <Header  update_p={update_p} personal={personal}></Header>
       <Container className="my-4  " style={{ justifyContent: "center" }}>
         <div className="">
           (

@@ -58,13 +58,13 @@ function App() {
         <Route path="/cat/:id/:subid" element={<Page1 />} />
         <Route path="/search/*" element={<Page2 update_p={update_p} personal={personal}/>} />
         <Route path="/wishlist" element={<Wishlist update_p={update_p} personal={personal}/>} />
-        <Route path="/super/*" element={<SuperPage />} />
-        <Route path="/profile" element={<Profile path={0} />} />
-        <Route path="/returns" element={<Profile path={1} />} />
-        <Route path="/orders" element={<Profile path={2} />} />
-        <Route path="/returns" element={<Profile path={2} />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
+        <Route path="/super/*" element={<SuperPage update_p={update_p} personal={personal}/>} />
+        <Route path="/profile" element={<Profile path={0} update_p={update_p} personal={personal} />} />
+        <Route path="/returns" element={<Profile path={1}  update_p={update_p} personal={personal}/>} />
+        <Route path="/orders" element={<Profile path={2}  update_p={update_p} personal={personal}/>} />
+        <Route path="/returns" element={<Profile path={2} update_p={update_p} personal={personal} />} />
+        <Route path="/login" element={<Login update_p={update_p} personal={personal} />} />
+        <Route path="/signup" element={<Signup  update_p={update_p} personal={personal}/>} />
         <Route path="/checkout" element={<Checkout />} />
       </Routes>
 
