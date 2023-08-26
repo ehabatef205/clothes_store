@@ -19,6 +19,9 @@ import { Cookies } from 'react-cookie'
 // import CartItems from "./pages/CartItems";
 import ShoppinghcartProvider from './components/section/Shoppingcartcontext'
 import { update } from "./api/personal_cookies";
+import ChatBot from 'react-simple-chatbot';// Remove the space before 'react-simple-chatbot'
+
+
 function App() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -36,11 +39,60 @@ function App() {
   }
 
   React.useEffect(() => {
-    // Redirect only when the current path is "/"
+   
     if (location.pathname === "/") {
       navigate("/cat/64ad46be5e38ca8f15f8e52b");
     }
   }, [navigate, location]);
+  
+const steps = [
+  {
+      id: '0',
+      message: 'Hey !',
+
+      trigger: '1',
+  }, {
+      id: '1',
+
+      message: 'Please write your username',
+      trigger: '2'
+  }, {
+      id: '2',
+
+      user: true,
+      trigger: '3',
+  }, {
+      id: '3',
+      message: " hi {previousValue}, how can I help you?",
+      trigger: 4
+  }, {
+      id: '4',
+      options: [
+     
+          { value: 1, label: 'View catigories' },
+          { value: 2, label: 'Read Articles' },
+
+      ],
+      end: true
+  }
+];
+
+const theme = {
+  background: '#C9FF8F',
+  headerBgColor: '#197B22',
+  headerFontSize: '20px',
+  botBubbleColor: '#0F3789',
+  headerFontColor: 'white',
+  botFontColor: 'white',
+  userBubbleColor: '#FF5733',
+  userFontColor: 'white',
+};
+
+
+const config = {
+  floating: true,
+};
+ 
   return (
 
     <ShoppinghcartProvider className="App">
@@ -67,6 +119,13 @@ function App() {
         <Route path="/signup" element={<Signup  update_p={update_p} personal={personal}/>} />
         <Route path="/checkout" element={<Checkout />} />
       </Routes>
+      <ChatBot
+
+headerTitle="wolfBot"
+steps={steps}
+{...config}
+
+/>
 
       <footer style={{ height: "200px", backgroundColor: "black", position: "relative", top: "70px" }}><Footer /></footer>
 

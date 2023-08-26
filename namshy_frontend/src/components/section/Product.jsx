@@ -107,7 +107,17 @@ export function Product({ product, index ,personal,update_p}) {
                 >
                     <div className="d-flex flex-column align-items-start col-7 ">
                         <Card.Title className="mb-0" style={ isOpen? null: paragrapghstyle} ref={ref}>{product.name}</Card.Title>
-                        <Card.Text className="mb-0" style={ isOpen? null: paragrapghstyle} ref={ref}>Price: {product.price_after}</Card.Text>
+                        <Card.Text className="mb-0">
+  {product.price_before !== product.price_after ? (
+    <>
+      {product.price_after}$ <del className="mx-2 text-danger">{product.price_before}$</del>
+    </>
+  ) : (
+    <>
+      {product.price_after}$
+    </>
+  )}
+</Card.Text>
                     </div>
                     <span
               className="col-5"
