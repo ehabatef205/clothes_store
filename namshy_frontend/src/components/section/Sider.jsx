@@ -121,7 +121,7 @@ export default function Sider(props) {
           </div>
         </div>
 
-        <div
+        {/* <div
           className="border-bottom border-2 border-secondary w-100 "
           style={{ fontSize: "14px ", paddingBottom: "25px" }}
         >
@@ -180,7 +180,7 @@ export default function Sider(props) {
               ))}
             </ul>
           </div>
-        </div>
+        </div> */}
 
         <div
           className="border-bottom border-2 border-secondary w-100 "

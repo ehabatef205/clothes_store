@@ -279,9 +279,7 @@ export function SearchSlider(props) {
     navigate(`/SelectedProductPage/${product._id}`);
   };
 
-  const addtoBag = async (id) => {
-    navigate(`/SelectedProductPage/${id}`);
-  }
+ 
 
 
   const filter = async () => {

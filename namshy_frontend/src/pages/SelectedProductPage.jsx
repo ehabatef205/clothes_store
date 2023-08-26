@@ -100,28 +100,7 @@ function SelectedProductPage({ products, handleClick, update_p, personal }) {
         style={{ position: "relative", top: "70px" }}
       >
       </div>
-      {/* /////////////// */}
-      <div className=" m-3" style={{ textAlign: "center" }}>
-        {" "}
-        <nav aria-label="breadcrumb">
-          <ol className="breadcrumb m-0">
-            <li className="breadcrumb-item">
-              <a href="#" style={{ color: "black", textDecoration: "none" }}>
-                Home
-              </a>
-            </li>
-            <li className="breadcrumb-item">
-              <a href="#" style={{ color: "black", textDecoration: "none" }}>
-                woman
-              </a>
-            </li>
-            <li className="breadcrumb-item active" aria-current="page">
-              clothings
-            </li>
-          </ol>
-        </nav>
-      </div>
-      {/* ////////////////////// */}
+
       <Container id="parent" className="d-flex flex-wrap "
         style={{ width: "100%" }}
 
