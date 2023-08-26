@@ -50,6 +50,6 @@ export const get_product_filter = async (_id, filter) => {
 export const get_product_first_visit = async (_id) => {
     return (await (await axios.get(`${proxy}/first_visit/${_id}`)).data)
 }
-export const tryon = async (tops,bottoms) => {
-    return (await (await axios.post(`${proxy}/tryon`,{garments:{tops:tops,bottoms:bottoms}})).data)
+export const tryon = async (tops,bottoms,gender) => {
+    return (await (await axios.post(`${proxy}/tryon`,{garments:{tops:tops,bottoms:bottoms},gender:gender})).data)
 }

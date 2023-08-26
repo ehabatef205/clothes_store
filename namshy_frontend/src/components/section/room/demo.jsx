@@ -5,6 +5,8 @@ import { Container } from "react-bootstrap";
 function Demo(props) {
   const [selectedgender,setselectedgender]=React.useState("f")
   const [viewimage,setviewimage]=React.useState("https://reveryai.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F8ad9503b-779f-42e2-b031-25d7e114827b%2Fmodel_15301356.png?table=block&id=5dc004b2-452f-4186-bc50-d62f4847b035&spaceId=d32a2c79-e329-4a17-9023-ff73a1f84676&width=1960&userId=&cache=v2")
+  const imagemale='https://media.revery.ai/generated_model_image/1675184224;symbol_185698-symbol_169422;1645328854091511.png'
+  const imagefemale='https://reveryai.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F8ad9503b-779f-42e2-b031-25d7e114827b%2Fmodel_15301356.png?table=block&id=5dc004b2-452f-4186-bc50-d62f4847b035&spaceId=d32a2c79-e329-4a17-9023-ff73a1f84676&width=1960&userId=&cache=v2'
   const [selectedtops,setselectedtops]=React.useState("")
   const [selectedbottoms,setselectedbottoms]=React.useState("")
   const [tops,settops]=React.useState([])
@@ -48,7 +50,7 @@ const handeltryon=async()=>{
 
   }
   else{
-    await tryon(selectedtops,selectedbottoms).then(e=>{
+    await tryon(selectedtops,selectedbottoms,selectedgender).then(e=>{
       console.log(e)
       if(e.tryon.success){
         setviewimage(`https://media.revery.ai/generated_model_image/${e.tryon.model_metadata.model_file}.png`)
@@ -126,8 +128,8 @@ const handeltryon=async()=>{
             className="w-100 "
             style={{ height: "fit-content", borderBottom: " 0.5px solid gray" }}
           >
-            <button className="btn bg-light b-1 w-25 my-2 mx-3" onClick={()=>{setselectedgender("f")}}>f</button>
-            <button className="btn bg-light b-1 w-25 my-2 mx-3"onClick={()=>{setselectedgender("m")}}>m</button>
+            <button className="btn bg-light b-1 w-25 my-2 mx-3" onClick={()=>{setselectedgender("f") ; setviewimage(imagefemale) }}>f</button>
+            <button className="btn bg-light b-1 w-25 my-2 mx-3"onClick={()=>{setselectedgender("m");setviewimage(imagemale)}}>m</button>
           </div>
           <div
             className="w-100 d-flex flex-wrap "

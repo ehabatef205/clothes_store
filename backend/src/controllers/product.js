@@ -491,7 +491,7 @@ module.exports.uplodaImage = async (req, res, next) => {
 };
 module.exports.models =async  (req, res) => {
   await getmodels(req.body.gender).then(response=>{
-    res.json({default:JSON.parse(response).models[0]})
+    res.json({default:JSON.parse(response).models[0],image:JSON.parse(response).model_files[0],response:JSON.parse(response)})
   })
   .catch((error) => {
     res.json({
@@ -503,7 +503,7 @@ module.exports.models =async  (req, res) => {
 
 
 module.exports.tryon =async  (req, res) => {
-  await requesttryon(req.body.garments).then(response=>{
+  await requesttryon(req.body.garments,request.body.gender).then(response=>{
     return res.json({tryon:JSON.parse(response)})
   })
   .catch((error) => {

@@ -44,7 +44,7 @@ function getmodels(gender) {
     const headers = getAuthenticationHeader(process.env.VRPUBLIC, process.env.VRSECRET);
     const options = {
       hostname: 'api.revery.ai',
-      path: "/console/v1/get_model_list",
+      path: `/console/v1/get_model_list?gender=${gender}`,
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -94,7 +94,7 @@ const  MakeRequest= (vrprop) => {
 }
 
 
-function requesttryon(garments) {
+function requesttryon(garments,gender) {
   return new Promise((resolve, reject) => {
     const headers = getAuthenticationHeader(process.env.VRPUBLIC, process.env.VRSECRET);
     const options = {
@@ -123,8 +123,11 @@ function requesttryon(garments) {
       reject(error); // Reject the promise with the error
     });
     console.log(garments)
+    var id="1697455153"
+      if(gender==="male")
+      id="1675184224"
       req.write(JSON.stringify({garments:garments,
-        model_id:"1697455153"
+        model_id:id
       }));
     
 
