@@ -12,7 +12,7 @@ module.exports.Create_order_item = async (req, res) => {
   const token = usertoken.split(" ");
   const decoded = jwt.verify(token[1], process.env.JWT_KEY);
   const id = decoded.id;
-  const email=decoded.email
+  const email = decoded.email
   const body = req.body;
 
   let list = [];
@@ -21,17 +21,19 @@ module.exports.Create_order_item = async (req, res) => {
   for (var i = 0; i < body.products.length; i++) {
     await Product.findById(body.products[i].product_id).then(
       async (product) => {
-        if(body.products[i].clothing){var sizes = product.sizes;
-        var index = product.colors.indexOf(body.products[i].color);
-        sizes[body.products[i].size][index];
-        if (typeof sizes[body.products[i].size][index] === "string") {
-          sizes[body.products[i].size][index] =
-            parseInt(sizes[body.products[i].size][index]) -
-            body.products[i].quantity;
-        } else {
-          sizes[body.products[i].size][index] =
-            sizes[body.products[i].size][index] - body.products[i].quantity;
-        }}
+        if (body.products[i].clothing) {
+          var sizes = product.sizes;
+          var index = product.colors.indexOf(body.products[i].color);
+          sizes[body.products[i].size][index];
+          if (typeof sizes[body.products[i].size][index] === "string") {
+            sizes[body.products[i].size][index] =
+              parseInt(sizes[body.products[i].size][index]) -
+              body.products[i].quantity;
+          } else {
+            sizes[body.products[i].size][index] =
+              sizes[body.products[i].size][index] - body.products[i].quantity;
+          }
+        }
         body.products[i].image = product.imageSrc[0];
 
         body.products[i].SKU = product.SKU;
@@ -39,20 +41,21 @@ module.exports.Create_order_item = async (req, res) => {
         if (!suppliers.includes(product.supplier)) {
           suppliers.push(product.supplier);
         }
-        if(body.products[i].clothing){
-        await Product.findByIdAndUpdate(body.products[i].product_id, {
-          $set: { sizes: sizes },
-        }).then(async (product1) => {
-          await Cart.findOneAndDelete({
-            product_id: body.products[i].product_id,
-            user_id: id,
-          }).then((e) => {
-            list.push("Done");
-          });
-        });}
-        else{
+        if (body.products[i].clothing) {
           await Product.findByIdAndUpdate(body.products[i].product_id, {
-            $inc: { quantity: -body.products[i].quantity },
+            $set: { sizes: sizes },
+          }).then(async (product1) => {
+            await Cart.findOneAndDelete({
+              product_id: body.products[i].product_id,
+              user_id: id,
+            }).then((e) => {
+              list.push("Done");
+            });
+          });
+        }
+        else {
+          await Product.findByIdAndUpdate(body.products[i].product_id, {
+            $inc: { 'quantity.avilable': -body.products[i].quantity },
           }).then(async (product1) => {
             await Cart.findOneAndDelete({
               product_id: body.products[i].product_id,
@@ -67,7 +70,7 @@ module.exports.Create_order_item = async (req, res) => {
   }
 
   if (list.length === body.products.length) {
-    await add_order_item(body, id, suppliers,email)
+    await add_order_item(body, id, suppliers, email)
       .then((e) => {
         emailController.sendMail(
           decoded.email,
@@ -75,6 +78,7 @@ module.exports.Create_order_item = async (req, res) => {
           e._id,
           e.totalPrice
         );
+        console.log("Done")
         return res.status(200).json(e);
       })
       .catch((err) => {
@@ -84,8 +88,8 @@ module.exports.Create_order_item = async (req, res) => {
   }
 };
 
-const add_order_item = async (body, id, suppliers,email) => {
-  
+const add_order_item = async (body, id, suppliers, email) => {
+
   const newOrder_item = new Order_items({
     user_id: id,
     email: email,
@@ -305,15 +309,15 @@ module.exports.Update_many = async (req, res) => {
 
 module.exports.filter = async (req, res) => {
   const queryObject = req.body.query;
-  var query = {returnrequest: "none" };
+  var query = { returnrequest: "none" };
   if (queryObject.month !== undefined) {
     const [month, year] = queryObject.month.split("/");
     const startDate = new Date(year, month - 1, 1);
     const endDate = new Date(year, month, 0);
-    query.createdAt= { $gte: startDate, $lte: endDate }
+    query.createdAt = { $gte: startDate, $lte: endDate }
   }
-  if(queryObject.status !== undefined){
-    query.status= queryObject.status
+  if (queryObject.status !== undefined) {
+    query.status = queryObject.status
   }
   console.log(query)
   await Order_items.find(query)

@@ -6,18 +6,18 @@ const cookie = new Cookies()
 
 
 
-const addOrder=async(products, phone, country, firstName, lastName, address, city, zipCode,totalPrice)=>{
+const addOrder=async(products, phone, country, firstName, lastName, address, city, zipCode, payment,totalPrice)=>{
     const token = cookie.get('Auth')
     return  axios.post(`${proxy}`, {
         products: products,
-        phone: phone,
-        country: country,
         firstName: firstName,
         lastName: lastName,
+        phone: phone,
         address: address,
         city: city,
+        country: country,
         zipCode: zipCode,
-        payment: "cash",
+        payment: payment,
         totalPrice: totalPrice
     }
     ,{headers:{authorization:token}}

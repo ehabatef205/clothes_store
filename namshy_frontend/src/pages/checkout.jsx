@@ -51,7 +51,7 @@ const Checkout = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    await addOrder(products, formData?.firstName, formData?.country, formData?.firstName, formData?.lastName, formData?.address, formData?.city, formData?.zipCode, priceProducts).then(async res => {
+    await addOrder(products, formData?.firstName, formData?.lastName, formData?.phone, formData?.address, formData?.city, formData?.country, formData?.zipCode, "cash", priceProducts).then(async res => {
       console.log(res.data)
       navigate("/orders", { replace: true })
     })
@@ -80,7 +80,7 @@ const Checkout = () => {
 
   const createOrder = (data) => {
     // Order is created on the server and the order id is returned
-    return fetch("http://localhost:7011/my-server/create-paypal-order", {
+    return fetch("https://different-puce-shorts.cyclic.cloud/my-server/create-paypal-order", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -99,7 +99,7 @@ const Checkout = () => {
 
   const onApprove = (data) => {
     // Order is captured on the server and the response is returned to the browser
-    return fetch("http://localhost:7011/my-server/capture-paypal-order", {
+    return fetch("https://different-puce-shorts.cyclic.cloud/my-server/capture-paypal-order", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -110,11 +110,10 @@ const Checkout = () => {
     })
       .then((response) => response.json()).then(async (order) => {
         if (order.status === "COMPLETED") {
-          await addOrder(products, formData?.firstName, formData?.country, formData?.firstName, formData?.lastName, formData?.address, formData?.city, formData?.zipCode, priceProducts).then(async res => {
+          await addOrder(products, formData?.firstName, formData?.lastName, formData?.phone, formData?.address, formData?.city, formData?.country, formData?.zipCode, "onlice", priceProducts).then(async res => {
             console.log(res.data)
             navigate("/orders", { replace: true })
           })
-          navigate(-1)
         }
       });
   };

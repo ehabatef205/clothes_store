@@ -1,51 +1,55 @@
 .custom-navbar Nav.Link {
-    padding: 0.5rem 50rem;
+  padding: 0.5rem 50rem;
 }
+
 .nav-link {
-    font-size: 500px;
+  font-size: 500px;
 }
+
 .custom-navbar {
-    height: 9%;
+  height: 9%;
 }
+
 .hider::-webkit-scrollbar {
-    display: none;
+  display: none;
+}
+
+.hider.a {
+  cursor: pointer;
+}
+
+.navhover {
+  border-bottom: none;
+  color: white;
+
+}
+
+.search-icon:hover {
+  color: #d99d2b !important;
+  cursor: pointer;
+}
+
+.navhover:hover {
+  color: #d99d2b !important;
+  cursor: pointer;
+  border-bottom: 1px solid #d99d2b !important;
+}
+
+@media screen and (max-width: 767px) {
+  .navbar-container {
+    height: 80px;
   }
 
-.hider.a{
-    hover:pointer;
-}
-.hell::-webkit-scrollbar {
+  .icon-link {
+    padding: 10px;
+  }
+
+  .nav-links-container {
     display: none;
   }
-  .navhover {
-    border-bottom: none;
-    color: white;
-   
-  }
-  .search-icon:hover {
-    color: #d99d2b!important;
-    cursor: pointer;
-  }
-  .navhover:hover {
-    color: #d99d2b!important;
-    cursor: pointer;
-    border-bottom:1px solid #d99d2b!important;
-  }
-  @media screen and (max-width: 767px) {
-    .navbar-container {
-      height: 80px;
-    }
-  
-    .icon-link {
-      padding: 10px;
-    }
-  
-    .nav-links-container {
-      display: none;
-    }
-  }
- 
-   /* Styles for the mobile-friendly version of the navbar */
+}
+
+/* Styles for the mobile-friendly version of the navbar */
 .mobile-navbar {
   display: flex;
   flex-direction: column;
@@ -55,13 +59,91 @@
   top: 60px;
   left: 0;
   width: 100%;
-  display: none; /* Initially hide the mobile navbar */
+  display: none;
+  /* Initially hide the mobile navbar */
 }
 
 .mobile-navbar .nav-link {
   font-size: 18px;
   color: white;
   padding: 10px;
+}
+
+@media (min-width: 601px) {
+  .replogo {
+    display: none;
+  }
+
+  .logo {
+    display: block;
+    height: 100%;
+    width: 90px;
+    display: flex;
+
+    color: white
+  }
+
+  .catigory {
+    padding: 0.5rem 2.4rem !important;
+    border-right: 1px solid white !important;
+
+  }
+
+  .cate {
+    display: block;
+    display: flex;
+    flex-direction: row;
+    overflow-y: auto;
+  }
+
+  .repcat {
+    display: none;
+
+  }
+}
+
+
+@media (max-width: 600px) {
+  .padesrep {
+    margin-top: 15px !important;
+  }
+
+  .catigory {
+    padding: 0.5rem 1rem;
+    border-right: 1px solid white;
+  }
+
+  .replogo {
+    display: block;
+    height: 40px;
+
+    right: 0px;
+    position: absolute;
+    top: 0px;
+
+    color: white
+  }
+
+  .searchrep {
+    margin-left: 30px;
+  }
+
+  .logo {
+    display: none;
+  }
+
+  .cate {
+    display: none;
+  }
+
+  .repcat {
+    display: block;
+
+    display: flex;
+    flex-direction: row;
+    overflow-y: auto;
+
+  }
 }
 
 /* Style for the mobile menu toggle (hamburger icon) */
@@ -76,6 +158,7 @@
 }
 
 @media screen and (max-width: 767px) {
+
   /* Show the mobile menu toggle for smaller screens */
   .mobile-menu-toggle {
     display: block;

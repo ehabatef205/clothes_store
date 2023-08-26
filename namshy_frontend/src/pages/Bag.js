@@ -205,7 +205,7 @@ const Bag = ({ update_p, personal }) => {
                 </div>
               </div>
               <div className="d-flex justify-content-between">
-                <p>Total Price: {totalPrice + 50} $</p>
+                <p>Total Price: {(totalPrice + 50).toFixed(2)} $</p>
                 <button
                   className="btn text-light "
                   style={{ backgroundColor: "#d99d2b" }}
