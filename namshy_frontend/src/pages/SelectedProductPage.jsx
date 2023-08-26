@@ -181,14 +181,38 @@ function SelectedProductPage({ products, handleClick, update_p, personal }) {
                     className="  d-flex "
                     style={{ fontSize: "18px", flexDirection: "column" }}
                   >
-                    <del className=" mx-2 text-danger">{selected?.price_before}$ </del>
+
+
+  {selected?.price_before !== selected?.price_after ? (
+    <>
+      <del className=" mx-2 text-danger">{selected?.price_before}$ </del>
+    </>
+  ) : (
+    <>
+     
+    </>
+  )}
+                    {/* <del className=" mx-2 text-danger">{selected?.price_before}$ </del> */}
                     {" "}
                     <div className=" mx-2 text-body" style={{ fontSize: "30px" }}>{selected?.price_after}$ </div>
                   </div>
-                  <div style={{ borderRadius: "50px", width: "fit-content", height: "fit-content" }} className=" bg-danger-subtle col-3  d-flex justify-content-center">
+
+
+                  {selected?.price_before !== selected?.price_after ? (
+    <>
+      <div style={{ borderRadius: "50px", width: "fit-content", height: "fit-content" }} className=" bg-danger-subtle col-3  d-flex justify-content-center">
                     <b className="my-3 mx-4" >{(((selected?.price_before - selected?.price_after) * 100) / selected?.price_before).toFixed(1)}%</b></div>
 
-                </div>
+               
+    </>
+  ) : (
+    <>
+     
+    </>
+  )}
+
+
+</div>   
               </div>
               {/*  */}
 
@@ -209,9 +233,7 @@ function SelectedProductPage({ products, handleClick, update_p, personal }) {
                     <div>
                       <b style={{ fontSize: "25px" }}>size</b>
                     </div>
-                    <div style={{ fontSize: "15px" }} className="text-dark">
-                      show size chart
-                    </div>
+                    
                   </div>
 
                   <div
@@ -232,17 +254,18 @@ function SelectedProductPage({ products, handleClick, update_p, personal }) {
                                 setColort(v)
                               }
                             }}
+                            className="btn  m-1"
                             style={{
                               zIndex: 3,
                               cursor: "pointer",
                               minWidth: "60px",
                               maxWidth: "fit-content",
                               borderRadius: "2px",
-                              backgroundColor: (selected.sizeable && selected.colors) ? "gray" : '#' + v,
+                              backgroundColor: (selected.sizeable && selected.colors) ? (v===Sizet?"black":"gray" ): '#' + v,
                               color: (selected.sizeable && selected.colors) ? "white" : '#' + v,
                             }}
 
-                            className="btn  btn-outline-secondary "
+                          
                           >
                             {v}
                           </button>
