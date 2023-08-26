@@ -14,7 +14,7 @@ import Header from "../components/Navs/Header";
 import Empitywish from "../components/section/empitywish";
 
 
-const Wishlist = () => {
+function Wishlist({update_p, personal}) {
 
   const navigate = useNavigate();
 
@@ -44,7 +44,7 @@ const Wishlist = () => {
 
   return (
     <div>
-      <Header></Header>
+      <Header update_p={update_p} personal={personal}></Header>
       <Container className="my-4  " style={{ justifyContent: "center" }}>
         <div className="" style={{ minHeight: "500px" }}>
           {!isCartEmpty ? (
@@ -71,6 +71,7 @@ const Wishlist = () => {
                         <div className="col-12 col-lg-4 " >
                           <Wishlistcol
                             key={index}
+                            update_p={update_p} personal={personal}
                             product={product}
                             renderedIndex={index}
                             load={load}

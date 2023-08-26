@@ -19,8 +19,9 @@ import { update } from "../../api/personal_cookies";
 import { Cookies } from "react-cookie";
 import { backend_url } from "../../config";
 const proxy = `${backend_url}/external/speech`;
+import { ToastContainer, toast } from 'react-toastify';
 
-export function NavBar({ visible = true }) {
+export function NavBar({ visible = true, update_p, personal }) {
   const [language] = React.useState("en-US");
   const [categories, setCategories] = useState([]);
 
@@ -47,17 +48,6 @@ export function NavBar({ visible = true }) {
         });
     };
   };
-
-  const [personal, setpersonal] = useState({})
-  const update_p = async () => {
-    if (cookie.get('Auth')) {
-      var p = await update()
-      console.log(p)
-      setpersonal(p)
-    } else {
-      setpersonal({ cart: [], wish: [] })
-    }
-  }
 
   React.useEffect(() => {
     const getCategory = async () => {
@@ -151,7 +141,7 @@ export function NavBar({ visible = true }) {
                     {personal?.cart?.length}</span></b></i>  </a>
             <a
               onClick={() => {
-                navigate("/favorites");
+                navigate("/wishlist");
                 window.scrollTo(0, 0)
               }}
               style={{ paddingLeft: "2%", cursor: "pointer", textDecoration: "none" }}
@@ -197,6 +187,11 @@ export function NavBar({ visible = true }) {
               >
                 <KeyboardVoiceIcon className="icon" />
               </button>
+              <i className='bi bi-camera-fill search-icon' onClick={() => {
+                toast.warning("Waiting for config", {
+                  position: toast.POSITION.TOP_LEFT
+                })
+              }}></i>
               <input
                 style={{
                   color: "#000",
@@ -302,6 +297,7 @@ export function NavBar({ visible = true }) {
             </div>
           </div>
         </Container>
+        <ToastContainer />
       </div>
       {visible && <Nav2 current_page={currentpage + "/"}></Nav2>}
     </div>

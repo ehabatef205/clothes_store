@@ -4,6 +4,7 @@ import "./slider.css";
 import * as wish from "../../api/wish";
 import * as cartDB from "../../api/cart";
 import { Cookies } from "react-cookie";
+import { update } from "../../api/personal_cookies";
 
 const Cartcol = ({ cart, load, product, personal, update_p }) => {
   const [active, setactive] = useState(true);
@@ -33,7 +34,7 @@ const Cartcol = ({ cart, load, product, personal, update_p }) => {
 
               <p>{product?.price_after}</p>
             </div>
-            <div  style={{ textAlign: "center" ,display:"flex",flexDirection:"row"  }}>
+            <div style={{ textAlign: "center", display: "flex", flexDirection: "row" }}>
               <button
                 onClick={async () => {
                   if (product?.clothing) {
@@ -144,6 +145,7 @@ const Cartcol = ({ cart, load, product, personal, update_p }) => {
                     onClick={() =>
                       cartDB.Delete_cart_item(cart._id).then((e) => {
                         load();
+                        update_p()
                       })
                     }
                   >
@@ -153,29 +155,29 @@ const Cartcol = ({ cart, load, product, personal, update_p }) => {
                 </div>
                 <div className=" m-2 text-secondary">|</div>
                 <div className="m-2 ">
-                  {fav ?(
+                  {fav ? (
                     <div class="spinner-border text-danger" role="status">
                       <span class="visually-hidden">Loading...</span>
                     </div>
-                  ):
-                  (
-                    <button
-                      className="btn"
-                      onClick={() => {
-                        addToFavorites(product._id);
-                      }}
-                      disabled={personal?.wish?.includes(product?._id)}
-                    >
-                      {" "}
-                      {personal?.wish?.includes(product?._id) ? (
-                        <i className="bi bi-heart-fill m-2 text-danger">
-                          Saved
-                        </i>
-                      ) : (
-                        <i className="bi bi-heart m-2">save later</i>
-                      )}
-                    </button>
-                  )  }
+                  ) :
+                    (
+                      <button
+                        className="btn"
+                        onClick={() => {
+                          addToFavorites(product._id);
+                        }}
+                        disabled={personal?.wish?.includes(product?._id)}
+                      >
+                        {" "}
+                        {personal?.wish?.includes(product?._id) ? (
+                          <i className="bi bi-heart-fill m-2 text-danger">
+                            Saved
+                          </i>
+                        ) : (
+                          <i className="bi bi-heart m-2">save later</i>
+                        )}
+                      </button>
+                    )}
                 </div>
               </div>
             </div>

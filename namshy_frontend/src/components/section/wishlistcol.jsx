@@ -9,8 +9,8 @@ import * as wish from "../../api/wish"
 
 
 import { Cookies } from "react-cookie";
-const Supercol = ({ product, renderedIndex, load }) => {
-  const navigate=useNavigate()
+const Supercol = ({ product, renderedIndex, load, update_p, personal }) => {
+  const navigate = useNavigate()
 
   const cookie = new Cookies();
   const addtoBag = async (id) => {
@@ -65,6 +65,7 @@ const Supercol = ({ product, renderedIndex, load }) => {
                 className="btn"
                 onClick={() => wish.Delete_cart_item(product._id).then(e => {
                   load()
+                  update_p()
                 })}
               >
                 {" "}

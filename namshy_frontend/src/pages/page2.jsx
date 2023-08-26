@@ -8,7 +8,7 @@ import Header from "../components/Navs/Header";
 import * as sub_cat from "../api/subcategory";
 import FilterRep from "../components/section/FilterRep";
 
-export default function Page1() {
+export default function Page1({ update_p, personal }) {
   const [category, setCategory] = React.useState({});
   const [Subcategory, setSubCategory] = React.useState({});
   const query = window.location.pathname.split("/")[2];
@@ -21,11 +21,11 @@ export default function Page1() {
     };
     getCategory();
   }, []);
-  const[coloractive,setcoloractive]=React.useState(false)
-  const[priceactive,setpriceactive]=React.useState(false)
-  const[dateactive,setdateactive]=React.useState(false)
-  const[colorfilter,setColorFilter]=React.useState([])
-  const[datefilter,setdatefilter]=React.useState("")
+  const [coloractive, setcoloractive] = React.useState(false)
+  const [priceactive, setpriceactive] = React.useState(false)
+  const [dateactive, setdateactive] = React.useState(false)
+  const [colorfilter, setColorFilter] = React.useState([])
+  const [datefilter, setdatefilter] = React.useState("")
   const handleColorChange = (color) => {
     console.log(color)
     if (colorfilter.includes(color)) {
@@ -34,7 +34,7 @@ export default function Page1() {
       setColorFilter([...colorfilter, color]);
     }
   };
-  const[pricefilter,setpricefilter]=React.useState([])
+  const [pricefilter, setpricefilter] = React.useState([])
   const handlepriceChange = (price) => {
     console.log(price)
     if (pricefilter.includes(price)) {
@@ -46,7 +46,7 @@ export default function Page1() {
 
   return (
     <div className="sub_cat ">
-      <Header visible={false} />
+      <Header visible={false} update_p={update_p} personal={personal} />
       <div
         className="section_container d-flex  flex-wrap justify-content-center align-content-center"
         style={{ position: "relative", top: "70px" }}
@@ -68,9 +68,9 @@ export default function Page1() {
               className="filter"
               style={{ width: "20%", marginLeft: "5%" }}
             >
-              <Sider   handleColorChange={handleColorChange} colorfilter={colorfilter} pricefilter={pricefilter}handlepriceChange={handlepriceChange}
-              coloractive={coloractive} priceactive={priceactive} setcoloractive={setcoloractive} setpriceactive={setpriceactive}
-              datefilter={datefilter} dateactive={dateactive} setdatefilter={setdatefilter}setdateactive={setdateactive} />
+              <Sider handleColorChange={handleColorChange} colorfilter={colorfilter} pricefilter={pricefilter} handlepriceChange={handlepriceChange}
+                coloractive={coloractive} priceactive={priceactive} setcoloractive={setcoloractive} setpriceactive={setpriceactive}
+                datefilter={datefilter} dateactive={dateactive} setdatefilter={setdatefilter} setdateactive={setdateactive} />
             </div>
             <div
               style={{ height: "100%", width: "75%" }}
@@ -79,28 +79,28 @@ export default function Page1() {
               {/* <div className="w-100  " style={{ "max-height": "10%" }}>
                 <SecHeader />
               </div> */}
-               <div  className=" filterrep " >
-            <button
-             data-bs-toggle="offcanvas"
-             data-bs-target="#filter"
-             aria-controls="offcanvasRight"
-            className="w-50 btn btn-outline-secondary my-3 "
-            >filter <i  className=" mx-2 bi bi-filter-square "></i>
-            </button>
-          </div>
+              <div className=" filterrep " >
+                <button
+                  data-bs-toggle="offcanvas"
+                  data-bs-target="#filter"
+                  aria-controls="offcanvasRight"
+                  className="w-50 btn btn-outline-secondary my-3 "
+                >filter <i className=" mx-2 bi bi-filter-square "></i>
+                </button>
+              </div>
               <div className=" cards w-100 ">
                 <SearchSlider query={query}
-                dateactive={dateactive} datefilter={datefilter}
-                colorfilter={colorfilter} pricefilter={pricefilter} coloractive={coloractive} priceactive={priceactive} > 
+                  dateactive={dateactive} datefilter={datefilter}
+                  colorfilter={colorfilter} pricefilter={pricefilter} coloractive={coloractive} priceactive={priceactive} update_p={update_p} personal={personal}>
                 </SearchSlider>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <FilterRep  handleColorChange={handleColorChange} colorfilter={colorfilter} pricefilter={pricefilter}handlepriceChange={handlepriceChange}
-              coloractive={coloractive} priceactive={priceactive} setcoloractive={setcoloractive} setpriceactive={setpriceactive}
-              datefilter={datefilter} dateactive={dateactive} setdatefilter={setdatefilter}setdateactive={setdateactive} > </FilterRep>
+      <FilterRep handleColorChange={handleColorChange} colorfilter={colorfilter} pricefilter={pricefilter} handlepriceChange={handlepriceChange}
+        coloractive={coloractive} priceactive={priceactive} setcoloractive={setcoloractive} setpriceactive={setpriceactive}
+        datefilter={datefilter} dateactive={dateactive} setdatefilter={setdatefilter} setdateactive={setdateactive} > </FilterRep>
     </div>
   );
 }

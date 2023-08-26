@@ -11,18 +11,17 @@ import { Container } from "react-bootstrap";
 import { useNavigate } from 'react-router-dom';
 
 import * as cart from "../api/cart";
-import {carts}  from "../api/product";
+import { carts } from "../api/product";
 import "../components/section/slider.css";
 import Header from "../components/Navs/Header";
 
 import Empitycart from "../components/section/empitycart";
-const Bag = () => {
+const Bag = ({ update_p, personal }) => {
   const [totalPrice, setTotalPrice] = useState(0);
   const [cartItems, setCartItems] = useState([]);
   const [ProductItems, setProductItems] = useState([]);
   const [isCartEmpty, setIsCartEmpty] = useState(false);
   const [VRactive, setVRactive] = useState(false);
-  const [personal, setpersonal] = useState({})
   const navigate = useNavigate();
 
   const chekoutpage = () => {
@@ -30,30 +29,26 @@ const Bag = () => {
     navigate('/checkout', { state: cartItems });
   };
   const load = async () => {
-    const productArr= []
-    const cartArr= await cart.get_cart()
+    const productArr = []
+    const cartArr = await cart.get_cart()
     cartArr?.forEach(element => {
       productArr.push(element.product_id)
     });
 
-    const products=await carts(productArr)
+    const products = await carts(productArr)
     setCartItems(cartArr)
     setProductItems(products)
-    var total=0
-    products?.forEach((element,index)=>{
-      total+=element.price_after*cartArr[index].quantity
+    var total = 0
+    products?.forEach((element, index) => {
+      total += element.price_after * cartArr[index].quantity
     })
     setTotalPrice(total)
     update_p()
   }
-  const update_p=async()=>{
-    var p=await update()
-    setpersonal(p)
-  }
 
   useEffect(() => {
     load()
-    
+
   }, []);
 
   useEffect(() => {
@@ -72,7 +67,7 @@ const Bag = () => {
 
   return (
     <div>
-      <Header></Header>
+      <Header update_p={update_p} personal={personal}></Header>
       <Container className="my-4  " style={{ justifyContent: "center" }}>
         <div className="">
           {!isCartEmpty ? (
@@ -81,21 +76,21 @@ const Bag = () => {
             <div className="" style={{ height: "fit-content" }}>
               <div className="d-flex justify-content-between">
                 <button
-               /* onClick={()=>{
-                  toast.warning("Waiting to activate Ai Virtual Room", {
-                    position: toast.POSITION.TOP_LEFT
-                })
-                }}*/
-                onClick={()=>{setVRactive(!VRactive)}}
+                  /* onClick={()=>{
+                     toast.warning("Waiting to activate Ai Virtual Room", {
+                       position: toast.POSITION.TOP_LEFT
+                   })
+                   }}*/
+                  onClick={() => { setVRactive(!VRactive) }}
                   className="btn text-light "
                   style={{ backgroundColor: "#d99d2b" }}
                 >
                   AI Virtual Room
                 </button>
-                {VRactive&&<PopUp products={ProductItems} VRactive={VRactive}setVRactive={setVRactive}></PopUp>}
-                <ToastContainer/>
+                {VRactive && <PopUp products={ProductItems} VRactive={VRactive} setVRactive={setVRactive}></PopUp>}
+                <ToastContainer />
                 <button
-                onClick={()=>{navigate(-1)}}
+                  onClick={() => { navigate(-1) }}
                   className="btn "
                   style={{ color: "#d99d2b", border: "1px solid gray" }}
                 >
@@ -105,7 +100,7 @@ const Bag = () => {
 
               <div className="d-flex m-3  d-flex flex-wrap  ">
                 <div
-                  style={{ textAlign: "end",height:"80%" }}
+                  style={{ textAlign: "end", height: "80%" }}
                   className="col-12 col-lg-4  d-flex-column justify-content-between  "
                 >
                   <div className="one">
@@ -156,7 +151,7 @@ const Bag = () => {
                       </div>
                       <div>
                         <p className="mx-2" style={{ fontSize: "1.2rem" }}>
-                          {totalPrice+50}$
+                          {totalPrice + 50}$
                         </p>
                       </div>
                     </div>
@@ -194,16 +189,14 @@ const Bag = () => {
                 <div className="  col-12 col-lg-8">
                   <div>
                     <div className="d-flex justify-content-around flex-wrap">
-                      {cartItems?.map((cart, index) => (
-                        <div>
+                      {cartItems?.map((cart2, index) => (
+                        <div key={index}>
                           <Cartcol
-                            key={index}
-                            cart={cart}
+                            cart={cart2}
                             personal={personal}
                             product={ProductItems[index]}
                             load={load}
                             update_p={update_p}
-                           
                           />
                         </div>
                       ))}
@@ -212,7 +205,7 @@ const Bag = () => {
                 </div>
               </div>
               <div className="d-flex justify-content-between">
-                <p>Total Price: {totalPrice+50} $</p>
+                <p>Total Price: {totalPrice + 50} $</p>
                 <button
                   className="btn text-light "
                   style={{ backgroundColor: "#d99d2b" }}

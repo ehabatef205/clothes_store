@@ -15,7 +15,7 @@ import './selected.css'
 import Carousel from "react-bootstrap/Carousel";
 import { ToastContainer, toast } from 'react-toastify';
 
-function SelectedProductPage({ products, handleClick }) {
+function SelectedProductPage({ products, handleClick, update_p, personal }) {
   const [childHeight, setChildHeight] = useState(0);
   const size = ['ssssjjjjjjjjjjjjjjssss', 'ss', '3434', '3434', '3', 'fffffff', 'ssssjjjjjjjjjjjjjjssss', 'ss', '3434', '3']
   const color = ['danger', 'light', 'dark', 'success', 'info']
@@ -26,11 +26,7 @@ function SelectedProductPage({ products, handleClick }) {
   const [Sizet, setSizet] = useState('');
   const [Colort, setColort] = useState('');
   const cookie = new Cookies()
-  const [personal, setpersonal] = useState({})
-  const update_p = async () => {
-    var p = await update()
-    setpersonal(p)
-  }
+
   var viewcontroller = 0
   const [formattedDescription, setformattedDescription] = useState("")
   const { id } = useParams();
@@ -93,7 +89,7 @@ function SelectedProductPage({ products, handleClick }) {
   };
   return (
     <div>
-      <Header visible={false} ></Header>
+      <Header visible={false} update_p={update_p} personal={personal} ></Header>
       <div
         className="viewcontainer justify-content-center   "
         style={{ position: "relative", top: "70px" }}
