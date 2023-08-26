@@ -127,12 +127,26 @@ export function CardsSlider(props) {
                   ? "1px solid red"
                   : "0.5px solid #C8D2D1"}}
         key={product._id}>
+          
           <div
             onClick={() => handleImageClick(product)}
             className="carousel-wrapper"
             style={{cursor:"pointer"}}
            
           >
+             <div style={{position:"absolute",zIndex:"5" ,width:"100%" ,justifyContent:"end",display:"flex"}}>
+            {product?.price_before !== product?.price_after ? (
+    <>
+      <div style={{ borderRadius: "50px", width: "fit-content", height: "fit-content" ,fontSize:"0.8rem"}} className=" bg-danger-subtle col-3 m-1  d-flex justify-content-center text-black">
+                    <b className="my-3 mx-4" >{(((product?.price_before - product?.price_after) * 100) / product?.price_before).toFixed(1)}%</b></div>
+
+               
+    </>
+  ) : (
+    <>
+     
+    </>
+  )} </div>
             <Carousel controls={false}
             interval={3000} >
               {product.imageSrc.map((image, index) => (
