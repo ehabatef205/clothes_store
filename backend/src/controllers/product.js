@@ -401,7 +401,7 @@ module.exports.cart = (req, res) => {
     });
 };
 
-module.exports.uplodaImage = async (req, res, next) => {
+module.exports.uplodaImage = async (req, res) => {
   if (!req.files || req.files.length === 0) {
     return res.status(400).send("No file uploaded");
   }
