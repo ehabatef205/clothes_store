@@ -64,6 +64,21 @@ const Bag = ({ update_p, personal }) => {
       setIsCartEmpty(true);
     }
   }, [cartItems]);
+  
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+
+  useEffect(() => {
+    for (const product of ProductItems) {
+      if (product.garment_id !== undefined) {
+        setIsButtonDisabled(true);
+        
+       
+        break;
+     
+      }
+    }
+  }, [ProductItems]);
+
 
   return (
     <div>
@@ -75,18 +90,23 @@ const Bag = ({ update_p, personal }) => {
           ) : (
             <div className="" style={{ height: "fit-content" }}>
               <div className="d-flex justify-content-between">
+
+              <div className="button-container">
+        
                 <button
-                  /* onClick={()=>{
-                     toast.warning("Waiting to activate Ai Virtual Room", {
-                       position: toast.POSITION.TOP_LEFT
-                   })
-                   }}*/
+                    disabled={!isButtonDisabled}
+                    
                   onClick={() => { setVRactive(!VRactive) }}
-                  className="btn text-light "
+                  className="btn text-light hover-button "
                   style={{ backgroundColor: "#d99d2b" }}
                 >
                   AI Virtual Room
                 </button>
+                <div className={` ${!isButtonDisabled ? 'message' : 'hidden'}`}> Add an AI product</div></div>
+             
+  
+                
+  
                 {VRactive && <PopUp products={ProductItems} VRactive={VRactive} setVRactive={setVRactive}></PopUp>}
                 <ToastContainer />
                 <button

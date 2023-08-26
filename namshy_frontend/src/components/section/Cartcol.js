@@ -24,17 +24,17 @@ const Cartcol = ({ cart, load, product, personal, update_p }) => {
   return (
     <div className="">
       <div
-        className="tow my-3  mx-5 d-flex flex-wrap"
+        className="tow my-3  mx-5 d-flex flex-wrap justify-content-center"
         style={{ marginRight: "0px" }}
       >
-        <div className="  d-flex col-12 col-lg-6">
-          <div className="" style={{ textAlign: "center" }}>
+        <div className=" flex-wrap  d-flex col-12 col-md-7 col-lg-7 ">
+          <div className=" " style={{ textAlign: "center" ,width:"35%"}}>
             <div className="h-50 ">
               <span style={{ textAlign: "center" }}>Item Price</span>
 
               <p>{product?.price_after}</p>
             </div>
-            <div style={{ textAlign: "center", display: "flex", flexDirection: "row" }}>
+            <div className=""style={{ textAlign: "center", display: "flex", flexDirection: "row" }}>
               <button
                 onClick={async () => {
                   if (product?.clothing) {
@@ -73,7 +73,7 @@ const Cartcol = ({ cart, load, product, personal, update_p }) => {
                   value={cart.quantity}
                 />
               ) : (
-                <div class="spinner-border text-secondary" role="status">
+                <div class="spinner-border" role="status">
                   <span class="visually-hidden">Loading...</span>
                 </div>
               )}
@@ -94,7 +94,7 @@ const Cartcol = ({ cart, load, product, personal, update_p }) => {
             </div>
           </div>
 
-          <div className="d-flex  flex-wrap " style={{ textAlign: "end" }}>
+          <div className="d-flex flex-wrap " style={{ textAlign: "end",width:"65%" }}>
             <div className="m-3 ">
               <p style={{ margin: "0px", padding: "0px" }}>
                 {/* {product?} */}
@@ -117,7 +117,7 @@ const Cartcol = ({ cart, load, product, personal, update_p }) => {
                     }}
                     className="btn  btn-outline-secondary "
                   >
-                    {cart.size}
+                    {cart.size} 
                   </button>
                   <div style={{ height: "30px" }}>{" \n"}</div>
                   <button
@@ -141,7 +141,10 @@ const Cartcol = ({ cart, load, product, personal, update_p }) => {
                   <button
                     className="btn"
                     onClick={() =>
+                      
                       cartDB.Delete_cart_item(cart._id).then((e) => {
+                        window.location.reload();
+                        window.scrollTo(0,0)
                         load();
                         update_p()
                       })
@@ -181,12 +184,13 @@ const Cartcol = ({ cart, load, product, personal, update_p }) => {
             </div>
           </div>
         </div>
-        <div className=" col-12 col-lg-6">
+        <div className=" col-12 col-md-5 col-lg-5 ">
           <img
-            className="d-block w-100"
+            // className="w-100"
             alt={""}
             style={{
-              height: "465px",
+              height: "100%",
+              width:"100%"
             }}
             src={
               Array.isArray(product?.imageSrc) && product.imageSrc.length > 0

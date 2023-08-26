@@ -31,6 +31,7 @@ const Supercol = ({ product, renderedIndex, load, update_p, personal }) => {
 
   const { decreaseQuantity, addToCart } =
     useContext(CartContext);
+    
 
   return (
     <div className="">
@@ -75,7 +76,8 @@ const Supercol = ({ product, renderedIndex, load, update_p, personal }) => {
             <div className=" my-1 text-secondary ">|</div>
             <div className="my-1">
               <button className="btn"
-                onClick={() => { navigate(`/SelectedProductPage/${currentproduct._id}`) }}>
+                onClick={() => { navigate(`/SelectedProductPage/${currentproduct._id}`);
+                window.scrollTo(0,0) }}>
                 {" "}
                 <i className="bi bi-cart m-2">Visit Product</i>
 

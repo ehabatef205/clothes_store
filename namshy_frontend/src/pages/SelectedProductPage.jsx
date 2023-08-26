@@ -101,7 +101,7 @@ function SelectedProductPage({ products, handleClick, update_p, personal }) {
         className="viewcontainer justify-content-center   "
         style={{ position: "relative", top: "70px" }}
       >
-      </div>
+      
 
       <Container id="parent" className="d-flex flex-wrap "
         style={{ width: "100%" }}
@@ -253,7 +253,11 @@ function SelectedProductPage({ products, handleClick, update_p, personal }) {
                               if (selected.sizeable && selected.colors) {
                                 setSizet(v)
                                 setColort("")
-                              } else {
+                              } else if(selected.sizeable&&!selected.colors){
+                                setSizet(v)
+                              }
+                              
+                              else{
                                 setColort(v)
                               }
                             }}
@@ -472,6 +476,7 @@ function SelectedProductPage({ products, handleClick, update_p, personal }) {
         </section>
       </Container>
       <ToastContainer />
+    </div>
     </div>
 
   );
