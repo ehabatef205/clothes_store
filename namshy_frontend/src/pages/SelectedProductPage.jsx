@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { getAvailableColorsAndSizes } from "./color-size";
-import { useParams,useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { Container } from "react-bootstrap";
 import { Rating } from "@mui/material";
 import Header from "../components/Navs/Header";
@@ -25,7 +25,7 @@ function SelectedProductPage({ products, handleClick, update_p, personal }) {
   const [Sizet, setSizet] = useState('');
   const [Colort, setColort] = useState('');
   const cookie = new Cookies()
-  const navigate=useNavigate()
+  const navigate = useNavigate()
   var viewcontroller = 0
   const [formattedDescription, setformattedDescription] = useState("")
   const { id } = useParams();
@@ -54,23 +54,24 @@ function SelectedProductPage({ products, handleClick, update_p, personal }) {
   const [value, setValue] = useState(0);
 
   const addtoBag = async () => {
-    const token= cookie.get("Auth")
-    if(token===undefined){
+    const token = cookie.get("Auth")
+    if (token === undefined) {
       navigate('/login')
     }
-    else{
-    await Cart.add_cart(id, 1, Colort, Sizet, selected.clothing, cookie.get("Auth")).then(e => {
-      if (e.data.message === "This product is already in cart") {
-        toast.warning("This product is already in cart", {
-          position: toast.POSITION.TOP_LEFT
-        })
-      } else if (e.data.message === "Done add this product to cart") {
-        toast.success("Done add this product to cart", {
-          position: toast.POSITION.TOP_LEFT
-        })
-      }
-      update_p()
-    })}
+    else {
+      await Cart.add_cart(id, 1, Colort, Sizet, selected.clothing, cookie.get("Auth")).then(e => {
+        if (e.data.message === "This product is already in cart") {
+          toast.warning("This product is already in cart", {
+            position: toast.POSITION.TOP_LEFT
+          })
+        } else if (e.data.message === "Done add this product to cart") {
+          toast.success("Done add this product to cart", {
+            position: toast.POSITION.TOP_LEFT
+          })
+        }
+        update_p()
+      })
+    }
   }
   const deletebag = async () => {
     await Cart.Delete_by_product(id).then((e) => {
@@ -78,15 +79,16 @@ function SelectedProductPage({ products, handleClick, update_p, personal }) {
     })
   }
   const addtowish = async () => {
-    const token= cookie.get("Auth")
-    if(token===undefined){
+    const token = cookie.get("Auth")
+    if (token === undefined) {
       navigate('/login')
     }
-    else{
-    await Wish.add_cart(id, 1, cookie.get("Auth")).then((e) => {
-      update_p()
-    })
-  }}
+    else {
+      await Wish.add_cart(id, 1, cookie.get("Auth")).then((e) => {
+        update_p()
+      })
+    }
+  }
 
   const [Showrate, setShowrate] = useState(true);
   const handleRateClick = () => {
@@ -183,15 +185,15 @@ function SelectedProductPage({ products, handleClick, update_p, personal }) {
                   >
 
 
-  {selected?.price_before !== selected?.price_after ? (
-    <>
-      <del className=" mx-2 text-danger">{selected?.price_before}$ </del>
-    </>
-  ) : (
-    <>
-     
-    </>
-  )}
+                    {selected?.price_before !== selected?.price_after ? (
+                      <>
+                        <del className=" mx-2 text-danger">{selected?.price_before}$ </del>
+                      </>
+                    ) : (
+                      <>
+
+                      </>
+                    )}
                     {/* <del className=" mx-2 text-danger">{selected?.price_before}$ </del> */}
                     {" "}
                     <div className=" mx-2 text-body" style={{ fontSize: "30px" }}>{selected?.price_after}$ </div>
@@ -199,20 +201,20 @@ function SelectedProductPage({ products, handleClick, update_p, personal }) {
 
 
                   {selected?.price_before !== selected?.price_after ? (
-    <>
-      <div style={{ borderRadius: "50px", width: "fit-content", height: "fit-content" }} className=" bg-danger-subtle col-3  d-flex justify-content-center">
-                    <b className="my-3 mx-4" >{(((selected?.price_before - selected?.price_after) * 100) / selected?.price_before).toFixed(1)}%</b></div>
-
-               
-    </>
-  ) : (
-    <>
-     
-    </>
-  )}
+                    <>
+                      <div style={{ borderRadius: "50px", width: "fit-content", height: "fit-content" }} className=" bg-danger-subtle col-3  d-flex justify-content-center">
+                        <b className="my-3 mx-4" >{(((selected?.price_before - selected?.price_after) * 100) / selected?.price_before).toFixed(1)}%</b></div>
 
 
-</div>   
+                    </>
+                  ) : (
+                    <>
+
+                    </>
+                  )}
+
+
+                </div>
               </div>
               {/*  */}
 
@@ -233,7 +235,7 @@ function SelectedProductPage({ products, handleClick, update_p, personal }) {
                     <div>
                       <b style={{ fontSize: "25px" }}>size</b>
                     </div>
-                    
+
                   </div>
 
                   <div
@@ -248,9 +250,10 @@ function SelectedProductPage({ products, handleClick, update_p, personal }) {
                             key={index}
                             onClick={() => {
                               console.log(v)
-                              if (selected.sizeable)
+                              if (selected.sizeable && selected.colors) {
                                 setSizet(v)
-                              else {
+                                setColort("")
+                              } else {
                                 setColort(v)
                               }
                             }}
@@ -261,11 +264,11 @@ function SelectedProductPage({ products, handleClick, update_p, personal }) {
                               minWidth: "60px",
                               maxWidth: "fit-content",
                               borderRadius: "2px",
-                              backgroundColor: (selected.sizeable && selected.colors) ? (v===Sizet?"black":"gray" ): '#' + v,
+                              backgroundColor: (selected.sizeable && selected.colors) ? (v === Sizet ? "black" : "gray") : '#' + v,
                               color: (selected.sizeable && selected.colors) ? "white" : '#' + v,
                             }}
 
-                          
+
                           >
                             {v}
                           </button>
@@ -305,6 +308,8 @@ function SelectedProductPage({ products, handleClick, update_p, personal }) {
                   <span className=" mx-3" style={{ textAlign: "center", width: "45%" }}>
                     <button
                       className="btn text-light my-3 h-75 w-100"
+                      disabled={(selected.colors && !selected.sizeable && Colort === "") || (!selected.colors && selected.sizeable && Sizet === "") ||
+                        (selected?.colors && selected?.sizeable && Colort === "")}
                       onClick={() => {
 
 

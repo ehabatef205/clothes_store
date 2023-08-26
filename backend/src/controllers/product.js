@@ -4,7 +4,7 @@ const Cart = require("../models/cart.js");
 const mongoose = require("mongoose");
 const xlsx = require("xlsx");
 const multer = require("multer");
-const { MakeRequest ,getmodels,requesttryon} = require("./vrRoom.js");
+const { MakeRequest, getmodels, requesttryon } = require("./vrRoom.js");
 
 module.exports.AllProducts = (req, res) => {
   Product.find()
@@ -135,17 +135,17 @@ module.exports.getProductBySubCategoryfilter = async (req, res) => {
 
   if (req.body.filter.colors !== undefined && req.body.filter.colors.length > 0) {
     const arr = [];
-req.body.filter.colors.map((color) => {
-  const colorIndex = parseInt(color);
-  
-  arr.push({ [`sizes.S.${colorIndex}`]: { $gt: 0 } });
-  arr.push({ [`sizes.M.${colorIndex}`]: { $gt: 0 } });
-  arr.push({ [`sizes.L.${colorIndex}`]: { $gt: 0 } });
-  arr.push({ [`sizes.XL.${colorIndex}`]: { $gt: 0 } });
-  arr.push({ [`sizes.XXL.${colorIndex}`]: { $gt: 0 } });
-});
+    req.body.filter.colors.map((color) => {
+      const colorIndex = parseInt(color);
+
+      arr.push({ [`sizes.S.${colorIndex}`]: { $gt: 0 } });
+      arr.push({ [`sizes.M.${colorIndex}`]: { $gt: 0 } });
+      arr.push({ [`sizes.L.${colorIndex}`]: { $gt: 0 } });
+      arr.push({ [`sizes.XL.${colorIndex}`]: { $gt: 0 } });
+      arr.push({ [`sizes.XXL.${colorIndex}`]: { $gt: 0 } });
+    });
     q.colors = arr;
-  
+
   }
 
   if (req.body.filter.prices !== undefined && req.body.filter.prices.length > 0) {
@@ -154,7 +154,7 @@ req.body.filter.colors.map((color) => {
   if (req.body.filter.creationDate !== undefined) {
     q.creationDate = req.body.filter.creationDate;
   }
-  
+
 
   const query = { subCategory: _id, view: true, $and: [] };
 
@@ -167,9 +167,9 @@ req.body.filter.colors.map((color) => {
   }
   var currentDate = new Date();
   if (q.creationDate !== null) {
-    var timer=7
-    if(q.creationDate==="month")
-    timer=30
+    var timer = 7
+    if (q.creationDate === "month")
+      timer = 30
     query.$and.push({
       createdAt: {
         $gte: new Date(currentDate.getTime() - timer * 24 * 60 * 60 * 1000)
@@ -179,7 +179,7 @@ req.body.filter.colors.map((color) => {
 
   try {
     const products = await Product.find(query);
-    
+
     return res.json({ response: products });
   } catch (err) {
     return res.json({ message: err.message });
@@ -191,17 +191,17 @@ module.exports.searchProductfilter = async (req, res) => {
 
   if (req.body.filter.colors !== undefined && req.body.filter.colors.length > 0) {
     const arr = [];
-req.body.filter.colors.map((color) => {
-  const colorIndex = parseInt(color);
-  
-  arr.push({ [`sizes.S.${colorIndex}`]: { $gt: 0 } });
-  arr.push({ [`sizes.M.${colorIndex}`]: { $gt: 0 } });
-  arr.push({ [`sizes.L.${colorIndex}`]: { $gt: 0 } });
-  arr.push({ [`sizes.XL.${colorIndex}`]: { $gt: 0 } });
-  arr.push({ [`sizes.XXL.${colorIndex}`]: { $gt: 0 } });
-});
+    req.body.filter.colors.map((color) => {
+      const colorIndex = parseInt(color);
+
+      arr.push({ [`sizes.S.${colorIndex}`]: { $gt: 0 } });
+      arr.push({ [`sizes.M.${colorIndex}`]: { $gt: 0 } });
+      arr.push({ [`sizes.L.${colorIndex}`]: { $gt: 0 } });
+      arr.push({ [`sizes.XL.${colorIndex}`]: { $gt: 0 } });
+      arr.push({ [`sizes.XXL.${colorIndex}`]: { $gt: 0 } });
+    });
     q.colors = arr;
-  
+
   }
 
   if (req.body.filter.prices !== undefined && req.body.filter.prices.length > 0) {
@@ -210,10 +210,11 @@ req.body.filter.colors.map((color) => {
   if (req.body.filter.creationDate !== undefined) {
     q.creationDate = req.body.filter.creationDate;
   }
-  
 
-  const query = { 
-    name: { $regex: ".*" + req.body.query + ".*", $options: "i" }, view: true, $and: [] };
+
+  const query = {
+    name: { $regex: ".*" + req.body.query + ".*", $options: "i" }, view: true, $and: []
+  };
 
   if (q.prices.length > 0) {
     query.$and.push({ $or: q.prices });
@@ -224,9 +225,9 @@ req.body.filter.colors.map((color) => {
   }
   var currentDate = new Date();
   if (q.creationDate !== null) {
-    var timer=7
-    if(q.creationDate==="month")
-    timer=30
+    var timer = 7
+    if (q.creationDate === "month")
+      timer = 30
     query.$and.push({
       createdAt: {
         $gte: new Date(currentDate.getTime() - timer * 24 * 60 * 60 * 1000)
@@ -236,7 +237,7 @@ req.body.filter.colors.map((color) => {
   console.log(query)
   try {
     const products = await Product.find(query);
-    
+
     return res.json({ response: products });
   } catch (err) {
     return res.json({ message: err.message });
@@ -382,26 +383,26 @@ module.exports.SearchByNameBulk = (req, res) => {
     });
 };
 
-module.exports.cart = (req, res) => {
+module.exports.cart = async (req, res) => {
   const ids = req.body.products;
-  Product.find({
-    _id: {
-      $in: ids,
-    },
-  })
-    .then((response) => {
-      res.json({
-        response,
-      });
-    })
-    .catch((error) => {
-      res.json({
-        message: "An error Occured!",
-      });
-    });
+  const products = [];
+  for (var i = 0; i < ids.length; i++) {
+    await Product.findById(ids[i])
+      .then(response => {
+        products.push(response)
+      })
+      .catch(error => {
+        res.json({
+          message: 'An error Occured!'
+        })
+      })
+  }
+  if (products.length === ids.length) {
+    res.json({ response: products })
+  }
 };
 
-module.exports.uplodaImage = async (req, res) => {
+module.exports.uplodaImage = async (req, res, next) => {
   if (!req.files || req.files.length === 0) {
     return res.status(400).send("No file uploaded");
   }
@@ -415,7 +416,7 @@ module.exports.uplodaImage = async (req, res) => {
   const body = req.body;
   body.supplier = "Wolf";
   body.imageSrc = images;
-  var vrprop = {}; 
+  var vrprop = {};
   if (body.dressing) {
     vrprop.gender = body.gender;
     vrprop.vrpos = body.vrpos;
@@ -434,8 +435,8 @@ module.exports.uplodaImage = async (req, res) => {
     name: body.name,
     dressing: body.dressing,
     ...vrprop,
-    sizeable:body.sizeable,
-    colors:body.colors,
+    sizeable: body.sizeable,
+    colors: body.colors,
     SKU: body.SKU,
     price_before: body.price_before,
     price_after: body.price_after,
@@ -448,70 +449,70 @@ module.exports.uplodaImage = async (req, res) => {
       },
       description: body.description,
     },
-    sizeable:body.sizeable,
-    colors:body.colors,
+    sizeable: body.sizeable,
+    colors: body.colors,
     quantity: JSON.parse(body.quantity),
     view: true,
   });
 
   try {
-  const response = await product.save();
-  console.log("Product saved:", response);
+    const response = await product.save();
+    console.log("Product saved:", response);
 
-  if (response.dressing) {
-    try {
-      const responseData = await MakeRequest(vrprop);
-      console.log("MakeRequest Response:", responseData);
+    if (response.dressing) {
+      try {
+        const responseData = await MakeRequest(vrprop);
+        console.log("MakeRequest Response:", responseData);
 
-      if (JSON.parse(responseData).success) {
-        const updatedProduct = await Product.findOneAndUpdate(
-          { _id: response._id },
-          { garment_id: JSON.parse(responseData).garment_id },
-          { new: true }
-        );
+        if (JSON.parse(responseData).success) {
+          const updatedProduct = await Product.findOneAndUpdate(
+            { _id: response._id },
+            { garment_id: JSON.parse(responseData).garment_id },
+            { new: true }
+          );
 
-        console.log("Updated Product:", updatedProduct);
+          console.log("Updated Product:", updatedProduct);
 
-        return res.json({
-          response: updatedProduct,
-        });
+          return res.json({
+            response: updatedProduct,
+          });
+        }
+      } catch (error) {
+        console.error("MakeRequest Error:", error);
       }
-    } catch (error) {
-      console.error("MakeRequest Error:", error);
     }
+    return res.json({
+      response,
+    });
+  } catch (error) {
+    return res.json({
+      message: error.message,
+    });
   }
-  return res.json({
-    response,
-  });
-} catch (error) {
-  return res.json({
-    message: error.message,
-  });
-}
 };
-module.exports.models =async  (req, res) => {
-  await getmodels(req.body.gender).then(response=>{
-    res.json({default:JSON.parse(response).models[0],image:JSON.parse(response).model_files[0],response:JSON.parse(response)})
+module.exports.models = async (req, res) => {
+  await getmodels(req.body.gender).then(response => {
+    res.json({ default: JSON.parse(response).models[0], image: JSON.parse(response).model_files[0], response: JSON.parse(response) })
   })
-  .catch((error) => {
-    res.json({
-      message: "An error Occured!",
-      error:error.message
+    .catch((error) => {
+      res.json({
+        message: "An error Occured!",
+        error: error.message
+      });
     });
-  });
 };
 
 
-module.exports.tryon =async  (req, res) => {
-  await requesttryon(req.body.garments,request.body.gender).then(response=>{
-    return res.json({tryon:JSON.parse(response)})
+module.exports.tryon = async (req, res) => {
+  await requesttryon(req.body.garments, request.body.gender).then(response => {
+    return res.json({ tryon: JSON.parse(response) })
   })
-  .catch((error) => {
-    res.json({
-      message: "An error Occured!",
-      error:error.message
+    .catch((error) => {
+      res.json({
+        message: "An error Occured!",
+        error: error.message
+      });
     });
-  });
 };
 
 module.exports.getProductByMainCategory = async (req, res) => {

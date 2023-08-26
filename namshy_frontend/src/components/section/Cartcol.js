@@ -100,7 +100,7 @@ const Cartcol = ({ cart, load, product, personal, update_p }) => {
                 {/* {product?} */}
               </p>
               <p style={{ margin: "0px", padding: "0px" }}>{product?.name}</p>
-              {product?.clothing ? (
+              {(
                 <div
                   className="   justify-content-start my-3"
                   style={{ textAlign: "left" }}
@@ -126,17 +126,15 @@ const Cartcol = ({ cart, load, product, personal, update_p }) => {
                       cursor: "pointer",
                       width: "70px",
                       borderRadius: "2px",
-                      backgroundColor: cart.color,
-                      color: cart.color,
+                      backgroundColor: '#'+cart.color,
+                      color: '#'+cart.color,
                     }}
                     className="btn  btn-outline-secondary "
                   >
-                    0
+                    {cart.size}
                   </button>
                 </div>
-              ) : (
-                <></>
-              )}
+              ) }
 
               <div className="d-flex">
                 <div className="m-2 ">
