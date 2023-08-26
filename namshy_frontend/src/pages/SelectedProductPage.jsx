@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { getAvailableColorsAndSizes } from "./color-size";
-import { useParams } from "react-router-dom";
+import { useParams,useNavigate } from "react-router-dom";
 import { Container } from "react-bootstrap";
 import { Rating } from "@mui/material";
 import Header from "../components/Navs/Header";
@@ -10,7 +10,6 @@ import * as user from '../api/user'
 import * as Cart from '../api/cart'
 import * as Wish from '../api/wish'
 import { Cookies } from 'react-cookie'
-import { update } from "../api/personal_cookies";
 import './selected.css'
 import Carousel from "react-bootstrap/Carousel";
 import { ToastContainer, toast } from 'react-toastify';
@@ -26,7 +25,7 @@ function SelectedProductPage({ products, handleClick, update_p, personal }) {
   const [Sizet, setSizet] = useState('');
   const [Colort, setColort] = useState('');
   const cookie = new Cookies()
-
+  const navigate=useNavigate()
   var viewcontroller = 0
   const [formattedDescription, setformattedDescription] = useState("")
   const { id } = useParams();
@@ -55,6 +54,11 @@ function SelectedProductPage({ products, handleClick, update_p, personal }) {
   const [value, setValue] = useState(0);
 
   const addtoBag = async () => {
+    const token= cookie.get("Auth")
+    if(token===undefined){
+      navigate('/login')
+    }
+    else{
     await Cart.add_cart(id, 1, Colort, Sizet, selected.clothing, cookie.get("Auth")).then(e => {
       if (e.data.message === "This product is already in cart") {
         toast.warning("This product is already in cart", {
@@ -66,7 +70,7 @@ function SelectedProductPage({ products, handleClick, update_p, personal }) {
         })
       }
       update_p()
-    })
+    })}
   }
   const deletebag = async () => {
     await Cart.Delete_by_product(id).then((e) => {
@@ -74,15 +78,16 @@ function SelectedProductPage({ products, handleClick, update_p, personal }) {
     })
   }
   const addtowish = async () => {
+    const token= cookie.get("Auth")
+    if(token===undefined){
+      navigate('/login')
+    }
+    else{
     await Wish.add_cart(id, 1, cookie.get("Auth")).then((e) => {
       update_p()
     })
-  }
-  const deletewish = async () => {
-    await Wish.Delete_by_product(id).then((e) => {
-      update_p()
-    })
-  }
+  }}
+
   const [Showrate, setShowrate] = useState(true);
   const handleRateClick = () => {
     setShowrate(false)

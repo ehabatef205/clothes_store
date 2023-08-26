@@ -9,7 +9,7 @@ import * as sub_cat from "../api/subcategory";
 import FilterRep from "../components/section/FilterRep";
 
 
-export default function Page1() {
+export default function Page1({ update_p, personal }) {
   const [category, setCategory] = React.useState({});
   const [Subcategory, setSubCategory] = React.useState({});
   const main = window.location.pathname.split("/")[2];
@@ -49,7 +49,7 @@ export default function Page1() {
 
   return (
     <div className="sub_cat ">
-      <Header visible={false} />
+      <Header visible={false} update_p={update_p} personal={personal}/>
       <div
         className="section_container d-flex  flex-wrap justify-content-center align-content-center"
         style={{ position: "relative", top: "70px" }}

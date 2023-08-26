@@ -32,16 +32,15 @@ export function Product({ product, index ,personal,update_p}) {
         navigate(`/SelectedProductPage/${product._id}`);
     };
 
-    const addtoBag = async (id) => {
-        console.log(personal)
-        navigate(`/SelectedProductPage/${product._id}`);
-    };
+
     const addToFavorites = async (id) => {
-        
-        console.log(personal);
+        const token=cookie.get('Auth')
+        if(token===undefined){
+            navigate('/login')
+        }else{
         await Wish.add_cart(id, 1, cookie.get("Auth")).then((e) => {
             update_p()
-        });
+        });}
     };
 
     //   console.log("card",product)

@@ -256,8 +256,12 @@ export function CardsSlider(props) {
     }
 
   const addToFavorites = async(id) => {
+    const token=cookie.get('Auth')
+        if(token===undefined){
+            navigate('/login')
+        }else{
     await Wish.add_cart(id, 1, cookie.get("Auth")).then(e=>{update_p()})
-    
+        }
     
   };
   const removefromFavorites = async(id) => {

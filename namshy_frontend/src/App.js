@@ -55,7 +55,7 @@ function App() {
 
         <Route path="/" element={<Home update_p={update_p} personal={personal} />} />
         <Route path="/cat/:id" element={<Home update_p={update_p} personal={personal} />} />
-        <Route path="/cat/:id/:subid" element={<Page1 />} />
+        <Route path="/cat/:id/:subid" element={<Page1 update_p={update_p} personal={personal}/>} />
         <Route path="/search/*" element={<Page2 update_p={update_p} personal={personal}/>} />
         <Route path="/wishlist" element={<Wishlist update_p={update_p} personal={personal}/>} />
         <Route path="/super/*" element={<SuperPage update_p={update_p} personal={personal}/>} />
