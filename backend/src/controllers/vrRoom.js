@@ -124,7 +124,7 @@ function requesttryon(garments,gender) {
     });
     console.log(garments)
     var id="1697455153"
-      if(gender==="male")
+      if(gender==="m")
       id="1675184224"
       req.write(JSON.stringify({garments:garments,
         model_id:id
