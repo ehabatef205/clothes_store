@@ -11,7 +11,7 @@ import FilterRep from "../components/section/FilterRep";
 export default function Page1({ update_p, personal }) {
   const [category, setCategory] = React.useState({});
   const [Subcategory, setSubCategory] = React.useState({});
-  const query = window.location.pathname.split("/")[2];
+  const query = decodeURIComponent(window.location.pathname.split("/")[2]);
   const sub = window.location.pathname.split("/")[3];
   useEffect(() => {
     const getCategory = async () => {

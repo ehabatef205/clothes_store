@@ -203,7 +203,7 @@ export function NavBar({ visible = true, update_p, personal }) {
                   borderRadius: "25px",
                   width: "100%",
                 }}
-                value={query}
+                value={decodeURIComponent(query)}
                 onChange={(e) => {
                   setQuery(e.target.value);
                 }}
